@@ -1,20 +1,19 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import NavLinks from "./nav-links";
+import ThemeDropdown from "./theme-dropdown";
+import UserButton from "./user-button";
 
-const Header = () => {
-  const pathname = usePathname();
+const Header = async () => {
   return (
-    <nav className="w-full flex justify-between p-5 border-b">
-      <div>
-        <Link
-          href={"/"}
-          className={cn("text-lg", pathname === "/" && "font-bold underline")}
-        >
-          Browse
-        </Link>
+    <nav className="w-full flex-center flex-col h-15 p-5 border-b">
+      <div className="flex-between w-[60%] mx-auto">
+        <div>
+          <NavLinks />
+        </div>
+        <div className="flex items-center gap-x-4">
+          <ThemeDropdown />
+          <UserButton />
+        </div>
       </div>
     </nav>
   );
