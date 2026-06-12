@@ -8,8 +8,6 @@ export const signUpSchema = z.object({
     .string()
     .min(8, "password must be between 8-50 characters")
     .max(50),
-  gender: z.string().max(1).optional(),
-  image: z.string().max(1).optional(),
 });
 
 export const signInSchema = z.object({

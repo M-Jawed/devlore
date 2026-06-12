@@ -6,8 +6,16 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { auth } from "@/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-const SignInPage = () => {
+const SignInPage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (session) redirect("/");
   return (
     <section className="w-full min-h-screen flex-center">
       <Card className="w-[40%] mx-auto">

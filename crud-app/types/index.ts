@@ -4,6 +4,10 @@ import z from "zod";
 
 export type User = z.infer<typeof signUpSchema> & {
   id: string;
+  gender: string;
+  image: string;
+  country: string;
+  phone: number;
   role: string;
   bio: string;
   emailVerified: boolean;
