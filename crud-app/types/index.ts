@@ -15,4 +15,21 @@ export type User = z.infer<typeof signUpSchema> & {
   createdAt: Date;
 };
 
+export type Post = {
+  _id: string;
+  userId: string;
+  slug: string;
+  title: string;
+  body: string;
+  category: string;
+  tags: string[];
+  banner: string;
+  likes: number;
+  isPublished: boolean;
+  comments: [];
+  __v: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type Session = Awaited<ReturnType<typeof auth.api.getSession>>;

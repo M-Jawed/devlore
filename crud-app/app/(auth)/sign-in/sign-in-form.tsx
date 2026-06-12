@@ -6,13 +6,14 @@ import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { signIn } from "./sign-in";
+import { signIn, signInWithGoogle } from "./sign-in";
 import z from "zod";
 import { signInSchema } from "@/lib/zod/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeClosed, Eye } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 
 const SignInForm = () => {
@@ -32,6 +33,10 @@ const SignInForm = () => {
       return;
     }
     toast.success(res.message);
+  };
+
+  const handleGoogleSignIn = async () => {
+    await signInWithGoogle();
   };
 
   return (
@@ -99,8 +104,15 @@ const SignInForm = () => {
           </div>
         </div>
 
+        <div className="text-center tracking-wide">OR</div>
+
         <div className="flex-center">
-          <Button variant={"secondary"} className="w-50">
+          <Button
+            type="button"
+            variant={"secondary"}
+            className="w-50"
+            onClick={handleGoogleSignIn}
+          >
             Continue with Google <FcGoogle size={13} />
           </Button>
         </div>

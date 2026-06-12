@@ -9,6 +9,6 @@ export const formatError = (error: any) => {
   if (error.message === "Username is already taken. Please try another.") {
     return "Username is already taken";
   } else {
-    return error.message;
+    return error instanceof Error ? error.message : String(error);
   }
 };

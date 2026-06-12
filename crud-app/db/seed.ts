@@ -1,4 +1,7 @@
 import "dotenv/config";
+import Post from "@/models/Post";
+import connectDB from "@/config/db";
+import { posts } from "./sample-data";
 
 const seed = async () => {
   const admin = await fetch(`${process.env.APP_URL}/api/auth/sign-up/email`, {
@@ -37,4 +40,14 @@ const seed = async () => {
   console.log("seeded succesfully");
 };
 
-seed();
+const seedPosts = async () => {
+  await connectDB();
+
+  Post.deleteMany();
+  Post.insertMany(posts);
+
+  console.log("seeded post collection successfuly");
+  return;
+};
+
+seedPosts();

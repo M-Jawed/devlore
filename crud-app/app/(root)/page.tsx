@@ -1,10 +1,25 @@
-import Image from "next/image";
 import type { Metadata } from "next";
+import { getAllPosts } from "@/lib/actions/post.action";
+import PostsList from "@/components/posts/posts-lis";
+import type { Post } from "@/types";
 
 export const metadata: Metadata = {
   title: "Homepage",
 };
 
-export default function Home() {
-  return <h1>homepage</h1>;
-}
+const Home = async () => {
+  const res = await getAllPosts();
+
+  if (!res.success) {
+    throw new Error("No posts found");
+  }
+
+  const posts = res.data;
+  return (
+    <>
+      <PostsList data={posts} limit={3} />
+    </>
+  );
+};
+
+export default Home;
