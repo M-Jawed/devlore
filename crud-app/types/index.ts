@@ -20,6 +20,7 @@ export type Post = {
   userId: string;
   slug: string;
   title: string;
+  description: string;
   body: string;
   category: string;
   tags: string[];

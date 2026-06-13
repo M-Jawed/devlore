@@ -1,23 +1,22 @@
 import type { Metadata } from "next";
-import { getAllPosts } from "@/lib/actions/post.action";
+import { getFeaturedPosts } from "@/lib/actions/post.action";
 import PostsList from "@/components/posts/posts-lis";
-import type { Post } from "@/types";
 
 export const metadata: Metadata = {
   title: "Homepage",
 };
 
 const Home = async () => {
-  const res = await getAllPosts();
+  const res = await getFeaturedPosts({ limit: 2 });
 
   if (!res.success) {
-    throw new Error("No posts found");
+    throw new Error("No featured posts found");
   }
 
-  const posts = res.data;
+  const featuredPosts = res.data;
   return (
     <>
-      <PostsList data={posts} limit={3} />
+      <PostsList data={featuredPosts} limit={3} />
     </>
   );
 };
