@@ -13,13 +13,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUserById } from "@/lib/actions/user.action";
 import PostOwner from "./post-card-owner-info";
+import BookmarkButton from "./add-to-bookmark";
+import { convertToPlainJSON } from "@/lib/utils";
 
 const PostCard = async ({ post }: { post: Post }) => {
   const user = await getUserById(post.userId as string);
+  const plainPost = convertToPlainJSON(post);
 
   return (
-    <Link href={`/posts/${post.slug}`}>
-      <Card>
+    <Card>
+      <Link href={`/posts/${post.slug}`}>
         <CardHeader>
           <div className="h-50 mb-2">
             <Image
@@ -41,12 +44,15 @@ const PostCard = async ({ post }: { post: Post }) => {
         <CardContent>
           <Badge variant={"ghost"}> Likes: {post.likes} </Badge>
         </CardContent>
+      </Link>
 
-        <CardFooter>
+      <CardFooter>
+        <div className="flex-between w-full">
           <PostOwner user={user} />
-        </CardFooter>
-      </Card>
-    </Link>
+          <BookmarkButton post={plainPost} />
+        </div>
+      </CardFooter>
+    </Card>
   );
 };
 

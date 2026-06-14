@@ -12,12 +12,15 @@ const PostsList = ({
   limit: number;
 }) => {
   return (
-    <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-3 px-5 mt-10">
-      {data?.map((post) => (
-        <PostCard key={post._id} post={post} />
-      ))}
+    <section className=" px-5 mt-10">
+      <h1 className="text-4xl mb-5 font-bold">Featured Posts</h1>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-3 mb-5">
+        {data?.map((post) => (
+          <PostCard key={post._id} post={post} />
+        ))}
+      </div>
 
-      <Link href={"/posts"} className="mt-3">
+      <Link href={"/posts"}>
         <Button variant={"outline"} size={"sm"}>
           View all posts <ArrowRight size={10} />
         </Button>

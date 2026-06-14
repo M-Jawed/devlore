@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const res = await getFeaturedPosts({ limit: 2 });
+  const res = await getFeaturedPosts();
 
   if (!res.success) {
     throw new Error("No featured posts found");

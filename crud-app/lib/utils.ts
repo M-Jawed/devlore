@@ -12,3 +12,7 @@ export const formatError = (error: any) => {
     return error instanceof Error ? error.message : String(error);
   }
 };
+
+export const convertToPlainJSON = (data: any) => {
+  return JSON.parse(JSON.stringify(data));
+};

@@ -18,7 +18,8 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { signOutAction } from "@/lib/actions/user.action";
-import { User, DoorOpen } from "lucide-react";
+import { User, DoorOpen, BookMarked } from "lucide-react";
+import Link from "next/link";
 
 const UserAvatar = ({ session }: { session: Session }) => {
   const initialName = session?.user.name.charAt(0);
@@ -55,6 +56,14 @@ const UserAvatar = ({ session }: { session: Session }) => {
           <DropdownMenuShortcut>
             {" "}
             <User />{" "}
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={"/bookmarks"} className="w-full">
+            Bookmarks
+          </Link>
+          <DropdownMenuShortcut>
+            <BookMarked />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleSignOut()}>
