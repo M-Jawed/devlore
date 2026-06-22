@@ -52,7 +52,9 @@ const UserAvatar = ({ session }: { session: Session }) => {
           {session?.user.email}{" "}
         </DropdownMenuLabel>
         <DropdownMenuItem>
-          Profile
+          <Link href={"/profile"} className="w-full">
+            Profile
+          </Link>
           <DropdownMenuShortcut>
             {" "}
             <User />{" "}

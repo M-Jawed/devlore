@@ -13,7 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeClosed, Eye } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 
 const SignInForm = () => {
