@@ -4,3 +4,10 @@ export const signUpDefaultValues = {
   email: "",
   password: "",
 };
+
+export const updateUserDefaultValues = {
+  name: "",
+  username: "",
+  email: "",
+  gender: "",
+};

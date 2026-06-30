@@ -27,3 +27,57 @@ export const getUserById = async (id: string) => {
     return { success: false, message: formatError(error) };
   }
 };
+
+export const updateUserProfileImage = async (imageUrl: string) => {
+  try {
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    const id = session?.user.id as string;
+
+    const user = await User.findById(id).lean();
+
+    if (!user)
+      return { success: false, message: "User with that id not found" };
+
+    await User.findByIdAndUpdate(id, { image: imageUrl });
+
+    revalidatePath("/profile");
+    return { success: true, message: "Profile Updated" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+};
+
+export const updateUser = async (userData: {
+  name: string;
+  username: string;
+  email: string;
+  gender: string;
+}) => {
+  try {
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    const userId = session?.user.id as string;
+
+    const user = await User.findById(userId);
+
+    if (!user)
+      return { success: false, message: "User with that id not found" };
+
+    await User.findByIdAndUpdate(userId, userData);
+
+    revalidatePath("/profile");
+
+    return { success: true, message: "User updated succesfully" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+};

@@ -21,9 +21,14 @@ import { signOutAction } from "@/lib/actions/user.action";
 import { User, DoorOpen, BookMarked } from "lucide-react";
 import Link from "next/link";
 
-const UserAvatar = ({ session }: { session: Session }) => {
+const UserAvatar = ({
+  session,
+  userImage,
+}: {
+  session: Session;
+  userImage: string;
+}) => {
   const initialName = session?.user.name.charAt(0);
-  const router = useRouter();
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -39,8 +44,9 @@ const UserAvatar = ({ session }: { session: Session }) => {
       <DropdownMenuTrigger asChild>
         <Avatar>
           <AvatarImage
-            src={session?.user.image as string}
+            src={userImage}
             alt="Avatar of the user"
+            referrerPolicy="no-referrer"
           />
           <AvatarFallback>{initialName}</AvatarFallback>
           <AvatarBadge className="bg-green-600" />
