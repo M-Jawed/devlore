@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -7,11 +9,95 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../ui/sidebar";
+import Link from "next/link";
+import Image from "next/image";
+import { Home } from "lucide-react";
+import { Geist } from "next/font/google";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { PiHouseLineFill, PiHouseLineLight } from "react-icons/pi";
+import { LuCircleUser } from "react-icons/lu";
+import { FaUserCircle } from "react-icons/fa";
+import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
+
+const geist = Geist({
+  subsets: ["latin"],
+});
 
 const MainSidebar = () => {
+  const pathname = usePathname();
   return (
-    <Sidebar className="w-40">
-      <SidebarHeader></SidebarHeader>
+    <Sidebar className={`w-46`}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem className="-mt-12">
+            <Link href={"/"}>
+              <Image
+                src={"/images/logo.png"}
+                alt="Image of the logo devlore"
+                width={200}
+                height={200}
+              />
+            </Link>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <SidebarMenuItem
+          className={cn(
+            pathname.startsWith("/posts") && "border-r-2 border-primary",
+          )}
+        >
+          <SidebarMenuButton asChild className="text-lg px-3">
+            <Link href={"/"}>Home</Link>
+          </SidebarMenuButton>
+          <SidebarMenuBadge>
+            {" "}
+            {pathname === "/posts" ? (
+              <PiHouseLineFill size={18} />
+            ) : (
+              <PiHouseLineLight size={18} />
+            )}
+          </SidebarMenuBadge>
+        </SidebarMenuItem>
+
+        <SidebarMenuItem
+          className={cn(
+            pathname.startsWith("/profile") && "border-r-2 border-primary",
+          )}
+        >
+          <SidebarMenuButton asChild className="text-lg px-3">
+            <Link href={"/profile"}>Profile</Link>
+          </SidebarMenuButton>
+          <SidebarMenuBadge>
+            {" "}
+            {pathname === "/profile" ? (
+              <FaUserCircle size={18} />
+            ) : (
+              <LuCircleUser size={18} />
+            )}
+          </SidebarMenuBadge>
+        </SidebarMenuItem>
+
+        <SidebarMenuItem
+          className={cn(
+            pathname.startsWith("/bookmarks") && "border-r-2 border-primary",
+          )}
+        >
+          <SidebarMenuButton asChild className="text-lg px-3">
+            <Link href={"/bookmarks"}>Library</Link>
+          </SidebarMenuButton>
+          <SidebarMenuBadge>
+            {" "}
+            {pathname === "/bookmarks" ? (
+              <IoBookmark size={18} />
+            ) : (
+              <IoBookmarkOutline size={18} />
+            )}
+          </SidebarMenuBadge>
+        </SidebarMenuItem>
+      </SidebarContent>
     </Sidebar>
   );
 };
