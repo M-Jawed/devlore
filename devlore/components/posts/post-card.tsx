@@ -24,14 +24,14 @@ const PostCard = async ({ post }: { post: Post }) => {
     <Card>
       <Link href={`/posts/${post.slug}`}>
         <CardHeader>
-          <div className="h-50 mb-2">
+          <div className="h-60 mb-2">
             <Image
               src={post.banner}
               alt={`Image of a post that talks about ${post.title}`}
               width={400}
               height={400}
               loading={"eager"}
-              className="object-cover w-full h-full rounded-lg"
+              className=" object-fill w-full h-full rounded-lg"
             />
           </div>
           <Badge variant={"outline"}> {post.category} </Badge>
