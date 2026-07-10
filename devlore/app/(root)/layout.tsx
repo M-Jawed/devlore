@@ -18,7 +18,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
             <Header />
             <main className="flex flex-1">
               <MainSidebar />
-              <div className="flex-1 px-6">{children}</div>
+              <div className="flex-1">{children}</div>
             </main>
 
             <Footer />

@@ -4,6 +4,7 @@ import Post from "@/models/Post";
 import connectDB from "@/config/db";
 import { formatError } from "../utils";
 import { convertToPlainJSON } from "../utils";
+import type { PopulatedPost } from "@/types";
 
 export const getAllPosts = async () => {
   try {
@@ -66,5 +67,24 @@ export const getPostById = async ({ postId }: { postId: string }) => {
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
+  }
+};
+
+export const getRecentPosts = async () => {
+  try {
+    const posts = await Post.find()
+      .limit(3)
+      .sort({ createdAt: -1 })
+      .populate("userId", "name image");
+
+    if (!posts) return { success: false, message: "No posts found", data: [] };
+
+    return {
+      success: true,
+      message: "Posts found",
+      data: posts as PopulatedPost[],
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error), data: [] };
   }
 };

@@ -33,4 +33,8 @@ export type Post = {
   updatedAt: Date;
 };
 
+export type PopulatedPost = Omit<Post, "userId"> & {
+  userId: User;
+};
+
 export type Session = Awaited<ReturnType<typeof auth.api.getSession>>;
