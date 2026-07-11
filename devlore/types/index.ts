@@ -2,8 +2,12 @@ import { signUpSchema } from "@/lib/zod/validator";
 import { auth } from "@/auth";
 import z from "zod";
 
-export type User = z.infer<typeof signUpSchema> & {
+export type User = {
   id: string;
+  name: string;
+  username: string;
+  email: string;
+  password?: string;
   gender: string;
   image: string;
   country: string;

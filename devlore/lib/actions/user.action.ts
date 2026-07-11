@@ -6,8 +6,6 @@ import { headers } from "next/headers";
 import User from "@/models/User";
 import { formatError } from "../utils";
 import connectDB from "@/config/db";
-import mongoose from "mongoose";
-import { ObjectId } from "mongodb";
 import { convertToPlainJSON } from "../utils";
 
 export const signOutAction = async () => {
@@ -80,4 +78,18 @@ export const updateUser = async (userData: {
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+};
+
+// Just for testing
+
+export const getRecentUsers = async () => {
+  const users = await User.find().limit(3).sort({ createdAt: -1 });
+
+  if (!users) return { success: false, message: "No users found", data: [] };
+
+  return {
+    success: true,
+    message: "Users found",
+    data: convertToPlainJSON(users),
+  };
 };
