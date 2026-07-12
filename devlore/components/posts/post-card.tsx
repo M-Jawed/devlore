@@ -1,4 +1,6 @@
-import type { Post } from "@/types";
+"use client";
+
+import type { Post, User } from "@/types";
 import {
   Card,
   CardHeader,
@@ -7,7 +9,6 @@ import {
   CardContent,
   CardFooter,
 } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,40 +16,83 @@ import { getUserById } from "@/lib/actions/user.action";
 import PostOwner from "./post-card-owner-info";
 import BookmarkButton from "./add-to-bookmark";
 import { convertToPlainJSON } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
 
-const PostCard = async ({ post }: { post: Post }) => {
-  const user = await getUserById(post.userId as string);
+const PostCard = ({ post }: { post: Post }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await getUserById(post.userId as string);
+      setUser(user);
+    };
+
+    getUser();
+  }, []);
+
+  if (!user) {
+    return (
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-x-2">
+            <Skeleton className="size-10 shrink-0 rounded-full" />
+            <div>
+              <Skeleton className="h-4 w-15" />
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-[1fr_auto]">
+            <div>
+              <Skeleton className="h-4 w-30 mb-3" />
+              <Skeleton className="h-4 w-20" />
+            </div>
+            <div>
+              <Skeleton className="h-40 w-60" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const plainPost = convertToPlainJSON(post);
 
   return (
     <Card>
       <Link href={`/posts/${post.slug}`}>
         <CardHeader>
-          <div className="h-60 mb-2">
-            <Image
-              src={post.banner}
-              alt={`Image of a post that talks about ${post.title}`}
-              width={400}
-              height={400}
-              loading={"eager"}
-              className=" object-fill w-full h-full rounded-lg"
-            />
-          </div>
-          <Badge variant={"outline"}> {post.category} </Badge>
-          <CardTitle className="md:text-1xl font-bold tracking-wide">
-            {" "}
-            {post.title}{" "}
-          </CardTitle>
-          <CardDescription> {post.description} </CardDescription>
+          <PostOwner user={user} />
         </CardHeader>
         <CardContent>
-          <Badge variant={"ghost"}> Likes: {post.likes} </Badge>
+          <div className="grid grid-cols-[1fr_auto]">
+            <div>
+              <h1 className="font-bold text-2xl tracking-wide mt-4">
+                {" "}
+                {post.title}{" "}
+              </h1>
+              <p className="text-lg text-muted-foreground truncate">
+                {" "}
+                {post.description}{" "}
+              </p>
+            </div>
+            <div>
+              <div>
+                <Image
+                  src={post.banner}
+                  alt={`Image or banner of the post ${post.title}`}
+                  width={200}
+                  height={200}
+                  className="rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Link>
-
       <CardFooter>
-        <div className="flex-between w-full">
-          <PostOwner user={user} />
+        <div>
           <BookmarkButton post={plainPost} />
         </div>
       </CardFooter>

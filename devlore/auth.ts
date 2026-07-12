@@ -36,6 +36,16 @@ export const auth = betterAuth({
         type: "number",
         required: false,
       },
+      followers: {
+        type: "string[]",
+        required: false,
+        defaultValue: [],
+      },
+      following: {
+        type: "string[]",
+        required: false,
+        defaultValue: [],
+      },
     },
   },
   emailAndPassword: {

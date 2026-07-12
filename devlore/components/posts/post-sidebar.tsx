@@ -45,9 +45,9 @@ const PostSidebar = async () => {
               <h1>No users found</h1>
             ) : (
               users.data.map((user: UserType) => (
-                <div className="flex-between">
+                <div key={user.username} className="flex-between">
                   <div className="flex items-center gap-x-2">
-                    <Avatar key={user.id}>
+                    <Avatar>
                       <AvatarImage src={user.image} />
                       <AvatarFallback>
                         <User />{" "}

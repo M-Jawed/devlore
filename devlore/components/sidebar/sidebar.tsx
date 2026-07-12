@@ -19,12 +19,14 @@ import { PiHouseLineFill, PiHouseLineLight } from "react-icons/pi";
 import { LuCircleUser } from "react-icons/lu";
 import { FaUserCircle } from "react-icons/fa";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
+import { useTheme } from "next-themes";
 
 const geist = Geist({
   subsets: ["latin"],
 });
 
 const MainSidebar = () => {
+  const { theme } = useTheme();
   const pathname = usePathname();
   return (
     <Sidebar className={`w-46`}>
@@ -33,7 +35,11 @@ const MainSidebar = () => {
           <SidebarMenuItem className="-mt-12">
             <Link href={"/"}>
               <Image
-                src={"/images/logo.png"}
+                src={
+                  theme === "light"
+                    ? "/images/logo.png"
+                    : "/images/logo-dark.png"
+                }
                 alt="Image of the logo devlore"
                 width={200}
                 height={200}

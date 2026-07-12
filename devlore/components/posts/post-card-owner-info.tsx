@@ -10,8 +10,8 @@ const PostOwner = ({ user }: { user: User }) => {
         <AvatarImage src={user.image} alt="Image of a user" />
         <AvatarFallback> {initialName} </AvatarFallback>
       </Avatar>
-      <div className="flex flex-col">
-        <span> {user.name} </span>
+      <div>
+        <span> {user.name} | </span>
         <span className="text-muted-foreground">
           {" "}
           {moment(user.createdAt, "YYYYMMDD").fromNow()}{" "}

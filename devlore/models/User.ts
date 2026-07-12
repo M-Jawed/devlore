@@ -30,6 +30,16 @@ const userSchema = new Schema(
     },
 
     gender: String,
+
+    followers: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+
+    following: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true, strict: false },
 );
