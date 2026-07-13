@@ -36,7 +36,10 @@ const StickySidebar = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <div ref={sidebarRef} className="sticky w-80 px-4 py-3 border-l">
+    <div
+      ref={sidebarRef}
+      className="max-xl:hidden sticky w-80 px-4 py-3 border-l"
+    >
       {children}
     </div>
   );

@@ -4,12 +4,18 @@ import type { Post } from "@/types";
 import Posts from "@/components/posts/posts";
 import PostFilters from "@/components/posts/post-filter";
 
-const PostsPage = async () => {
-  const res = await getAllPosts();
+const PostsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ feed: string }>;
+}) => {
+  const { feed } = await searchParams;
+  const query = feed ? { featured: true } : {};
+  const res = await getAllPosts(query);
   const posts = res.data;
 
   return (
-    <section className="mt-10 min-h-screen px-6">
+    <section className=" w-full mt-10 min-h-screen px-6 overflow-hidden pb-5">
       <PostFilters />
       <Posts posts={posts} />
     </section>

@@ -94,7 +94,7 @@ const PostCard = ({ post }: { post: Post }) => {
       </Link>
       <CardFooter>
         <div className="flex-between w-full">
-          <PostControls />
+          <PostControls isFeatured={post.isFeatured} />
           <BookmarkButton post={plainPost} />
         </div>
       </CardFooter>

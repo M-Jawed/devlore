@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import MainSidebar from "@/components/sidebar/sidebar";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
+import SidebarResizeHandler from "@/components/sidebar/sidebar-resize-handler";
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth.api.getSession({
@@ -14,6 +15,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       {session ? (
         <SidebarProvider>
+          <SidebarResizeHandler />
           <div className="flex flex-col flex-1 w-full min-h-screen">
             <Header />
             <div className="flex flex-1 pb-5">

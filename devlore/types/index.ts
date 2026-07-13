@@ -31,6 +31,7 @@ export type Post = {
   banner: string;
   likes: number;
   isPublished: boolean;
+  isFeatured: boolean;
   comments: [];
   __v: number;
   createdAt: Date;

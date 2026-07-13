@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -50,8 +51,8 @@ export default function RootLayout({
           attribute={"class"}
           disableTransitionOnChange
         >
-          {children}
-          <Toaster richColors />
+          <TooltipProvider>{children}</TooltipProvider>
+          <Toaster position="top-right" />
         </ThemeProvider>
       </body>
     </html>

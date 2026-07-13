@@ -6,11 +6,14 @@ import { formatError } from "../utils";
 import { convertToPlainJSON } from "../utils";
 import type { PopulatedPost } from "@/types";
 
-export const getAllPosts = async () => {
+export const getAllPosts = async ({
+  featured,
+}: { featured?: boolean } = {}) => {
   try {
     await connectDB();
 
-    const posts = await Post.find().lean();
+    const query = featured ? { isFeatured: true } : {};
+    const posts = await Post.find(query).lean().sort({ createdAt: -1 });
 
     if (!posts || posts.length === 0) {
       return { success: false, message: "No posts found", data: [] };
