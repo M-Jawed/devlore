@@ -18,6 +18,7 @@ import BookmarkButton from "./add-to-bookmark";
 import { convertToPlainJSON } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
+import PostControls from "./post-controls";
 
 const PostCard = ({ post }: { post: Post }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -92,7 +93,8 @@ const PostCard = ({ post }: { post: Post }) => {
         </CardContent>
       </Link>
       <CardFooter>
-        <div>
+        <div className="flex-between w-full">
+          <PostControls />
           <BookmarkButton post={plainPost} />
         </div>
       </CardFooter>

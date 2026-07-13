@@ -1,5 +1,5 @@
 const PostControls = () => {
-  return <h1>Post controls goes here</h1>;
+  return <h1>Post control goes here</h1>;
 };
 
 export default PostControls;
