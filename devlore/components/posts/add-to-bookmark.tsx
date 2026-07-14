@@ -11,12 +11,12 @@ import type { Post } from "@/types";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 
-const BookmarkButton = ({ post }: { post: Post }) => {
+const BookmarkButton = ({ id }: { id: string }) => {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const session = useSession();
   const userId = session.data?.user.id as string;
-  const postId = post._id;
+  const postId = id;
 
   const handleAddBookmark = async () => {
     const res = await addToBookmark({ userId, postId });

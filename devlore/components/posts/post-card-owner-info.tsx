@@ -2,7 +2,7 @@ import { User } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import moment from "moment";
 
-const PostOwner = ({ user }: { user: User }) => {
+const PostOwner = ({ user, createdAt }: { user: User; createdAt?: Date }) => {
   const initialName = user.name.charAt(0).toUpperCase();
   return (
     <div className="flex items-center gap-x-2">
@@ -14,7 +14,7 @@ const PostOwner = ({ user }: { user: User }) => {
         <span> {user.name} | </span>
         <span className="text-muted-foreground">
           {" "}
-          {moment(user.createdAt, "YYYYMMDD").fromNow()}{" "}
+          {moment(user.createdAt || createdAt, "YYYYMMDD").fromNow()}{" "}
         </span>
       </div>
     </div>

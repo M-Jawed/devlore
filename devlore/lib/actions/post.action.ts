@@ -91,3 +91,22 @@ export const getRecentPosts = async () => {
     return { success: false, message: formatError(error), data: [] };
   }
 };
+
+export const getPostBySlug = async (slug: string) => {
+  const post = await Post.findOne({ slug: slug })
+    .populate("userId", "image name ")
+    .lean();
+
+  if (!post)
+    return {
+      success: false,
+      message: "No post with that slug found",
+      data: {},
+    };
+
+  return {
+    success: true,
+    message: "Post found",
+    data: convertToPlainJSON(post),
+  };
+};

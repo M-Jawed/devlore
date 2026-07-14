@@ -3,6 +3,8 @@ import NoBookmarks from "@/components/bookmark/no-bookmarks";
 import PostCard from "@/components/posts/post-card";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
+import { convertToPlainJSON } from "@/lib/utils";
+import { Post } from "@/types";
 
 const Bookmarks = async () => {
   const session = await auth.api.getSession({
@@ -19,13 +21,13 @@ const Bookmarks = async () => {
     );
   }
 
-  const posts = res.data;
+  const posts = convertToPlainJSON(res.data);
 
   return (
     <section className="px-5 mt-10">
       <h1 className="text-3xl font-bold ">Your Bookmarks</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-3 mt-5">
-        {posts.map((post) => (
+        {posts.map((post: Post) => (
           <PostCard key={post._id} post={post} />
         ))}
       </div>

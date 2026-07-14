@@ -7,17 +7,7 @@ const geist = Geist({
 });
 
 const PostsLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div
-      className={`${geist.className} w-full grid md:grid-cols-[1fr_auto] items-start`}
-    >
-      {children}
-
-      <StickySidebar>
-        <PostSidebar />
-      </StickySidebar>
-    </div>
-  );
+  return <div className={`${geist.className} w-full`}>{children}</div>;
 };
 
 export default PostsLayout;

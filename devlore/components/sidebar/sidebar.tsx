@@ -43,6 +43,7 @@ const MainSidebar = () => {
                 alt="Image of the logo devlore"
                 width={200}
                 height={200}
+                loading="eager"
               />
             </Link>
           </SidebarMenuItem>
@@ -51,9 +52,7 @@ const MainSidebar = () => {
 
       <SidebarContent>
         <SidebarMenuItem
-          className={cn(
-            pathname.startsWith("/posts") && "border-r-2 border-primary",
-          )}
+          className={cn(pathname === "/posts" && "border-r-2 border-primary")}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
             <Link href={"/"}>Home</Link>

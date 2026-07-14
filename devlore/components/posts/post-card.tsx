@@ -95,7 +95,7 @@ const PostCard = ({ post }: { post: Post }) => {
       <CardFooter>
         <div className="flex-between w-full">
           <PostControls post={post} />
-          <BookmarkButton post={plainPost} />
+          <BookmarkButton id={plainPost._id} />
         </div>
       </CardFooter>
     </Card>
