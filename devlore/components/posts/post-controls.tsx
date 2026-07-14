@@ -3,32 +3,38 @@ import { TbSparkles2Filled } from "react-icons/tb";
 import { MessageSquareText } from "lucide-react";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import type { Post } from "@/types";
+import Link from "next/link";
 
-const PostControls = ({ isFeatured }: { isFeatured: boolean }) => {
+const PostControls = ({ post }: { post: Post }) => {
   return (
     <div>
-      <div className="flex items-center gap-x-2">
-        {isFeatured && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant={"ghost"} size={"icon-sm"}>
-                {" "}
-                <TbSparkles2Filled size={12} fill="orange" />{" "}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Featured Post</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-        <Button variant={"ghost"} size={"icon"}>
-          <FaHandsClapping />
-        </Button>
+      <Link href={`/posts/${post.slug}`}>
+        <div className="flex items-center gap-x-2">
+          {post.isFeatured && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant={"ghost"} size={"icon-sm"}>
+                  {" "}
+                  <TbSparkles2Filled size={12} fill="orange" />{" "}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Featured Post</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          <Button variant={"ghost"} size={"icon"}>
+            <FaHandsClapping />
+          </Button>
 
-        <Button variant={"ghost"} size={"icon"}>
-          <MessageSquareText />
-        </Button>
-      </div>
+          {post.comments.length > 0 && (
+            <Button variant={"ghost"} size={"icon"}>
+              <MessageSquareText />
+            </Button>
+          )}
+        </div>
+      </Link>
     </div>
   );
 };

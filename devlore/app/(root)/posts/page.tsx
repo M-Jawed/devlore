@@ -3,6 +3,11 @@ import PostCard from "@/components/posts/post-card";
 import type { Post } from "@/types";
 import Posts from "@/components/posts/posts";
 import PostFilters from "@/components/posts/post-filter";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Posts",
+};
 
 const PostsPage = async ({
   searchParams,
