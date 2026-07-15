@@ -10,9 +10,9 @@ const PostDetailsPage = async ({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  if (!post.success) notFound();
+  if (!post.success || !post.data) notFound();
 
-  return <PostDetails post={post.data} />;
+  return <PostDetails post={post.data!} />;
 };
 
 export default PostDetailsPage;

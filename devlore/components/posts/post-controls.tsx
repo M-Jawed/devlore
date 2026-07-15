@@ -24,13 +24,21 @@ const PostControls = ({ post }: { post: Post }) => {
               </TooltipContent>
             </Tooltip>
           )}
-          <Button variant={"ghost"} size={"icon"}>
-            <FaHandsClapping />
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="flex items-center gap-x-2"
+          >
+            <FaHandsClapping /> {post.likes}
           </Button>
 
           {post.comments.length > 0 && (
-            <Button variant={"ghost"} size={"icon"}>
-              <MessageSquareText />
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              className="flex items-center gap-x-2"
+            >
+              <MessageSquareText /> {post.comments.length}
             </Button>
           )}
         </div>

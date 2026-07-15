@@ -4,19 +4,22 @@ import z from "zod";
 
 export type User = {
   id: string;
-  name: string;
-  username: string;
-  email: string;
-  password?: string;
-  gender: string;
-  image: string;
-  country: string;
-  phone: number;
-  role: string;
-  bio: string;
-  emailVerified: boolean;
-  updatedAt: Date;
   createdAt: Date;
+  updatedAt: Date;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  image?: string | null;
+  username: string;
+  role: string | null | undefined;
+  bio?: string | null | undefined;
+  gender?: string | null | undefined;
+  country?: string | null | undefined;
+  phone?: number | null | undefined;
+  followers?: string[] | null | undefined;
+  following?: string[] | null | undefined;
+  likedPosts?: string[] | null | undefined;
+  displayUsername?: string | null | undefined;
 };
 
 export type Post = {
@@ -32,7 +35,16 @@ export type Post = {
   likes: number;
   isPublished: boolean;
   isFeatured: boolean;
-  comments: [];
+  comments: {
+    userId: string;
+    postId: string;
+    comment: string;
+    replies: {
+      userId: string;
+      postId: string;
+      comment: string;
+    }[];
+  }[];
   __v: number;
   createdAt: Date;
   updatedAt: Date;

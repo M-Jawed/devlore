@@ -46,6 +46,11 @@ export const auth = betterAuth({
         required: false,
         defaultValue: [],
       },
+      likedPosts: {
+        type: "string[]",
+        required: false,
+        defaultValue: [],
+      },
     },
   },
   emailAndPassword: {

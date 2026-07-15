@@ -1,13 +1,27 @@
 import { PopulatedPost } from "@/types";
-import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardFooter,
+} from "../ui/card";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { TbSparkles2Filled } from "react-icons/tb";
 import PostOwner from "./post-card-owner-info";
 import PostDetailsControls from "./post-details-controls";
 import Image from "next/image";
+import PostComments from "./comments/post-comments";
+import { auth } from "@/auth";
+import { headers } from "next/headers";
 
-const PostDetails = ({ post }: { post: PopulatedPost }) => {
+const PostDetails = async ({ post }: { post: PopulatedPost }) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const user = session?.user;
   return (
     <section className="w-full flex-center min-h-screen overflow-hidden">
       <Card className="w-[70%] ring-0 shadow-none">
@@ -51,6 +65,9 @@ const PostDetails = ({ post }: { post: PopulatedPost }) => {
             <p className="text-lg "> {post.body} </p>
           </div>
         </CardContent>
+        <CardFooter className="border-t ">
+          <PostComments user={user!} post={post!} />
+        </CardFooter>
       </Card>
     </section>
   );
