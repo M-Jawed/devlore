@@ -95,6 +95,7 @@ export const getRecentPosts = async () => {
 export const getPostBySlug = async (slug: string) => {
   const post = await Post.findOne({ slug: slug })
     .populate("userId", "image name ")
+    .populate("comments.userId", "name image username")
     .lean();
 
   if (!post)

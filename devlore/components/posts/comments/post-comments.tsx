@@ -5,6 +5,10 @@ import { PopulatedPost, User as UserType } from "@/types";
 import { User } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { postComment } from "@/lib/actions/comment.action";
+import { toast } from "sonner";
+import DisplayComments from "./display-comments";
 
 const PostComments = ({
   user,
@@ -16,7 +20,25 @@ const PostComments = ({
   const [comment, setComment] = useState<string>("");
 
   const handleSubmit = async () => {
-    console.log(comment);
+    if (!comment || comment.length === 0) {
+      toast.error("Comment cannot be empty");
+      return;
+    }
+
+    const res = await postComment({
+      postSlug: post.slug,
+      postId: post._id,
+      comment,
+    });
+
+    if (!res.success) {
+      toast.error(res.message);
+      console.log(res.message);
+      return;
+    }
+
+    setComment("");
+    toast.success(res.message);
   };
 
   const handleEnterKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -53,6 +75,19 @@ const PostComments = ({
         placeholder="What is your comment on this post?"
         className="mt-4 w-full resize-none h-30 overflow-y-auto"
       />
+      <Button
+        variant={"outline"}
+        type="button"
+        size={"sm"}
+        className="mt-5 mb-7"
+        onClick={handleSubmit}
+      >
+        Send
+      </Button>
+
+      <div className="mt-5 pt-10 border-t">
+        <DisplayComments post={post} />
+      </div>
     </div>
   );
 };

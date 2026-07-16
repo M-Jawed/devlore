@@ -50,6 +50,33 @@ export type Post = {
   updatedAt: Date;
 };
 
+export type Comment = {
+  _id?: string;
+  userId: string;
+  postId: string;
+  comment: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  replies?: Reply[];
+};
+
+export type Reply = {
+  _id?: string;
+  userId: string;
+  postId: string;
+  comment: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type PopulatedComment = Omit<Comment, "userId"> & {
+  userId: {
+    name: string;
+    image: string;
+    username: string;
+  };
+};
+
 export type PopulatedPost = Omit<Post, "userId"> & {
   userId: User;
 };

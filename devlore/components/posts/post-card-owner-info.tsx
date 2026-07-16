@@ -7,7 +7,7 @@ const PostOwner = ({ user, createdAt }: { user: User; createdAt?: Date }) => {
   return (
     <div className="flex items-center gap-x-2">
       <Avatar>
-        <AvatarImage src={user.image} alt="Image of a user" />
+        <AvatarImage src={user.image as string} alt="Image of a user" />
         <AvatarFallback> {initialName} </AvatarFallback>
       </Avatar>
       <div>

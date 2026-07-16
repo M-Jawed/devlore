@@ -6,7 +6,7 @@ const replySchema = new Schema(
     postId: { type: Schema.Types.ObjectId, ref: "Post", required: true },
     comment: { type: String, required: true },
   },
-  { timestamps: true },
+  { timestamps: true, _id: true },
 );
 
 export const commentSchema = new Schema(
@@ -28,7 +28,7 @@ export const commentSchema = new Schema(
     },
     replies: [replySchema],
   },
-  { timestamps: true },
+  { timestamps: true, _id: true },
 );
 
 const Comment =
