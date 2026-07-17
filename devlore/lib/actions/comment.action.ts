@@ -1,7 +1,7 @@
 "use server";
 
 import Comment from "@/models/Comment";
-import type { Comment as CommentType } from "@/types";
+import type { Comment as CommentType, Reply } from "@/types";
 import { formatError } from "../utils";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
@@ -148,13 +148,14 @@ export const postReply = async ({
 
     const userId = session?.user.id as string;
     const objectCommentId = new mongoose.Types.ObjectId(commentId);
+    const objectUserId = new mongoose.Types.ObjectId(userId);
 
     await Post.findOneAndUpdate(
       { _id: postId, "comments._id": objectCommentId },
       {
-        "comments.$.replies": {
-          $push: {
-            userId: userId,
+        $push: {
+          "comments.$.replies": {
+            userId: objectUserId,
             comment: reply,
           },
         },
@@ -165,5 +166,102 @@ export const postReply = async ({
     return { success: true, message: "Reply posted" };
   } catch (error) {
     return { success: false, message: formatError(error) };
+  }
+};
+
+export const handleReplyLike = async ({
+  postId,
+  commentId,
+  postSlug,
+  replyId,
+}: {
+  postId: string;
+  commentId: string;
+  postSlug: string;
+  replyId: string;
+}) => {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session)
+      return { success: false, message: "Session is null", isLiked: false };
+
+    const userId = session.user.id as string;
+    const objectCommentId = new mongoose.Types.ObjectId(commentId);
+    const objectUserId = new mongoose.Types.ObjectId(userId);
+    const objectReplyId = new mongoose.Types.ObjectId(replyId);
+    const post = await Post.findById(postId);
+
+    if (!post)
+      return {
+        success: false,
+        message: "No post with that id found",
+        isLiked: false,
+      };
+
+    const findComment = post.comments.find(
+      (item: CommentType) => item._id.toString() === commentId,
+    );
+
+    if (!findComment)
+      return {
+        success: false,
+        message: "No comment with that id found",
+        isLiked: false,
+      };
+
+    const findReply = findComment.replies.find(
+      (item: Reply) => item._id.toString() === replyId,
+    );
+
+    const isReplyLiked = findReply.likedBy.find(
+      (item: { userId: string }) => item.userId.toString() === userId,
+    );
+
+    if (isReplyLiked) {
+      await Post.findOneAndUpdate(
+        { _id: postId, "comments._id": objectCommentId },
+        {
+          $pull: {
+            "comments.$[comment].replies.$[reply].likedBy": {
+              userId: objectUserId,
+            },
+          },
+        },
+        {
+          arrayFilters: [
+            { "comment._id": objectCommentId },
+            { "reply._id": objectReplyId },
+          ],
+        },
+      );
+      revalidatePath(`/posts/${postSlug}`);
+
+      return { success: true, message: "Reply unliked", isLiked: false };
+    } else {
+      await Post.findOneAndUpdate(
+        { _id: postId, "comments._id": objectCommentId },
+        {
+          $push: {
+            "comments.$[comment].replies.$[reply].likedBy": {
+              userId: objectUserId,
+            },
+          },
+        },
+        {
+          arrayFilters: [
+            { "comment._id": objectCommentId },
+            { "reply._id": objectReplyId },
+          ],
+        },
+      );
+
+      revalidatePath(`/posts/${postSlug}`);
+      return { success: true, message: "Reply liked", isLiked: true };
+    }
+  } catch (error) {
+    return { success: false, message: formatError(error), isLiked: false };
   }
 };

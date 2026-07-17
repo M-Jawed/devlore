@@ -64,20 +64,32 @@ export type Comment = {
 };
 
 export type Reply = {
-  _id?: string;
+  _id: string;
   userId: string;
   postId: string;
   comment: string;
-  createdAt?: string;
-  updatedAt?: string;
+  likedBy: {
+    userId: string;
+  }[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
-export type PopulatedComment = Omit<Comment, "userId"> & {
+export type PopulatedReply = Omit<Reply, "userId"> & {
   userId: {
     name: string;
     image: string;
     username: string;
   };
+};
+
+export type PopulatedComment = Omit<Comment, "userId" | "replies"> & {
+  userId: {
+    name: string;
+    image: string;
+    username: string;
+  };
+  replies: PopulatedReply[];
 };
 
 export type PopulatedPost = Omit<Post, "userId"> & {

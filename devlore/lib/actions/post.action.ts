@@ -93,21 +93,26 @@ export const getRecentPosts = async () => {
 };
 
 export const getPostBySlug = async (slug: string) => {
-  const post = await Post.findOne({ slug: slug })
-    .populate("userId", "image name ")
-    .populate("comments.userId", "name image username")
-    .lean();
+  try {
+    const post = await Post.findOne({ slug: slug })
+      .populate("userId", "image name ")
+      .populate("comments.userId", "name image username")
+      .populate("comments.replies.userId", "name image username")
+      .lean();
 
-  if (!post)
+    if (!post)
+      return {
+        success: false,
+        message: "No post with that slug found",
+        data: {},
+      };
+
     return {
-      success: false,
-      message: "No post with that slug found",
-      data: {},
+      success: true,
+      message: "Post found",
+      data: convertToPlainJSON(post),
     };
-
-  return {
-    success: true,
-    message: "Post found",
-    data: convertToPlainJSON(post),
-  };
+  } catch (error) {
+    return { success: false, message: formatError(error), data: {} };
+  }
 };

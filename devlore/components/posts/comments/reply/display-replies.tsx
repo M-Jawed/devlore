@@ -5,14 +5,29 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { PopulatedComment } from "@/types";
+import ReplyCard from "./reply-card";
 
-const DisplayReplies = ({ comment }: { comment: PopulatedComment }) => {
+const DisplayReplies = ({
+  comment,
+  postId,
+  postSlug,
+}: {
+  comment: PopulatedComment;
+  postId: string;
+  postSlug: string;
+}) => {
   return (
-    <Card className="ring-0 border-b shadow-none rounded-none">
-      <CardHeader>{/* Comment owner avatar goes here */}</CardHeader>
-
-      <CardContent>{/* Body goes here */}</CardContent>
-    </Card>
+    <section>
+      {comment.replies?.map((item) => (
+        <ReplyCard
+          key={item._id}
+          reply={item}
+          commentId={comment._id}
+          postSlug={postSlug}
+          postId={postId}
+        />
+      ))}
+    </section>
   );
 };
 

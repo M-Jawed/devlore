@@ -43,7 +43,11 @@ const CommentCard = ({
       <CardFooter className="w-full">
         {comment.replies?.length! > 0 && (
           <div className="ml-6 pl-6 border-l-2 w-full">
-            <DisplayReplies comment={comment} />
+            <DisplayReplies
+              comment={comment}
+              postId={postId}
+              postSlug={postSlug}
+            />
           </div>
         )}
       </CardFooter>
