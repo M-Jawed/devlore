@@ -51,10 +51,13 @@ export type Post = {
 };
 
 export type Comment = {
-  _id?: string;
+  _id: string;
   userId: string;
   postId: string;
   comment: string;
+  likedBy: {
+    userId: string;
+  }[];
   createdAt?: Date;
   updatedAt?: Date;
   replies?: Reply[];

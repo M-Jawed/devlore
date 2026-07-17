@@ -7,7 +7,12 @@ const DisplayComments = ({ post }: { post: PopulatedPost }) => {
     <div>
       {post.comments.length > 0 ? (
         post.comments.map((comment, index) => (
-          <CommentCard key={index} comment={comment as any} />
+          <CommentCard
+            key={index}
+            comment={comment as any}
+            postSlug={post.slug}
+            postId={post._id}
+          />
         ))
       ) : (
         <h1>No comments. Be the first to comment!</h1>
