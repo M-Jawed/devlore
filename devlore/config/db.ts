@@ -1,11 +1,10 @@
 import "dotenv/config";
 import mongoose from "mongoose";
 
-const mongodbUrl = process.env.MONGODB_URL;
-
 let connected = false;
 
 const connectDB = async () => {
+  const mongodbUrl = process.env.MONGODB_URL;
   if (!mongodbUrl) throw new Error("Mongodb connection url not found");
   if (connected) return;
 

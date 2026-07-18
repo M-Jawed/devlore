@@ -6,7 +6,7 @@ import { MessageSquareText } from "lucide-react";
 import { Button } from "../ui/button";
 import BookmarkButton from "./add-to-bookmark";
 import { PopulatedPost } from "@/types";
-import { handleLikePost } from "@/lib/actions/user.action";
+import { handleLikePost } from "@/lib/actions/post.action";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -17,6 +17,7 @@ const PostDetailsControls = ({ post }: { post: PopulatedPost }) => {
 
     if (!res.success) {
       toast.error(res.message);
+      console.log(res.message);
       return;
     }
     setIsPostLiked(res.isLiked);

@@ -1,10 +1,15 @@
 "use server";
 
 import Post from "@/models/Post";
+import User from "@/models/User";
 import connectDB from "@/config/db";
 import { formatError } from "../utils";
 import { convertToPlainJSON } from "../utils";
 import type { PopulatedPost } from "@/types";
+import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
+import { headers } from "next/headers";
+import mongoose from "mongoose";
 
 export const getAllPosts = async ({
   featured,
@@ -114,5 +119,75 @@ export const getPostBySlug = async (slug: string) => {
     };
   } catch (error) {
     return { success: false, message: formatError(error), data: {} };
+  }
+};
+
+export const handleLikePost = async ({
+  postId,
+  postSlug = "",
+}: {
+  postId: string;
+  postSlug?: string;
+}) => {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session)
+      return { success: false, message: "Session is null", isLiked: false };
+
+    const userId = session?.user.id as string;
+
+    const posts = await Post.findById(postId).lean();
+    const isPostLikedByUser = (posts.likedBy ?? []).some(
+      (item: string) => item.toString() === userId,
+    );
+
+    if (isPostLikedByUser) {
+      await Post.findOneAndUpdate(
+        { _id: postId, likes: { $gt: 0 } },
+        {
+          $inc: { likes: -1 },
+          $pull: {
+            likedBy: userId,
+          },
+        },
+      );
+      await User.findByIdAndUpdate(userId, {
+        $pull: { likedPosts: postId },
+      });
+    } else {
+      await Post.findOneAndUpdate(
+        { _id: postId },
+        {
+          $inc: { likes: 1 },
+          $push: {
+            likedBy: userId,
+          },
+        },
+      );
+
+      const addPostToLikes = await User.findByIdAndUpdate(userId, {
+        $addToSet: { likedPosts: postId },
+      });
+
+      if (!addPostToLikes)
+        return {
+          success: false,
+          message: "Failed to like post",
+          isLiked: false,
+        };
+    }
+
+    revalidatePath(`/posts/${postSlug}`);
+    revalidatePath("/posts");
+    return {
+      success: true,
+      message: "Post Liked",
+      isLiked: !isPostLikedByUser,
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error), isLiked: false };
   }
 };

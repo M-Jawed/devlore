@@ -13,12 +13,13 @@ const CommentControls = ({
   comment,
   postSlug,
   postId,
+  isLiked,
 }: {
   comment: PopulatedComment;
   postSlug: string;
   postId: string;
+  isLiked: boolean;
 }) => {
-  const [liked, setLiked] = useState<boolean>(false);
   const [hideReply, setHideReply] = useState<boolean>(true);
   const [reply, setReply] = useState<string>("");
 
@@ -33,8 +34,6 @@ const CommentControls = ({
       toast.error(res.message);
       return;
     }
-
-    setLiked(res.isLiked);
   };
 
   const handleReply = async () => {
@@ -67,7 +66,7 @@ const CommentControls = ({
       <div className="w-full">
         <div className="flex items-center gap-x-2">
           <Button variant={"ghost"} type="button" onClick={handleLike}>
-            {liked ? <FaHandsClapping /> : <PiHandsClapping />}{" "}
+            {isLiked ? <FaHandsClapping /> : <PiHandsClapping />}{" "}
             {comment.likedBy.length}{" "}
           </Button>
           <Button

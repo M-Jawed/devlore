@@ -14,15 +14,15 @@ const ReplyControls = ({
   commentId,
   replyId,
   reply,
+  isLiked,
 }: {
   postSlug: string;
   postId: string;
   commentId: string;
   replyId: string;
   reply: PopulatedReply;
+  isLiked: boolean;
 }) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
   const handleLike = async () => {
     const res = await handleReplyLike({ postSlug, postId, commentId, replyId });
 
@@ -31,9 +31,6 @@ const ReplyControls = ({
       console.error(res.message);
       return;
     }
-
-    toast.success(res.message);
-    setIsLiked(res.isLiked);
   };
   return (
     <div className="w-full">

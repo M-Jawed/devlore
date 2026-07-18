@@ -86,7 +86,7 @@ const PostComments = ({
       </Button>
 
       <div className="mt-5 pt-10 border-t">
-        <DisplayComments post={post} />
+        <DisplayComments userId={user.id} post={post} />
       </div>
     </div>
   );

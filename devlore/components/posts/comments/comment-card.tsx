@@ -16,10 +16,12 @@ const CommentCard = ({
   comment,
   postSlug,
   postId,
+  isLiked,
 }: {
   comment: PopulatedComment;
   postSlug: string;
   postId: string;
+  isLiked: boolean;
 }) => {
   return (
     <Card className="ring-0 shadow-none rounded-none border-b">
@@ -37,6 +39,7 @@ const CommentCard = ({
           comment={comment}
           postSlug={postSlug}
           postId={postId}
+          isLiked={isLiked}
         />
       </CardContent>
 

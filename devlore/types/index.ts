@@ -35,16 +35,7 @@ export type Post = {
   likes: number;
   isPublished: boolean;
   isFeatured: boolean;
-  comments: {
-    userId: string;
-    postId: string;
-    comment: string;
-    replies: {
-      userId: string;
-      postId: string;
-      comment: string;
-    }[];
-  }[];
+  comments: Comment[];
   __v: number;
   createdAt: Date;
   updatedAt: Date;

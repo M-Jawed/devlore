@@ -13,11 +13,13 @@ const ReplyCard = ({
   commentId,
   postSlug,
   postId,
+  isLiked,
 }: {
   reply: PopulatedReply;
   commentId: string;
   postSlug: string;
   postId: string;
+  isLiked: boolean;
 }) => {
   return (
     <Card className="ring-0 border-b shadow-none rounded-none">
@@ -35,6 +37,7 @@ const ReplyCard = ({
 
       <CardFooter>
         <ReplyControls
+          isLiked={isLiked}
           replyId={reply._id}
           commentId={commentId}
           postSlug={postSlug}
