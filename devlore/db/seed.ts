@@ -37,7 +37,7 @@ const seed = async () => {
   console.log("Admin status", admin.status);
   console.log("Admin result", await admin.json());
   console.log("User result", await user.json());
-  console.log("seeded succesfully");
+  console.log("seeded successfully");
 };
 
 const seedPosts = async () => {
@@ -46,7 +46,7 @@ const seedPosts = async () => {
   Post.deleteMany();
   Post.insertMany(posts);
 
-  console.log("seeded post collection successfuly");
+  console.log("seeded post collection successfully");
   return;
 };
 
