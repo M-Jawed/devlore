@@ -3,13 +3,24 @@ import RecentPostCard from "./recent-post-card";
 import { recommendedTopics } from "@/constant";
 import { Button } from "../ui/button";
 import { Plus, User } from "lucide-react";
-import { getRecentUsers } from "@/lib/actions/user.action";
+import { getRecentUsers, getUserById } from "@/lib/actions/user.action";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import type { User as UserType } from "@/types";
+import RecommendedTopics from "./recommended-topics";
+import { auth } from "@/auth";
+import { headers } from "next/headers";
+import RecommendedUsers from "./recommended-users";
 
 const PostSidebar = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const userId = session?.user.id as string;
   const posts = await getRecentPosts();
   const users = await getRecentUsers();
+
+  const userById = await getUserById(userId);
   return (
     <div className="w-full">
       <div>
@@ -25,47 +36,14 @@ const PostSidebar = async () => {
         </div>
 
         <div className="mt-6">
-          <h1 className="font-medium text-lg tracking-wide">
-            Recommended topics
-          </h1>
-          <div className="mt-3 flex flex-wrap w-70 gap-2">
-            {recommendedTopics.map((item) => (
-              <Button key={item} variant={"outline"} size={"sm"}>
-                {" "}
-                {item} <Plus size={13} />{" "}
-              </Button>
-            ))}
-          </div>
+          <RecommendedTopics
+            recommendedTopics={recommendedTopics}
+            user={userById}
+          />
         </div>
 
         <div className="mt-5">
-          <h1 className="font-medium text-lg tracking-wide">Who to follow</h1>
-          <div className="space-y-4 mt-5">
-            {users.data.length === 0 ? (
-              <h1>No users found</h1>
-            ) : (
-              users.data.map((user: UserType) => (
-                <div key={user.username} className="flex-between">
-                  <div className="flex items-center gap-x-2">
-                    <Avatar>
-                      <AvatarImage src={user.image} />
-                      <AvatarFallback>
-                        <User />{" "}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm"> {user.name} </span>
-                  </div>
-                  <Button
-                    variant={"outline"}
-                    size={"xs"}
-                    className="tracking-wide"
-                  >
-                    Follow <Plus />{" "}
-                  </Button>
-                </div>
-              ))
-            )}
-          </div>
+          <RecommendedUsers users={users.data} currentUser={userById} />
         </div>
       </div>
     </div>

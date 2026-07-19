@@ -10,17 +10,20 @@ import { handleLikePost } from "@/lib/actions/post.action";
 import { toast } from "sonner";
 import { useState } from "react";
 
-const PostDetailsControls = ({ post }: { post: PopulatedPost }) => {
-  const [isPostLiked, setIsPostLiked] = useState<boolean>(false);
+const PostDetailsControls = ({
+  post,
+  isLiked,
+}: {
+  post: PopulatedPost;
+  isLiked: string | boolean;
+}) => {
   const handleLike = async () => {
     const res = await handleLikePost({ postId: post._id, postSlug: post.slug });
 
     if (!res.success) {
-      toast.error(res.message);
-      console.log(res.message);
+      toast.error("Something went wrong. please try again");
       return;
     }
-    setIsPostLiked(res.isLiked);
   };
   return (
     <div className="w-full flex-between border-t border-b py-2">
@@ -32,7 +35,7 @@ const PostDetailsControls = ({ post }: { post: PopulatedPost }) => {
             size={"icon"}
             className="flex items-center gap-x-2 cursor-pointer"
           >
-            {isPostLiked ? (
+            {isLiked ? (
               <FaHandsClapping size={7} />
             ) : (
               <PiHandsClapping size={7} />

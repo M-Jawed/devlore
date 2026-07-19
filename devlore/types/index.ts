@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import z from "zod";
 
 export type User = {
-  id: string;
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
   email: string;
@@ -19,6 +19,7 @@ export type User = {
   followers?: string[] | null | undefined;
   following?: string[] | null | undefined;
   likedPosts?: string[] | null | undefined;
+  topicsInterestedIn?: string[] | undefined | null;
   displayUsername?: string | null | undefined;
 };
 
@@ -36,6 +37,7 @@ export type Post = {
   isPublished: boolean;
   isFeatured: boolean;
   comments: Comment[];
+  likedBy?: [string];
   __v: number;
   createdAt: Date;
   updatedAt: Date;

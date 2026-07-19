@@ -1,7 +1,8 @@
 "use client";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { PopulatedPost, User as UserType } from "@/types";
+import { PopulatedPost } from "@/types";
+import type { User as UserType } from "better-auth";
 import { User } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";

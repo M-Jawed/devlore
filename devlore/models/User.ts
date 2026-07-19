@@ -50,6 +50,7 @@ const userSchema = new Schema(
         ref: "Post",
       },
     ],
+    topicsInterestedIn: [{ type: String }],
   },
   { timestamps: true, strict: false },
 );
