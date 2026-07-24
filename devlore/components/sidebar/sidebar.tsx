@@ -71,9 +71,7 @@ const MainSidebar = () => {
         </SidebarMenuItem>
 
         <SidebarMenuItem
-          className={cn(
-            pathname.startsWith("/profile") && "border-r-2 border-primary",
-          )}
+          className={cn(pathname === "/profile" && "border-r-2 border-primary")}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
             <Link href={"/profile"}>Profile</Link>
@@ -90,7 +88,7 @@ const MainSidebar = () => {
 
         <SidebarMenuItem
           className={cn(
-            pathname.startsWith("/bookmarks") && "border-r-2 border-primary",
+            pathname === "/bookmarks" && "border-r-2 border-primary",
           )}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
