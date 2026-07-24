@@ -1,4 +1,7 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { auth } from "@/auth";
 import { toNextJsHandler } from "better-auth/next-js";
 
-export const {GET, POST} = toNextJsHandler(auth)
+export const { GET, POST } = toNextJsHandler(auth);

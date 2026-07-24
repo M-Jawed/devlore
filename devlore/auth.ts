@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 import { username } from "better-auth/plugins";
 import { nanoid } from "nanoid";
 
-const client = new MongoClient(process.env.MONGODB_URL!);
+const client = new MongoClient(process.env.MONGODB_URL as string);
 
 export const auth = betterAuth({
   plugins: [username()],
