@@ -1,4 +1,4 @@
-import { User } from "@/models/User";
+import User from "@/models/User";
 import connectDB from "@/config/db";
 import { users } from "@/data/sample-data";
 import mongoose from "mongoose";
@@ -12,7 +12,7 @@ const seed = async () => {
 
   await User.insertMany(users);
 
-  console.log("Database seeded succesfully");
+  console.log("Database seeded successfully");
 
   await mongoose.disconnect();
 };

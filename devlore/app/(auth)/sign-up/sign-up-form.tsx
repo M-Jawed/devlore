@@ -40,7 +40,6 @@ const SignUpForm = () => {
     }
 
     form.reset();
-    router.push("/");
     toast.success(res.message);
   };
 

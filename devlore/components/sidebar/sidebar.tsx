@@ -20,6 +20,8 @@ import { LuCircleUser } from "react-icons/lu";
 import { FaUserCircle } from "react-icons/fa";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
 import { useTheme } from "next-themes";
+import { useSession } from "@/lib/auth-client";
+import { useEffect } from "react";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -28,6 +30,7 @@ const geist = Geist({
 const MainSidebar = () => {
   const { theme } = useTheme();
   const pathname = usePathname();
+
   return (
     <Sidebar className={`w-46`}>
       <SidebarHeader>

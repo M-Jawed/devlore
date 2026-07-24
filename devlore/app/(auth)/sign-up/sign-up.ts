@@ -12,12 +12,12 @@ export const signUp = async ({
       username: data.username,
       email: data.email,
       password: data.password,
-      callbackURL: "/",
+      callbackURL: "/posts",
     });
 
     if (error) return { success: true, message: formatError(error) };
 
-    return { success: true, message: "Signed up succesfully" };
+    return { success: true, message: "Signed up successfully" };
   } catch (error) {
     return {
       success: false,

@@ -20,7 +20,13 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import PostControls from "./post-controls";
 
-const PostCard = ({ post, currentUser }: { post: Post; currentUser: User }) => {
+const PostCard = ({
+  post,
+  currentUser,
+}: {
+  post: Post;
+  currentUser?: User;
+}) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -60,7 +66,7 @@ const PostCard = ({ post, currentUser }: { post: Post; currentUser: User }) => {
 
   const plainPost = convertToPlainJSON(post);
 
-  const isFollowing = currentUser.following?.includes(user._id) || false;
+  const isFollowing = currentUser!.following?.includes(user._id) || false;
 
   return (
     <Card>

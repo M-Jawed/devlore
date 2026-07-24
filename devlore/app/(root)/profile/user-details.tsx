@@ -21,7 +21,7 @@ const UserDetails = ({ user }: { user: User }) => {
           <div className="absolute inset-0 top-2 left-24 transition-opacity z-20 ">
             <ProfileAvatarDropdown
               userImage={user.image as string}
-              userId={user.id as string}
+              userId={user._id as string}
             />
           </div>
           <Avatar className="w-20 h-20">

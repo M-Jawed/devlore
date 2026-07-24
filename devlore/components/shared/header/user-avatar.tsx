@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { signOutAction } from "@/lib/actions/user.action";
 import { User, DoorOpen, BookMarked } from "lucide-react";
 import Link from "next/link";
 
@@ -29,15 +28,11 @@ const UserAvatar = ({
   userImage: string;
 }) => {
   const initialName = session?.user.name.charAt(0);
+  const router = useRouter();
 
   const handleSignOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: async () => {
-          await signOutAction();
-        },
-      },
-    });
+    await authClient.signOut();
+    window.location.href = "/";
   };
   return (
     <DropdownMenu>

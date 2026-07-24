@@ -11,7 +11,10 @@ const RecentPostCard = ({ post }: { post: PopulatedPost }) => {
       <div className="mt-5">
         <div className="flex gap-x-2 space-y-2">
           <Avatar className="w-6 h-6">
-            <AvatarImage src={post.userId.image} alt="Image of a user" />
+            <AvatarImage
+              src={post.userId.image as string}
+              alt="Image of a user"
+            />
             <AvatarFallback>
               {" "}
               <User />{" "}

@@ -12,12 +12,12 @@ export const signIn = async ({
     const { error } = await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/",
+      callbackURL: "/posts",
     });
 
     if (error) return { success: false, message: error.message };
 
-    return { success: true, message: "Signed in succesfully" };
+    return { success: true, message: "Signed in successfully" };
   } catch (error) {
     return {
       success: false,
@@ -29,7 +29,7 @@ export const signIn = async ({
 export const signInWithGoogle = async () => {
   const data = await authClient.signIn.social({
     provider: "google",
-    callbackURL: "/",
+    callbackURL: "/posts",
   });
 
   if (data.error) {
