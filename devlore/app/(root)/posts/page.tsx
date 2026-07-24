@@ -15,10 +15,16 @@ export const metadata: Metadata = {
 const PostsPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ feed: string }>;
+  searchParams: Promise<{ feed: string; search: string }>;
 }) => {
-  const { feed } = await searchParams;
-  const query = feed ? { featured: true } : {};
+  const { feed, search } = await searchParams;
+  const query = feed
+    ? { featured: true }
+    : search
+      ? {
+          search,
+        }
+      : {};
   const posts = await getAllPosts(query);
 
   const session = await auth.api.getSession({
@@ -28,7 +34,7 @@ const PostsPage = async ({
   const currentUser = await getUserById(session?.user.id as string);
 
   return (
-    <section className=" w-full grid md:grid-cols-[1fr_auto] items-start mt-10 min-h-screen px-6 overflow-hidden pb-5">
+    <section className=" w-full grid md:grid-cols-[1fr_auto] items-start mt-10 min-h-screen px-6 overflow-hidden pb-5 max-sm:px-0">
       <div className="w-full">
         <PostFilters />
         <Posts currentUser={currentUser} posts={posts.data} />

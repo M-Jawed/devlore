@@ -14,7 +14,12 @@ const Posts = ({
 }) => {
   const { open } = useSidebar();
   return (
-    <div className={cn("w-full gap-x-3 mt-5 px-7 space-y-7", !open && "pl-30")}>
+    <div
+      className={cn(
+        "w-full gap-x-3 mt-5 px-7 max-sm:px-2 space-y-7",
+        !open && "pl-30",
+      )}
+    >
       {posts!.length > 0 ? (
         posts?.map((post: Post) => (
           <PostCard key={post._id} post={post} currentUser={currentUser} />

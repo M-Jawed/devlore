@@ -25,8 +25,8 @@ const Bookmarks = async () => {
 
   return (
     <section className="px-5 mt-10">
-      <h1 className="text-3xl font-bold ">Your Bookmarks</h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-3 mt-5">
+      <h1 className="text-3xl font-bold text-center">Bookmarks</h1>
+      <div className="grid w-[60%] gap-x-3 mt-5 space-y-6 mx-auto max-lg:w-[80%] max-md:w-full">
         {posts.map((post: Post) => (
           <PostCard key={post._id} post={post} />
         ))}

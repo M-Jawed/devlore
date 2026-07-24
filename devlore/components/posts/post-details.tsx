@@ -36,7 +36,7 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
   const isFollowing = userFromDB.following?.includes(post.userId._id);
   return (
     <section className="w-full flex-center min-h-screen overflow-hidden">
-      <Card className="w-[70%] ring-0 shadow-none">
+      <Card className="w-[70%] max-sm:w-full ring-0 shadow-none">
         {post.isFeatured && (
           <Tooltip>
             <TooltipTrigger asChild>

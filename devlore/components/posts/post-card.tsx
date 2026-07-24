@@ -1,15 +1,7 @@
 "use client";
 
 import type { Post, User } from "@/types";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "../ui/card";
-import { Badge } from "../ui/badge";
+import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { getUserById } from "@/lib/actions/user.action";
@@ -66,7 +58,9 @@ const PostCard = ({
 
   const plainPost = convertToPlainJSON(post);
 
-  const isFollowing = currentUser!.following?.includes(user._id) || false;
+  const isFollowing = !currentUser
+    ? false
+    : (currentUser.following ?? []).includes(user._id);
 
   return (
     <Card>
@@ -81,11 +75,11 @@ const PostCard = ({
         <CardContent>
           <div className="grid grid-cols-[1fr_auto]">
             <div>
-              <h1 className="font-bold text-2xl tracking-wide mt-4">
+              <h1 className="font-bold text-2xl tracking-wide mt-4 max-sm:text-md">
                 {" "}
                 {post.title}{" "}
               </h1>
-              <p className="text-lg text-muted-foreground truncate">
+              <p className="text-lg max-sm:text-sm text-muted-foreground truncate">
                 {" "}
                 {post.description}{" "}
               </p>
@@ -97,7 +91,7 @@ const PostCard = ({
                   alt={`Image or banner of the post ${post.title}`}
                   width={200}
                   height={200}
-                  className="rounded-lg"
+                  className="rounded-lg max-sm:hidden"
                 />
               </div>
             </div>

@@ -43,7 +43,7 @@ const PostOwner = ({
           {moment(createdAt, "YYYYMMDD").fromNow()}{" "}
         </span>
       </div>
-      <div>
+      <div className="max-sm:hidden">
         <Button
           variant={"ghost"}
           disabled={true}

@@ -13,11 +13,21 @@ import mongoose from "mongoose";
 
 export const getAllPosts = async ({
   featured,
-}: { featured?: boolean } = {}) => {
+  search,
+}: { featured?: boolean; search?: string } = {}) => {
   try {
     await connectDB();
 
-    const query = featured ? { isFeatured: true } : {};
+    const query = featured
+      ? { isFeatured: true }
+      : search
+        ? {
+            title: {
+              $regex: search,
+              $options: "i",
+            },
+          }
+        : {};
     const posts = await Post.find(query).lean().sort({ createdAt: -1 });
 
     if (!posts || posts.length === 0) {
