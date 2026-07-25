@@ -68,25 +68,25 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  databaseHooks: {
-    user: {
-      create: {
-        before: async (user) => {
-          const baseUsername = user.name
-            .toLowerCase()
-            .replace(/\s+/g, "_")
-            .replace(/[^a-z0-9_]/g, "");
+  // databaseHooks: {
+  //   user: {
+  //     create: {
+  //       before: async (user) => {
+  //         const baseUsername = user.name
+  //           .toLowerCase()
+  //           .replace(/\s+/g, "_")
+  //           .replace(/[^a-z0-9_]/g, "");
 
-          const username = `${baseUsername}_${nanoid(4)}`;
+  //         const username = `${baseUsername}_${nanoid(4)}`;
 
-          return {
-            data: {
-              ...user,
-              username,
-            },
-          };
-        },
-      },
-    },
-  },
+  //         return {
+  //           data: {
+  //             ...user,
+  //             username,
+  //           },
+  //         };
+  //       },
+  //     },
+  //   },
+  // },
 });

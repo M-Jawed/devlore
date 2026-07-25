@@ -55,7 +55,11 @@ const MainSidebar = () => {
 
       <SidebarContent>
         <SidebarMenuItem
-          className={cn(pathname === "/posts" && "border-r-2 border-primary")}
+          className={cn(
+            "text-muted-foreground",
+            pathname === "/posts" &&
+              "border-r-2 border-primary font-medium text-primary",
+          )}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
             <Link href={"/"}>Home</Link>
@@ -71,14 +75,18 @@ const MainSidebar = () => {
         </SidebarMenuItem>
 
         <SidebarMenuItem
-          className={cn(pathname === "/profile" && "border-r-2 border-primary")}
+          className={cn(
+            "text-muted-foreground",
+            pathname.startsWith("/profile") &&
+              "border-r-2 border-primary font-medium text-primary",
+          )}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
             <Link href={"/profile"}>Profile</Link>
           </SidebarMenuButton>
           <SidebarMenuBadge>
             {" "}
-            {pathname === "/profile" ? (
+            {pathname.startsWith("/profile") ? (
               <FaUserCircle size={18} />
             ) : (
               <LuCircleUser size={18} />
@@ -88,7 +96,9 @@ const MainSidebar = () => {
 
         <SidebarMenuItem
           className={cn(
-            pathname === "/bookmarks" && "border-r-2 border-primary",
+            "text-muted-foreground",
+            pathname === "/bookmarks" &&
+              "border-r-2 border-primary font-medium text-primary",
           )}
         >
           <SidebarMenuButton asChild className="text-lg px-3">

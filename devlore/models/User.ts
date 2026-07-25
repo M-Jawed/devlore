@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { unique } from "next/dist/build/utils";
 
 const userSchema = new Schema(
   {
@@ -15,11 +16,13 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
 
     username: {
       type: String,
       required: true,
+      unique: true,
     },
 
     image: String,

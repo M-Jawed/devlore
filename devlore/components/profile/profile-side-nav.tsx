@@ -6,33 +6,39 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const ProfileSideNav = () => {
+const ProfileNavigation = () => {
   const pathname = usePathname();
   return (
-    <div className="w-60 px-4">
-      <div className="flex flex-col items-center space-y-3">
+    <div className="w-[60%] mx-auto border-b">
+      <div>
         <Button
-          className="flex items-center gap-x-2 w-40"
-          variant={pathname === "/profile" ? "default" : "outline"}
+          variant={"link"}
+          size={"sm"}
+          asChild
+          className={cn(
+            "font-medium rounded-none border-0",
+            pathname === "/profile" &&
+              "font-bold border-b-2 border-black tracking-wide text-lg pb-1",
+          )}
         >
-          <Link href={"/profile"} className={cn("w-full flex-between")}>
-            Profile
-            <User />
-          </Link>
+          <Link href={"/profile"}>Profile</Link>
         </Button>
 
         <Button
-          className="flex items-center gap-x-2 w-40"
-          variant={pathname === "/profile/posts" ? "default" : "outline"}
+          variant={"link"}
+          size={"sm"}
+          asChild
+          className={cn(
+            "font-medium rounded-none border-0",
+            pathname === "/profile/posts" &&
+              "font-black border-b-2 border-black tracking-wide text-lg pb-1",
+          )}
         >
-          <Link href={"/profile/posts"} className={cn("w-full flex-between")}>
-            Your Posts
-            <Book />
-          </Link>
+          <Link href={"/profile/posts"}>Your posts</Link>
         </Button>
       </div>
     </div>
   );
 };
 
-export default ProfileSideNav;
+export default ProfileNavigation;

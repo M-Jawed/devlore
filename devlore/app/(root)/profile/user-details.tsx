@@ -30,16 +30,10 @@ const UserDetails = ({ user }: { user: User }) => {
           </Avatar>
         </div>
       </div>
-      <Card>
+      <Card className="ring-0 shadow-none">
         <CardHeader className="text-center flex-center">
-          <div className="flex-between w-120">
-            <div>
-              <CardTitle>Details</CardTitle>
-              <CardDescription>Your Details</CardDescription>
-            </div>
-            <div>
-              <EditUserDialog user={user} />
-            </div>
+          <div>
+            <EditUserDialog user={user} />
           </div>
         </CardHeader>
         <CardContent>
@@ -62,7 +56,7 @@ const UserDetails = ({ user }: { user: User }) => {
             </div>
             <div className="flex-between w-[60%] px-3 border-b pb-2">
               <span>Gender: </span>
-              {user.gender}
+              {user.gender || "Not specified"}
             </div>
           </div>
         </CardContent>

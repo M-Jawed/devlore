@@ -15,7 +15,9 @@ export const signUp = async ({
       callbackURL: "/posts",
     });
 
-    if (error) return { success: true, message: formatError(error) };
+    if (error) {
+      return { success: false, message: formatError(error) };
+    }
 
     return { success: true, message: "Signed up successfully" };
   } catch (error) {
