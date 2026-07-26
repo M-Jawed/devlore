@@ -40,6 +40,7 @@ const SignUpForm = () => {
     }
 
     form.reset();
+    router.push("/posts");
     toast.success(res.message);
   };
 
@@ -49,10 +50,12 @@ const SignUpForm = () => {
     if (!res.success) {
       toast.error(res.message);
       setLoading(false);
+
       return;
     }
     setLoading(false);
   };
+
   return (
     <form
       method="POST"

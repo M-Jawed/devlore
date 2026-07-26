@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const ProfileNavigation = () => {
   const pathname = usePathname();
   return (
-    <div className="w-[60%] mx-auto border-b">
+    <div className="w-[60%] mx-auto border-b max-sm:w-full">
       <div>
         <Button
           variant={"link"}
@@ -35,6 +35,19 @@ const ProfileNavigation = () => {
           )}
         >
           <Link href={"/profile/posts"}>Your posts</Link>
+        </Button>
+
+        <Button
+          variant={"link"}
+          size={"sm"}
+          asChild
+          className={cn(
+            "font-medium rounded-none border-0",
+            pathname === "/profile/followings" &&
+              "font-black border-b-2 border-black tracking-wide text-lg pb-1",
+          )}
+        >
+          <Link href={"/profile/followings"}>Followings</Link>
         </Button>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { Timestamp } from "mongodb";
 import mongoose, { Schema } from "mongoose";
 import { unique } from "next/dist/build/utils";
 
@@ -33,6 +34,7 @@ const userSchema = new Schema(
     },
 
     gender: String,
+    bio: String,
 
     followers: [
       {
@@ -43,8 +45,8 @@ const userSchema = new Schema(
 
     following: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "User",
+        userId: { type: Schema.Types.ObjectId, ref: "User" },
+        followedAt: { type: Date, default: Date.now },
       },
     ],
     likedPosts: [

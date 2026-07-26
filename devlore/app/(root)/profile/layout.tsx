@@ -1,7 +1,12 @@
 import ProfileNavigation from "@/components/profile/profile-side-nav";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
-  return <section className="mt-10">{children}</section>;
+  return (
+    <section className="mt-10">
+      <ProfileNavigation />
+      {children}
+    </section>
+  );
 };
 
 export default ProfileLayout;

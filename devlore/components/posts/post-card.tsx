@@ -60,7 +60,10 @@ const PostCard = ({
 
   const isFollowing = !currentUser
     ? false
-    : (currentUser.following ?? []).includes(user._id);
+    : (currentUser.following ?? []).some(
+        (item: { userId: string; followedAt: Date }) =>
+          item?.userId?.toString() === user._id.toString(),
+      );
 
   return (
     <Card>

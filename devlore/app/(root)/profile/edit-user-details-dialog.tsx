@@ -37,14 +37,18 @@ import {
 import { updateUser } from "@/lib/actions/user.action";
 import { toast } from "sonner";
 import { getSession } from "@/lib/auth-client";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 const EditUserDialog = ({ user }: { user: User }) => {
+  const [open, setOpen] = useState<boolean>(false);
   const form = useForm<z.infer<typeof updateUserSchema>>({
     defaultValues: {
       name: user.name || "",
       username: user.username || "",
       gender: user.gender || "",
       email: user.email || "",
+      bio: user.bio || "",
     },
     resolver: zodResolver(updateUserSchema),
   });
@@ -59,10 +63,11 @@ const EditUserDialog = ({ user }: { user: User }) => {
     }
 
     await getSession();
+    setOpen(false);
     toast.success(res.message);
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant={"outline"} size={"sm"}>
           Edit <SquarePen />
@@ -161,13 +166,42 @@ const EditUserDialog = ({ user }: { user: User }) => {
               </Field>
             )}
           />
+
+          <Controller
+            control={form.control}
+            name="bio"
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor="bio"> Bio </FieldLabel>
+                <Textarea
+                  id={field.name}
+                  placeholder="Enter your bio"
+                  className="resize-none h-30"
+                  {...field}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant={"ghost"} type="button" size={"sm"}>
+              <Button
+                variant={"ghost"}
+                type="button"
+                size={"sm"}
+                disabled={form.formState.isSubmitting}
+              >
                 Cancel
               </Button>
             </DialogClose>
-            <Button variant={"outline"} type="submit" size={"sm"}>
+            <Button
+              variant={"outline"}
+              type="submit"
+              size={"sm"}
+              disabled={form.formState.isSubmitting}
+            >
               {form.formState.isSubmitting ? (
                 <span className="flex items-center gap-x-2">
                   Updating... <Spinner />

@@ -52,6 +52,7 @@ export const updateUser = async (userData: {
   username: string;
   email: string;
   gender: string;
+  bio?: string;
 }) => {
   try {
     await connectDB();
@@ -169,7 +170,10 @@ export const handleUserFollow = async ({
     if (isUserFollowing) {
       await User.findByIdAndUpdate(userId, {
         $pull: {
-          following: followedUserId,
+          following: {
+            userId: followedUserId,
+            followedAt: new Date(),
+          },
         },
       });
 
@@ -181,7 +185,10 @@ export const handleUserFollow = async ({
     } else {
       await User.findByIdAndUpdate(userId, {
         $push: {
-          following: followedUserId,
+          following: {
+            userId: followedUserId,
+            followedAt: new Date(),
+          },
         },
       });
 
@@ -203,5 +210,27 @@ export const handleUserFollow = async ({
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
+  }
+};
+
+export const getAllUserFollowings = async () => {
+  try {
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session)
+      return { success: false, message: "Session is null", data: [] };
+
+    const userId = session?.user?.id as string;
+
+    const followings = await User.findById(userId).populate(
+      "following",
+      "name username image",
+    );
+  } catch (error) {
+    return { success: false, message: formatError(error), data: [] };
   }
 };

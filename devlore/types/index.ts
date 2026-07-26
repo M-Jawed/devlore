@@ -17,7 +17,13 @@ export type User = {
   country?: string | null | undefined;
   phone?: number | null | undefined;
   followers?: string[] | null | undefined;
-  following?: string[] | null | undefined;
+  following?:
+    | {
+        userId: string;
+        followedAt: Date;
+      }[]
+    | null
+    | undefined;
   likedPosts?: string[] | null | undefined;
   topicsInterestedIn?: string[] | undefined | null;
   displayUsername?: string | null | undefined;

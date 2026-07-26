@@ -25,7 +25,7 @@ const SignUpPage = async () => {
     headers: await headers(),
   });
 
-  if (session) redirect("/");
+  if (session) redirect("/posts");
   return (
     <section className={`${geist.className} w-full min-h-screen flex-center`}>
       <Card className="w-[40%]">

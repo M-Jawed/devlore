@@ -201,3 +201,24 @@ export const handleLikePost = async ({
     return { success: false, message: formatError(error), isLiked: false };
   }
 };
+
+export const findUserPosts = async () => {
+  try {
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session)
+      return { success: false, message: "Session is null", data: [] };
+
+    const userId = session?.user?.id as string;
+
+    const posts = await Post.find({ userId }).lean();
+
+    return { success: true, message: "Posts found", data: posts };
+  } catch (error) {
+    return { success: false, message: formatError(error), data: [] };
+  }
+};
