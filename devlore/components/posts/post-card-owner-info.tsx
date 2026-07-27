@@ -12,11 +12,13 @@ const PostOwner = ({
   createdAt,
   isFollowing,
   postSlug,
+  type = "card",
 }: {
   user: User;
   createdAt?: Date;
   isFollowing: boolean;
   postSlug?: string;
+  type?: "card" | "details";
 }) => {
   const initialName = user.name.charAt(0).toUpperCase();
 
@@ -45,8 +47,8 @@ const PostOwner = ({
       </div>
       <div className="max-sm:hidden">
         <Button
-          variant={"ghost"}
-          disabled={true}
+          variant={type === "card" ? "ghost" : "outline"}
+          disabled={type === "card"}
           type="button"
           size={"sm"}
           onClick={handleFollow}

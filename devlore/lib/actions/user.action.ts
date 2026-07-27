@@ -8,6 +8,7 @@ import { formatError } from "../utils";
 import connectDB from "@/config/db";
 import { convertToPlainJSON } from "../utils";
 import Post from "@/models/Post";
+import mongoose from "mongoose";
 
 export const getUserById = async (id: string) => {
   try {
@@ -164,7 +165,8 @@ export const handleUserFollow = async ({
       return { success: false, message: "Followed user not found" };
 
     const isUserFollowing = (currentUser.following ?? []).some(
-      (item: string) => item.toString() === followedUserId,
+      (item: { userId: string; followedAt: Date }) =>
+        item.userId.toString() === followedUserId.toString(),
     );
 
     if (isUserFollowing) {
@@ -172,7 +174,6 @@ export const handleUserFollow = async ({
         $pull: {
           following: {
             userId: followedUserId,
-            followedAt: new Date(),
           },
         },
       });
@@ -226,10 +227,15 @@ export const getAllUserFollowings = async () => {
 
     const userId = session?.user?.id as string;
 
-    const followings = await User.findById(userId).populate(
-      "following",
-      "name username image",
-    );
+    const followings = await User.findById(userId)
+      .populate("following.userId", "name username image")
+      .lean();
+
+    return {
+      success: true,
+      message: "Followings found",
+      data: convertToPlainJSON(followings.following),
+    };
   } catch (error) {
     return { success: false, message: formatError(error), data: [] };
   }

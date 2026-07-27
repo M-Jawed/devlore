@@ -3,10 +3,10 @@ import { TbSparkles2Filled } from "react-icons/tb";
 import { MessageSquareText } from "lucide-react";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import type { Post } from "@/types";
+import type { PopulatedPost, Post } from "@/types";
 import Link from "next/link";
 
-const PostControls = ({ post }: { post: Post }) => {
+const PostControls = ({ post }: { post: PopulatedPost }) => {
   return (
     <div>
       <Link href={`/posts/${post.slug}`}>

@@ -27,7 +27,7 @@ const NotFound = () => {
 
         <div>
           <Button asChild variant={"outline"}>
-            <Link href={"/"}>
+            <Link href={"/posts"}>
               Back to home <FaArrowRightLong />
             </Link>
           </Button>

@@ -28,7 +28,10 @@ export const getAllPosts = async ({
             },
           }
         : {};
-    const posts = await Post.find(query).lean().sort({ createdAt: -1 });
+    const posts = await Post.find(query)
+      .lean()
+      .sort({ createdAt: -1 })
+      .populate("userId", "_id name username image");
 
     if (!posts || posts.length === 0) {
       return { success: false, message: "No posts found", data: [] };

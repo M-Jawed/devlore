@@ -1,6 +1,6 @@
 "use client";
 
-import type { Post, User } from "@/types";
+import type { PopulatedPost, Post, User } from "@/types";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,14 +16,14 @@ const PostCard = ({
   post,
   currentUser,
 }: {
-  post: Post;
+  post: PopulatedPost;
   currentUser?: User;
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const getUser = async () => {
-      const user = await getUserById(post.userId as string);
+      const user = await getUserById(post.userId._id as string);
       setUser(user);
     };
 
@@ -62,7 +62,7 @@ const PostCard = ({
     ? false
     : (currentUser.following ?? []).some(
         (item: { userId: string; followedAt: Date }) =>
-          item?.userId?.toString() === user._id.toString(),
+          item?.userId?.toString() === post.userId._id.toString(),
       );
 
   return (

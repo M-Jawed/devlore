@@ -33,7 +33,10 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
       (item: string) => item.toString() === (user?.id as string),
     ) || false;
 
-  const isFollowing = userFromDB.following?.includes(post.userId._id);
+  const isFollowing = userFromDB.following?.some(
+    (item: { userId: string; followedAt: string }) =>
+      item.userId.toString() === post.userId._id.toString(),
+  );
   return (
     <section className="w-full flex-center min-h-screen overflow-hidden">
       <Card className="w-[70%] max-sm:w-full ring-0 shadow-none">
@@ -58,6 +61,7 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
               postSlug={post.slug}
               createdAt={post.createdAt}
               isFollowing={isFollowing}
+              type="details"
             />
           </div>
           <PostDetailsControls isLiked={isLiked} post={post} />

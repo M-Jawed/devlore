@@ -1,6 +1,6 @@
 "use client";
 
-import type { Post, User } from "@/types";
+import type { PopulatedPost, Post, User } from "@/types";
 import PostCard from "./post-card";
 import { useSidebar } from "../ui/sidebar";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ const Posts = ({
   posts,
   currentUser,
 }: {
-  posts: Post[];
+  posts: PopulatedPost[];
   currentUser: User;
 }) => {
   const { open } = useSidebar();
@@ -21,7 +21,7 @@ const Posts = ({
       )}
     >
       {posts!.length > 0 ? (
-        posts?.map((post: Post) => (
+        posts?.map((post: PopulatedPost) => (
           <PostCard key={post._id} post={post} currentUser={currentUser} />
         ))
       ) : (
