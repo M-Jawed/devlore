@@ -16,9 +16,9 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0",
+            "font-medium rounded-none border-0 text-muted-foreground",
             pathname === "/profile" &&
-              "font-bold border-b-2 border-black tracking-wide text-lg pb-1",
+              "font-bold border-b-2 border-black tracking-wide text-md pb-1 text-primary",
           )}
         >
           <Link href={"/profile"}>Profile</Link>
@@ -29,9 +29,9 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0",
+            "font-medium rounded-none border-0 text-muted-foreground",
             pathname === "/profile/posts" &&
-              "font-black border-b-2 border-black tracking-wide text-lg pb-1",
+              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary",
           )}
         >
           <Link href={"/profile/posts"}>Your posts</Link>
@@ -42,12 +42,25 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0",
+            "font-medium rounded-none border-0 text-muted-foreground",
             pathname === "/profile/followings" &&
-              "font-black border-b-2 border-black tracking-wide text-lg pb-1",
+              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary",
           )}
         >
           <Link href={"/profile/followings"}>Followings</Link>
+        </Button>
+
+        <Button
+          variant={"link"}
+          size={"sm"}
+          asChild
+          className={cn(
+            "font-medium rounded-none border-0 text-muted-foreground",
+            pathname === "/profile/followings/suggestions" &&
+              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary",
+          )}
+        >
+          <Link href={"/profile/followings/suggestions"}>Suggestions</Link>
         </Button>
       </div>
     </div>

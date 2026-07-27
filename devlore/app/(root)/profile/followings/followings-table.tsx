@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -11,9 +13,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User, UserX } from "lucide-react";
 import moment from "moment";
+import { handleUserFollow } from "@/lib/actions/user.action";
+import { toast } from "sonner";
 
 type PopulatedFollowings = {
   userId: {
+    _id?: string;
     name?: string;
     username?: string;
     image?: string;
@@ -26,6 +31,19 @@ const FollowingsTable = ({
 }: {
   followings: PopulatedFollowings[];
 }) => {
+  const handleUnfollow = async (followedUserId: string) => {
+    const res = await handleUserFollow({
+      followedUserId,
+      postSlug: "/profile/followings",
+    });
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success(res.message);
+  };
   return (
     <Table>
       <TableCaption>People you follow</TableCaption>
@@ -43,7 +61,7 @@ const FollowingsTable = ({
               <div className="flex items-center gap-x-2">
                 <Avatar>
                   <AvatarImage
-                    src={item.userId.image}
+                    src={item.userId.image ?? ""}
                     alt={`Profile picture of the user ${item.userId.name}`}
                   />
                   <AvatarFallback>
@@ -61,7 +79,12 @@ const FollowingsTable = ({
 
             <TableCell>
               {" "}
-              <Button variant={"destructive"} size={"sm"}>
+              <Button
+                variant={"destructive"}
+                size={"sm"}
+                type="button"
+                onClick={() => handleUnfollow(item.userId._id as string)}
+              >
                 Unfollow <UserX />
               </Button>{" "}
             </TableCell>

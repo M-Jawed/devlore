@@ -10,7 +10,7 @@ import {
 
 const FollowingsTableSkeleton = () => {
   return (
-    <Table>
+    <Table className="w-[63%] mx-auto mt-10">
       <TableHeader>
         <TableHead>
           {" "}

@@ -18,7 +18,7 @@ const PostSidebar = async () => {
 
   const userId = session?.user.id as string;
   const posts = await getRecentPosts();
-  const users = await getRecentUsers();
+  const users = await getRecentUsers({ limit: 3 });
 
   const userById = await getUserById(userId);
   return (

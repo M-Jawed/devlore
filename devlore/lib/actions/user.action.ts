@@ -79,16 +79,16 @@ export const updateUser = async (userData: {
   }
 };
 
-// Just for testing
-
-export const getRecentUsers = async () => {
+export const getRecentUsers = async ({
+  limit = 0,
+}: { limit?: number } = {}) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   const userId = session?.user.id as string;
   const users = await User.find({ _id: { $ne: userId } })
-    .limit(3)
+    .limit(limit)
     .sort({ createdAt: -1 })
     .lean();
 
@@ -228,7 +228,7 @@ export const getAllUserFollowings = async () => {
     const userId = session?.user?.id as string;
 
     const followings = await User.findById(userId)
-      .populate("following.userId", "name username image")
+      .populate("following.userId", "_id name username image")
       .lean();
 
     return {
