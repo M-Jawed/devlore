@@ -2,7 +2,7 @@ import "dotenv/config";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 
-const protectedRoutes = ["/dashboard", "/bookmarks", "/posts"];
+const protectedRoutes = ["/dashboard", "/bookmarks", "/posts", "/profile"];
 const adminRoute = ["/admin"];
 
 const proxy = async (req: NextRequest) => {
