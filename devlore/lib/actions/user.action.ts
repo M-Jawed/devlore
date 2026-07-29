@@ -240,3 +240,51 @@ export const getAllUserFollowings = async () => {
     return { success: false, message: formatError(error), data: [] };
   }
 };
+
+export const getUserByUsername = async ({ username }: { username: string }) => {
+  try {
+    await connectDB();
+
+    const user = await User.findOne({ username }).lean();
+
+    if (!user) {
+      return {
+        success: false,
+        message: "No user found with that username",
+        data: {},
+      };
+    }
+
+    return {
+      success: true,
+      message: "User found",
+      data: convertToPlainJSON(user),
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error), data: {} };
+  }
+};
+
+export const getUserPosts = async ({ userId }: { userId: string }) => {
+  try {
+    await connectDB();
+
+    const objectUserId = new mongoose.Types.ObjectId(userId);
+
+    const userPosts = await Post.find({ userId: objectUserId })
+      .populate("userId", "name image username _id")
+      .lean();
+
+    if (!userPosts) {
+      return { success: false, message: "This user has no posts", data: [] };
+    }
+
+    return {
+      success: true,
+      message: "User posts found",
+      data: convertToPlainJSON(userPosts),
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error), data: [] };
+  }
+};

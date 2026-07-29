@@ -15,6 +15,7 @@ import { User, UserX } from "lucide-react";
 import moment from "moment";
 import { handleUserFollow } from "@/lib/actions/user.action";
 import { toast } from "sonner";
+import Link from "next/link";
 
 type PopulatedFollowings = {
   userId: {
@@ -60,21 +61,23 @@ const FollowingsTable = ({
           .filter((item) => item?.userId)
           .map((item) => (
             <TableRow key={item.userId._id}>
-              <TableCell>
-                <div className="flex items-center gap-x-2">
-                  <Avatar>
-                    <AvatarImage
-                      src={item.userId.image ?? ""}
-                      alt={`Profile picture of the user ${item.userId.name}`}
-                    />
-                    <AvatarFallback>
-                      {" "}
-                      <User />{" "}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span> {item.userId.name} </span>
-                </div>
-              </TableCell>
+              <Link href={`/profile/user/${item.userId.username}`}>
+                <TableCell>
+                  <div className="flex items-center gap-x-2">
+                    <Avatar>
+                      <AvatarImage
+                        src={item.userId.image ?? ""}
+                        alt={`Profile picture of the user ${item.userId.name}`}
+                      />
+                      <AvatarFallback>
+                        {" "}
+                        <User />{" "}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span> {item.userId.name} </span>
+                  </div>
+                </TableCell>
+              </Link>
               <TableCell>
                 {" "}
                 {moment(item.followedAt).format("LL") || "undefined date"}{" "}

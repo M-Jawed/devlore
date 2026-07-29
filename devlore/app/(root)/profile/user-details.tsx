@@ -13,17 +13,28 @@ import {
 import EditUserDialog from "./edit-user-details-dialog";
 import DisplayFollows from "@/components/profile/follow-info";
 
-const UserDetails = ({ user }: { user: User }) => {
+const UserDetails = ({
+  user,
+  currentUserId,
+}: {
+  user: User;
+  currentUserId: string;
+}) => {
   const initialName = user.name.charAt(0).toUpperCase();
+
+  const isProfileOwner = user._id.toString() === currentUserId.toString();
+
   return (
     <div className="flex-center flex-col space-y-4">
       <div className="mt-10 w-100 flex-center flex-col">
         <div className="relative">
           <div className="absolute inset-0 top-2 left-24 transition-opacity z-20 ">
-            <ProfileAvatarDropdown
-              userImage={user.image as string}
-              userId={user._id as string}
-            />
+            {isProfileOwner && (
+              <ProfileAvatarDropdown
+                userImage={user.image as string}
+                userId={user._id as string}
+              />
+            )}
           </div>
           <Avatar className="w-20 h-20">
             <AvatarImage src={user.image as string} />
@@ -37,9 +48,11 @@ const UserDetails = ({ user }: { user: User }) => {
       <Card className="ring-0 shadow-none">
         <CardHeader className="text-center flex-center">
           <DisplayFollows followers={user.followers as string[]} />
-          <div>
-            <EditUserDialog user={user} />
-          </div>
+          {isProfileOwner && (
+            <div>
+              <EditUserDialog user={user} />
+            </div>
+          )}
         </CardHeader>
         <CardContent>
           <div className="w-200 flex-center flex-col space-y-4">

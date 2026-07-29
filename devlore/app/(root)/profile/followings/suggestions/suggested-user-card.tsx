@@ -6,6 +6,7 @@ import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { handleUserFollow } from "@/lib/actions/user.action";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const SuggestedUserCard = ({ user }: { user: UserType }) => {
   const handleFollow = async () => {
@@ -23,22 +24,24 @@ const SuggestedUserCard = ({ user }: { user: UserType }) => {
   };
   return (
     <div className="w-full flex-between">
-      <div className="flex items-center gap-x-2">
-        <Avatar>
-          <AvatarImage
-            src={user.image as string}
-            alt={`Image of the user ${user.name}`}
-          />
-          <AvatarFallback>
-            {" "}
-            <User />{" "}
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <p> {user.name} </p>
-          <span className="text-sm text-muted-foreground"> {user.bio} </span>
+      <Link href={`/profile/user/${user.username}`}>
+        <div className="flex items-center gap-x-2">
+          <Avatar>
+            <AvatarImage
+              src={user.image as string}
+              alt={`Image of the user ${user.name}`}
+            />
+            <AvatarFallback>
+              {" "}
+              <User />{" "}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <p> {user.name} </p>
+            <span className="text-sm text-muted-foreground"> {user.bio} </span>
+          </div>
         </div>
-      </div>
+      </Link>
 
       <Button
         variant={"outline"}

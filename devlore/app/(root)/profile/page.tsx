@@ -18,7 +18,7 @@ const ProfilePage = async () => {
           {" "}
           {user.name}{" "}
         </h1>
-        <UserDetails user={user} />
+        <UserDetails user={user} currentUserId={session?.user?.id as string} />
       </div>
     </div>
   );
