@@ -6,6 +6,7 @@ import moment from "moment";
 import { Button } from "../ui/button";
 import { handleUserFollow } from "@/lib/actions/user.action";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const PostOwner = ({
   user,
@@ -20,7 +21,7 @@ const PostOwner = ({
   postSlug?: string;
   type?: "card" | "details";
 }) => {
-  const initialName = user.name.charAt(0).toUpperCase();
+  const initialName = user?.name?.charAt(0).toUpperCase() || "U";
 
   const handleFollow = async () => {
     const res = await handleUserFollow({ followedUserId: user._id, postSlug });
@@ -39,22 +40,39 @@ const PostOwner = ({
         <AvatarFallback> {initialName} </AvatarFallback>
       </Avatar>
       <div>
-        <span> {user.name} | </span>
-        <span className="text-muted-foreground">
+        <Button variant={"link"} size={"sm"} asChild>
+          <Link href={`/profile/user/${user.username}`}>
+            {user.name || "User"}
+          </Link>
+        </Button>
+        |
+        <span className="text-muted-foreground ml-2">
           {" "}
           {moment(createdAt, "YYYYMMDD").fromNow()}{" "}
         </span>
       </div>
+
       <div className="max-sm:hidden">
-        <Button
-          variant={type === "card" ? "ghost" : "outline"}
-          disabled={type === "card"}
-          type="button"
-          size={"sm"}
-          onClick={handleFollow}
-        >
-          {isFollowing ? "Following" : "Follow"}
-        </Button>
+        {type === "card" ? (
+          <Button
+            variant={"ghost"}
+            disabled
+            type="button"
+            size={"sm"}
+            onClick={handleFollow}
+          >
+            {isFollowing && "Following"}
+          </Button>
+        ) : (
+          <Button
+            variant={"outline"}
+            type="button"
+            size={"sm"}
+            onClick={handleFollow}
+          >
+            {isFollowing ? "Following" : "Follow"}
+          </Button>
+        )}
       </div>
     </div>
   );

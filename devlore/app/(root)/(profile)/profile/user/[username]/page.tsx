@@ -1,4 +1,8 @@
-import { getUserByUsername, getUserPosts } from "@/lib/actions/user.action";
+import {
+  getUserByUsername,
+  getUserPosts,
+  getUserById,
+} from "@/lib/actions/user.action";
 import ProfileDetails from "./profile-details";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
@@ -22,12 +26,14 @@ const UserDetailsPage = async ({
 
   const user = (await getUserByUsername({ username })).data;
   const userPosts = (await getUserPosts({ userId: user._id as string })).data;
+  const currentUser = await getUserById(userId);
 
   return (
     <section className="py-5">
       <ProfileDetails
         user={user}
         currentUserId={userId}
+        currentUser={currentUser}
         userPosts={userPosts}
       />
     </section>

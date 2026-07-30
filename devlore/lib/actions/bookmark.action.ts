@@ -15,7 +15,9 @@ export const getUserBookmarks = async ({ userId }: { userId: string }) => {
     return { success: false, message: "No bookmarks found", data: [] };
 
   const postIds = bookmarks.map((bookmark) => bookmark.postId);
-  const posts = await Post.find({ _id: { $in: postIds } }).lean();
+  const posts = await Post.find({ _id: { $in: postIds } })
+    .lean()
+    .populate("userId", "image username name _id");
 
   return { success: true, message: "Bookmarks found", data: posts };
 };

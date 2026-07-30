@@ -67,17 +67,17 @@ const PostCard = ({
 
   return (
     <Card>
-      <Link href={`/posts/${post.slug}`}>
-        <CardHeader>
-          <PostOwner
-            user={user}
-            isFollowing={isFollowing}
-            createdAt={post.createdAt}
-          />
-        </CardHeader>
+      <CardHeader>
+        <PostOwner
+          user={user}
+          isFollowing={isFollowing}
+          createdAt={post.createdAt}
+        />
+      </CardHeader>
+      <Link href={`/posts/${post.slug}`} className="pt-0 -mt-5">
         <CardContent>
           <div className="grid grid-cols-[1fr_auto]">
-            <div>
+            <div className="w-[85%] max-sm:w-full">
               <h1 className="font-bold text-2xl tracking-wide mt-4 max-sm:text-md">
                 {" "}
                 {post.title}{" "}

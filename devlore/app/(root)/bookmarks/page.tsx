@@ -4,7 +4,7 @@ import PostCard from "@/components/posts/post-card";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { convertToPlainJSON } from "@/lib/utils";
-import { Post } from "@/types";
+import { PopulatedPost } from "@/types";
 
 const Bookmarks = async () => {
   const session = await auth.api.getSession({
@@ -27,7 +27,7 @@ const Bookmarks = async () => {
     <section className="px-5 mt-10">
       <h1 className="text-3xl font-bold text-center">Bookmarks</h1>
       <div className="grid w-[60%] gap-x-3 mt-5 space-y-6 mx-auto max-lg:w-[80%] max-md:w-full">
-        {posts.map((post: Post) => (
+        {posts.map((post: PopulatedPost) => (
           <PostCard key={post._id} post={post} />
         ))}
       </div>
