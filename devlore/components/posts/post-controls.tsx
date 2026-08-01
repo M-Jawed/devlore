@@ -1,4 +1,5 @@
 import { FaHandsClapping } from "react-icons/fa6";
+import { PiHandsClapping } from "react-icons/pi";
 import { TbSparkles2Filled } from "react-icons/tb";
 import { MessageSquareText } from "lucide-react";
 import { Button } from "../ui/button";
@@ -6,7 +7,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import type { PopulatedPost, Post } from "@/types";
 import Link from "next/link";
 
-const PostControls = ({ post }: { post: PopulatedPost }) => {
+const PostControls = ({
+  post,
+  isLiked,
+}: {
+  post: PopulatedPost;
+  isLiked: boolean;
+}) => {
   return (
     <div>
       <Link href={`/posts/${post.slug}`}>
@@ -29,7 +36,7 @@ const PostControls = ({ post }: { post: PopulatedPost }) => {
             size={"icon"}
             className="flex items-center gap-x-2"
           >
-            <FaHandsClapping /> {post.likes}
+            {isLiked ? <FaHandsClapping /> : <PiHandsClapping />} {post.likes}
           </Button>
 
           {post.comments.length > 0 && (

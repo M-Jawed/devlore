@@ -288,3 +288,22 @@ export const getUserPosts = async ({ userId }: { userId: string }) => {
     return { success: false, message: formatError(error), data: [] };
   }
 };
+
+export const getUserLikedPosts = async () => {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session)
+      return { success: false, message: "Session is null", data: [] };
+
+    const userId = session?.user?.id as string;
+
+    const posts = await User.findById(userId).populate("postId").lean();
+
+    return { success: true, message: "Posts found", data: posts };
+  } catch (error) {
+    return { success: false, message: formatError(error), data: [] };
+  }
+};

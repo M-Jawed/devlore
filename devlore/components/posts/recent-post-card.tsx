@@ -7,8 +7,8 @@ import Link from "next/link";
 
 const RecentPostCard = ({ post }: { post: PopulatedPost }) => {
   return (
-    <Link href={`/posts/${post.slug}`}>
-      <div className="mt-5">
+    <div className="mt-5">
+      <Link href={`/profile/user/${post.userId.username}`}>
         <div className="flex gap-x-2 space-y-2">
           <Avatar className="w-6 h-6">
             <AvatarImage
@@ -22,6 +22,8 @@ const RecentPostCard = ({ post }: { post: PopulatedPost }) => {
           </Avatar>
           <span className=" text-xs mt-1"> {post.userId.name} </span>
         </div>
+      </Link>
+      <Link href={`/posts/${post.slug}`}>
         <div>
           <h1 className="font-bold text-lg"> {post.title} </h1>
           <span className="text-xs text-muted-foreground">
@@ -29,8 +31,8 @@ const RecentPostCard = ({ post }: { post: PopulatedPost }) => {
             {moment(post.createdAt, "YYMMDD").fromNow()}{" "}
           </span>
         </div>
-      </div>{" "}
-    </Link>
+      </Link>
+    </div>
   );
 };
 

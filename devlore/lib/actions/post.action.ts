@@ -96,7 +96,7 @@ export const getRecentPosts = async () => {
     const posts = await Post.find()
       .limit(3)
       .sort({ createdAt: -1 })
-      .populate("userId", "name image");
+      .populate("userId", "name image username _id");
 
     if (!posts) return { success: false, message: "No posts found", data: [] };
 

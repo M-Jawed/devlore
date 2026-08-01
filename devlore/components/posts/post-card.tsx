@@ -65,6 +65,12 @@ const PostCard = ({
           item?.userId?.toString() === post.userId._id.toString(),
       );
 
+  const isLiked = !currentUser
+    ? false
+    : (currentUser.likedPosts ?? []).some(
+        (item: string) => item.toString() === post._id.toString(),
+      );
+
   return (
     <Card>
       <CardHeader>
@@ -103,7 +109,7 @@ const PostCard = ({
       </Link>
       <CardFooter>
         <div className="flex-between w-full">
-          <PostControls post={post} />
+          <PostControls post={post} isLiked={isLiked} />
           <BookmarkButton id={plainPost._id} />
         </div>
       </CardFooter>

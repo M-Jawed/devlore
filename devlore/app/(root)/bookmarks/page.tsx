@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { convertToPlainJSON } from "@/lib/utils";
 import { PopulatedPost } from "@/types";
+import { getUserById } from "@/lib/actions/user.action";
 
 const Bookmarks = async () => {
   const session = await auth.api.getSession({
@@ -12,6 +13,7 @@ const Bookmarks = async () => {
   });
   const userId = session?.user.id as string;
   const res = await getUserBookmarks({ userId });
+  const currentUser = await getUserById(userId);
 
   if (!res.success) {
     return (
@@ -28,7 +30,7 @@ const Bookmarks = async () => {
       <h1 className="text-3xl font-bold text-center">Bookmarks</h1>
       <div className="grid w-[60%] gap-x-3 mt-5 space-y-6 mx-auto max-lg:w-[80%] max-md:w-full">
         {posts.map((post: PopulatedPost) => (
-          <PostCard key={post._id} post={post} />
+          <PostCard key={post._id} post={post} currentUser={currentUser} />
         ))}
       </div>
     </section>

@@ -28,12 +28,12 @@ const NavigationLinks = () => {
           variant={"link"}
           size={"sm"}
           className={cn(
-            pathname === "/liked" &&
+            pathname === "/bookmarks/liked" &&
               " font-bold border-b-2 border-b-black rounded-none",
           )}
           asChild
         >
-          <Link href={"/liked"}>Liked posts</Link>
+          <Link href={"/bookmarks/liked"}>Liked posts</Link>
         </Button>
       </div>
     </div>

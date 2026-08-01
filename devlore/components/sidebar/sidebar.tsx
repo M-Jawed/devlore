@@ -62,7 +62,7 @@ const MainSidebar = () => {
           )}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
-            <Link href={"/"}>Home</Link>
+            <Link href={"/posts"}>Home</Link>
           </SidebarMenuButton>
           <SidebarMenuBadge>
             {" "}
