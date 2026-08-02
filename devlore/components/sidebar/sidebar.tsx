@@ -8,10 +8,11 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "../ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
-import { Home } from "lucide-react";
+import { Home, StickyNotePlus } from "lucide-react";
 import { Geist } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -97,7 +98,7 @@ const MainSidebar = () => {
         <SidebarMenuItem
           className={cn(
             "text-muted-foreground",
-            pathname === "/bookmarks" &&
+            pathname.startsWith("/bookmarks") &&
               "border-r-2 border-primary font-medium text-primary",
           )}
         >
@@ -106,13 +107,33 @@ const MainSidebar = () => {
           </SidebarMenuButton>
           <SidebarMenuBadge>
             {" "}
-            {pathname === "/bookmarks" ? (
+            {pathname.startsWith("/bookmarks") ? (
               <IoBookmark size={18} />
             ) : (
               <IoBookmarkOutline size={18} />
             )}
           </SidebarMenuBadge>
         </SidebarMenuItem>
+
+        <SidebarSeparator />
+
+        <SidebarMenuItem
+          className={cn(
+            "text-muted-foreground",
+            pathname.startsWith("/create") &&
+              "border-r-2 border-primary font-medium text-primary",
+          )}
+        >
+          <SidebarMenuButton asChild className="text-lg px-3">
+            <Link href={"/create"}>Upload</Link>
+          </SidebarMenuButton>
+          <SidebarMenuBadge>
+            <StickyNotePlus size={18} />
+          </SidebarMenuBadge>
+        </SidebarMenuItem>
+        <span className="text-xs text-muted-foreground px-3">
+          Upload or Create a post
+        </span>
       </SidebarContent>
     </Sidebar>
   );

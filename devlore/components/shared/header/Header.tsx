@@ -6,6 +6,9 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 import Search from "./search";
+import { Button } from "@/components/ui/button";
+import { StickyNotePlus } from "lucide-react";
+import Link from "next/link";
 
 const Header = async () => {
   const session = await auth.api.getSession({
@@ -22,6 +25,11 @@ const Header = async () => {
           <Search />
         </div>
         <div className="flex items-center gap-x-4">
+          <Button size={"sm"} asChild>
+            <Link href={"/create"} className="flex items-center gap-x-1">
+              Upload <StickyNotePlus />
+            </Link>
+          </Button>
           <ThemeDropdown />
           <UserButton />
         </div>

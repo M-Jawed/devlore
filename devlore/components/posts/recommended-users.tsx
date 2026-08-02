@@ -29,18 +29,24 @@ const RecommendedUsers = ({
 
     toast.success(res.message);
   };
+
+  const followingIds = (currentUser.following ?? []).map(
+    (item: { userId: string }) => item.userId.toString(),
+  );
+
+  const unfollowedUsers = users
+    .filter((user: UserType) => !followingIds.includes(user._id.toString()))
+    .slice(0, 3);
+
   return (
     <div>
       {" "}
       <h1 className="font-medium text-lg tracking-wide">Who to follow</h1>
       <div className="space-y-4 mt-5">
-        {users.length === 0 ? (
+        {unfollowedUsers.length === 0 ? (
           <h1>No users found</h1>
         ) : (
-          users.map((user: UserType) => {
-            const isFollowing = currentUser.following?.includes(
-              user?._id?.toString(),
-            );
+          unfollowedUsers.map((user: UserType) => {
             return (
               <div key={user.username} className="flex-between">
                 <div className="flex items-center gap-x-2">
@@ -61,7 +67,7 @@ const RecommendedUsers = ({
                     handleFollow({ followedUserId: user?._id?.toString() })
                   }
                 >
-                  Follow {isFollowing ? <Check /> : <Plus />}{" "}
+                  Follow <Plus />
                 </Button>
               </div>
             );

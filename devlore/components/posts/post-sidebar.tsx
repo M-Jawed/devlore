@@ -3,7 +3,7 @@ import RecentPostCard from "./recent-post-card";
 import { recommendedTopics } from "@/constant";
 import { Button } from "../ui/button";
 import { Plus, User } from "lucide-react";
-import { getRecentUsers, getUserById } from "@/lib/actions/user.action";
+import { followRecommendation, getUserById } from "@/lib/actions/user.action";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import type { User as UserType } from "@/types";
 import RecommendedTopics from "./recommended-topics";
@@ -18,9 +18,10 @@ const PostSidebar = async () => {
 
   const userId = session?.user.id as string;
   const posts = await getRecentPosts();
-  const users = await getRecentUsers({ limit: 3 });
+  const users = (await followRecommendation()).data;
 
-  const userById = await getUserById(userId);
+  const currentUser = await getUserById(userId);
+
   return (
     <div className="w-full">
       <div>
@@ -38,12 +39,12 @@ const PostSidebar = async () => {
         <div className="mt-6">
           <RecommendedTopics
             recommendedTopics={recommendedTopics}
-            user={userById}
+            user={currentUser}
           />
         </div>
 
         <div className="mt-5">
-          <RecommendedUsers users={users.data} currentUser={userById} />
+          <RecommendedUsers users={users} currentUser={currentUser} />
         </div>
       </div>
     </div>

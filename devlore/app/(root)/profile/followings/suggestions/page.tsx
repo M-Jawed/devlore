@@ -1,4 +1,4 @@
-import { getRecentUsers, getUserById } from "@/lib/actions/user.action";
+import { followRecommendation, getUserById } from "@/lib/actions/user.action";
 import { User } from "@/types";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
@@ -13,7 +13,7 @@ const FollowingSuggestions = async () => {
   if (!session) notFound();
 
   const userId = session.user.id;
-  const users = (await getRecentUsers()).data;
+  const users = (await followRecommendation()).data;
   const currentUser = await getUserById(userId);
 
   const followingIds = (currentUser.following ?? []).map(

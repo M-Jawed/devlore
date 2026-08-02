@@ -79,7 +79,7 @@ export const updateUser = async (userData: {
   }
 };
 
-export const getRecentUsers = async ({
+export const followRecommendation = async ({
   limit = 0,
 }: { limit?: number } = {}) => {
   const session = await auth.api.getSession({
@@ -300,9 +300,21 @@ export const getUserLikedPosts = async () => {
 
     const userId = session?.user?.id as string;
 
-    const posts = await User.findById(userId).populate("postId").lean();
+    const posts = await User.findById(userId)
+      .populate({
+        path: "likedPosts",
+        populate: {
+          path: "userId",
+          select: "_id name username image",
+        },
+      })
+      .lean();
 
-    return { success: true, message: "Posts found", data: posts };
+    return {
+      success: true,
+      message: "Posts found",
+      data: convertToPlainJSON(posts),
+    };
   } catch (error) {
     return { success: false, message: formatError(error), data: [] };
   }
