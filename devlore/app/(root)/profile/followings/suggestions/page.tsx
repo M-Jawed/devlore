@@ -4,6 +4,11 @@ import { auth } from "@/auth";
 import { headers } from "next/headers";
 import SuggestedUserCard from "./suggested-user-card";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Suggestions",
+};
 
 const FollowingSuggestions = async () => {
   const session = await auth.api.getSession({

@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Homepage",
+  title: "Home",
 };
 
 const Home = async () => {

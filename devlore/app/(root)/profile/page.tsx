@@ -4,6 +4,11 @@ import UserDetails from "./user-details";
 import { getUserById } from "@/lib/actions/user.action";
 import { redirect } from "next/navigation";
 import ProfileNavigation from "@/components/profile/profile-side-nav";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
 const ProfilePage = async () => {
   const session = await auth.api.getSession({

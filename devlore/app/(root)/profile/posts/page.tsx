@@ -2,6 +2,12 @@ import { findUserPosts } from "@/lib/actions/post.action";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+import { title } from "process";
+
+export const metadata: Metadata = {
+  title: "Your Posts",
+};
 
 const PostPage = async () => {
   const posts = (await findUserPosts()).data;

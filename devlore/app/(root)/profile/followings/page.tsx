@@ -2,6 +2,11 @@ import { getAllUserFollowings } from "@/lib/actions/user.action";
 import FollowingsTable from "./followings-table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Followings",
+};
 
 const FollowingsPage = async () => {
   const followings = (await getAllUserFollowings()).data;

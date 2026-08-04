@@ -4,6 +4,11 @@ import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Liked Posts",
+};
 
 const LikedPostPage = async () => {
   const posts = (await getUserLikedPosts()).data;

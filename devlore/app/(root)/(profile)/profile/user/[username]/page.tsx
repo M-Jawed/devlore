@@ -9,6 +9,18 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import ProfilePosts from "./profile-posts";
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) => {
+  const { username } = await params;
+
+  return {
+    title: username ?? "undefined user",
+  };
+};
+
 const UserDetailsPage = async ({
   params,
 }: {

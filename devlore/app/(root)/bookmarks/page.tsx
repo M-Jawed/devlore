@@ -6,6 +6,11 @@ import { headers } from "next/headers";
 import { convertToPlainJSON } from "@/lib/utils";
 import { PopulatedPost } from "@/types";
 import { getUserById } from "@/lib/actions/user.action";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Bookmarks",
+};
 
 const Bookmarks = async () => {
   const session = await auth.api.getSession({
