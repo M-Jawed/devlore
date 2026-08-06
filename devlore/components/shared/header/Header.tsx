@@ -26,7 +26,7 @@ const Header = async () => {
         </div>
         <div className="flex items-center gap-x-4">
           <Button size={"sm"} asChild>
-            <Link href={"/create"} className="flex items-center gap-x-1">
+            <Link href={"/upload/post"} className="flex items-center gap-x-1">
               Upload <StickyNotePlus />
             </Link>
           </Button>

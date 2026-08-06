@@ -125,7 +125,7 @@ const MainSidebar = () => {
           )}
         >
           <SidebarMenuButton asChild className="text-lg px-3">
-            <Link href={"/create"}>Upload</Link>
+            <Link href={"/upload/post"}>Upload</Link>
           </SidebarMenuButton>
           <SidebarMenuBadge>
             <StickyNotePlus size={18} />

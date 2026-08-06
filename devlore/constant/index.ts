@@ -8,3 +8,11 @@ export const recommendedTopics = [
   "Productivity",
   "Politics",
 ];
+
+export const categories = [
+  "React",
+  "Next.js",
+  "JavaScript",
+  "TypeScript",
+  "TailwindCSS",
+];

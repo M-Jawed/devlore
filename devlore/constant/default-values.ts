@@ -11,3 +11,13 @@ export const updateUserDefaultValues = {
   email: "",
   gender: "",
 };
+
+export const uploadPostDefaultValues = {
+  title: "",
+  body: "",
+  category: "",
+  tags: [],
+  banner: "",
+  description: "",
+  slug: "",
+};

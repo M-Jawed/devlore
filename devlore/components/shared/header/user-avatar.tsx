@@ -14,10 +14,11 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuShortcut,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { User, DoorOpen, BookMarked } from "lucide-react";
+import { User, DoorOpen, BookMarked, Home } from "lucide-react";
 import Link from "next/link";
 
 const UserAvatar = ({
@@ -53,6 +54,15 @@ const UserAvatar = ({
           {session?.user.email}{" "}
         </DropdownMenuLabel>
         <DropdownMenuItem>
+          <Link href={"/posts"} className="w-full">
+            Home
+          </Link>
+          <DropdownMenuShortcut>
+            {" "}
+            <Home />{" "}
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
           <Link href={"/profile"} className="w-full">
             Profile
           </Link>
@@ -69,6 +79,7 @@ const UserAvatar = ({
             <BookMarked />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleSignOut()}>
           Sign Out
           <DropdownMenuShortcut>
