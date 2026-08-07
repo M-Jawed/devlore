@@ -12,6 +12,7 @@ import {
   FieldGroup,
   FieldError,
   FieldLabel,
+  FieldDescription,
 } from "@/components/ui/field";
 import {
   Select,
@@ -32,6 +33,11 @@ import { uploadPostSchema } from "@/lib/zod/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { categories } from "@/constant";
 import { useState } from "react";
+import TagCombobox from "./tag-combobox";
+import { tags } from "@/constant";
+import { UploadButton } from "@/lib/uploadthing";
+import { toast } from "sonner";
+import Image from "next/image";
 
 const UploadPostForm = () => {
   const form = useForm<z.infer<typeof uploadPostSchema>>({
@@ -74,8 +80,9 @@ const UploadPostForm = () => {
               control={form.control}
               name="slug"
               render={({ field, fieldState }) => (
-                <Field>
+                <Field className="items-start">
                   <FieldLabel htmlFor="slug">Slug</FieldLabel>
+
                   <Input
                     placeholder="Generate a slug for your post"
                     id={field.name}
@@ -85,11 +92,18 @@ const UploadPostForm = () => {
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
-                  <div className="w-[20%]">
-                    <Button className="w-full" variant={"outline"} size={"sm"}>
-                      Generate Slug
-                    </Button>
-                  </div>
+                  <FieldDescription>
+                    Click the button to generate a slug
+                  </FieldDescription>
+
+                  <Button
+                    className="w-[20%] self-start"
+                    type="button"
+                    variant={"outline"}
+                    size={"sm"}
+                  >
+                    Generate
+                  </Button>
                 </Field>
               )}
             />
@@ -101,7 +115,7 @@ const UploadPostForm = () => {
                 <Field>
                   <FieldLabel htmlFor="category">Category</FieldLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -122,6 +136,108 @@ const UploadPostForm = () => {
               )}
             />
           </FieldGroup>
+
+          <Controller
+            name="body"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor="body">Body</FieldLabel>
+                <FieldDescription>
+                  Give your post the description
+                </FieldDescription>
+                <Textarea
+                  id={field.name}
+                  className="resize-none h-90"
+                  placeholder="Enter post description..."
+                  {...field}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="description"
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor="description">Short description</FieldLabel>
+                <FieldDescription>
+                  Give your post a short description
+                </FieldDescription>
+                <Textarea
+                  id={field.name}
+                  className="resize-none h-20"
+                  placeholder="Post short description..."
+                  {...field}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="tags"
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor="tags">Tags</FieldLabel>
+                <FieldDescription>Add tags to your post</FieldDescription>
+                <TagCombobox
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={tags}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="banner"
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor="banner">Image</FieldLabel>
+                <FieldDescription>Give your post a thumbnail</FieldDescription>
+                <UploadButton
+                  endpoint={"imageUploader"}
+                  onClientUploadComplete={(res) => {
+                    const url = res[0]?.ufsUrl;
+                    if (url) field.onChange(url);
+                  }}
+                  onUploadError={(err) => {
+                    toast.error(err.message);
+                  }}
+                />
+                {field.value && (
+                  <div className="w-fit mx-auto h-full ">
+                    <Image
+                      src={field.value as string}
+                      alt="Image of the post thumbnail"
+                      width={200}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
+          <Button size={"sm"} className="mt-10 w-[30%]">
+            Upload
+          </Button>
         </form>
       </CardContent>
     </Card>
