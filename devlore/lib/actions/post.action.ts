@@ -225,3 +225,34 @@ export const findUserPosts = async () => {
     return { success: false, message: formatError(error), data: [] };
   }
 };
+
+export const createPost = async (data: {
+  title: string;
+  slug: string;
+  body: string;
+  category: string;
+  tags: string[];
+  banner: string;
+  description: string;
+}) => {
+  try {
+    console.log(data);
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session) return { success: false, message: "Session is null" };
+
+    const userId = session?.user?.id as string;
+
+    await Post.create({ ...data, userId });
+
+    revalidatePath("/posts");
+
+    return { success: true, message: "Post uploaded successfully" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+};

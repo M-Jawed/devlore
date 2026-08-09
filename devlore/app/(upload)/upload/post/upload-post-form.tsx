@@ -32,21 +32,52 @@ import { uploadPostDefaultValues } from "@/constant/default-values";
 import { uploadPostSchema } from "@/lib/zod/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { categories } from "@/constant";
-import { useState } from "react";
 import TagCombobox from "./tag-combobox";
 import { tags } from "@/constant";
 import { UploadButton } from "@/lib/uploadthing";
 import { toast } from "sonner";
 import Image from "next/image";
+import { createPost } from "@/lib/actions/post.action";
+import UploadPostButton from "./upload-button";
+import slugify from "slugify";
+import { useRouter } from "next/navigation";
+import { useUploadPostStore } from "@/app/store/use-upload-post";
 
 const UploadPostForm = () => {
+  const router = useRouter();
+  const { setIsSubmitting } = useUploadPostStore();
   const form = useForm<z.infer<typeof uploadPostSchema>>({
     defaultValues: uploadPostDefaultValues,
     resolver: zodResolver(uploadPostSchema),
   });
 
   const onSubmit = async (value: z.infer<typeof uploadPostSchema>) => {
+    setIsSubmitting(true);
     console.log(value);
+    const res = await createPost(value);
+
+    if (!res.success) {
+      console.error(res.message);
+      setIsSubmitting(false);
+      return;
+    }
+    router.push(`/posts/${value.slug}`);
+    toast.success(res.message);
+    form.reset();
+    setIsSubmitting(false);
+  };
+
+  const generateSlug = () => {
+    const title = form.watch("title");
+
+    if (title.length < 5) {
+      toast.error("Title must be above 5 characters");
+      return;
+    }
+
+    const slug = slugify(title);
+
+    form.setValue("slug", slug);
   };
 
   return (
@@ -57,7 +88,13 @@ const UploadPostForm = () => {
       </CardHeader>
 
       <CardContent>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form
+          onSubmit={form.handleSubmit(onSubmit, (errors) =>
+            console.error(errors),
+          )}
+          id="upload-post-form"
+          className="space-y-3"
+        >
           <Controller
             control={form.control}
             name="title"
@@ -97,8 +134,9 @@ const UploadPostForm = () => {
                   </FieldDescription>
 
                   <Button
-                    className="w-[20%] self-start"
+                    className="w-full md:w-[50%] self-start"
                     type="button"
+                    onClick={generateSlug}
                     variant={"outline"}
                     size={"sm"}
                   >
@@ -235,9 +273,7 @@ const UploadPostForm = () => {
             )}
           />
 
-          <Button size={"sm"} className="mt-10 w-[30%]">
-            Upload
-          </Button>
+          <UploadPostButton />
         </form>
       </CardContent>
     </Card>

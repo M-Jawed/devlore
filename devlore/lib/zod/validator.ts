@@ -37,8 +37,8 @@ export const uploadPostSchema = z.object({
     .min(3, "Slug is required")
     .max(70, "Maximum characters is 70"),
   body: z.string().min(70, "Body must at least be above 70 characters"),
-  category: z.string("Category is required"),
-  tags: z.array(z.string()).min(1, "Tag is required"),
+  category: z.string().min(1, "Please select a category"),
+  tags: z.array(z.string()).min(2, "Please select at least 2 tags"),
   banner: z.string().min(1, "Image is required"),
   description: z.string().min(3, "Description must be above 3 characters"),
 });

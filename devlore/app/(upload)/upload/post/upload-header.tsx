@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import UserButton from "@/components/shared/header/user-button";
+import UploadPostButton from "./upload-button";
 
 const UploadHeader = () => {
   return (
     <header className="w-full h-18 flex-center">
-      <div className="flex-between w-full md:w-[70%] lg:w-[60%]">
+      <div className="flex-between w-full md:w-[70%] lg:w-[60%] px-4 fixed bg-background">
         <div>
           <Link href={"/posts"} className=" h-20 flex-center">
             <Image
@@ -17,7 +18,8 @@ const UploadHeader = () => {
           </Link>
         </div>
 
-        <div>
+        <div className="flex items-center gap-x-2">
+          <UploadPostButton type={"header"} />
           <UserButton />
         </div>
       </div>
