@@ -12,12 +12,14 @@ const PostOwner = ({
   user,
   createdAt,
   isFollowing,
+  isAuthor,
   postSlug,
   type = "card",
 }: {
   user: User;
   createdAt?: Date;
   isFollowing: boolean;
+  isAuthor: boolean;
   postSlug?: string;
   type?: "card" | "details";
 }) => {
@@ -52,28 +54,30 @@ const PostOwner = ({
         </span>
       </div>
 
-      <div className="max-sm:hidden">
-        {type === "card" ? (
-          <Button
-            variant={"ghost"}
-            disabled
-            type="button"
-            size={"sm"}
-            onClick={handleFollow}
-          >
-            {isFollowing && "Following"}
-          </Button>
-        ) : (
-          <Button
-            variant={"outline"}
-            type="button"
-            size={"sm"}
-            onClick={handleFollow}
-          >
-            {isFollowing ? "Following" : "Follow"}
-          </Button>
-        )}
-      </div>
+      {!isAuthor && (
+        <div className="max-sm:hidden">
+          {type === "card" ? (
+            <Button
+              variant={"ghost"}
+              disabled
+              type="button"
+              size={"sm"}
+              onClick={handleFollow}
+            >
+              {isFollowing && "Following"}
+            </Button>
+          ) : (
+            <Button
+              variant={"outline"}
+              type="button"
+              size={"sm"}
+              onClick={handleFollow}
+            >
+              {isFollowing ? "Following" : "Follow"}
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

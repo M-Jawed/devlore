@@ -16,17 +16,22 @@ const CommentCard = ({
   comment,
   postSlug,
   postId,
+  postOwnerId,
   isLiked,
 }: {
   comment: PopulatedComment;
   postSlug: string;
   postId: string;
+  postOwnerId: string;
   isLiked: boolean;
 }) => {
+  const isAuthor = comment.userId._id.toString() === postOwnerId.toString();
   return (
     <Card className="ring-0 shadow-none rounded-none border-b">
       <CardHeader>
         <CommentOwnerAvatar
+          username={comment.userId.username}
+          isAuthor={isAuthor}
           image={comment.userId.image as string}
           name={comment.userId.name}
           createdAt={comment.createdAt as Date}

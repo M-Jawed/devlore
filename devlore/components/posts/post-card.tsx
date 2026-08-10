@@ -11,11 +11,14 @@ import { convertToPlainJSON } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import PostControls from "./post-controls";
+import PostOwnerTools from "./post-owner-tools";
 
 const PostCard = ({
+  type,
   post,
   currentUser,
 }: {
+  type?: "profile" | null;
   post: PopulatedPost;
   currentUser?: User;
 }) => {
@@ -71,6 +74,8 @@ const PostCard = ({
         (item: string) => item.toString() === post._id.toString(),
       );
 
+  const isAuthor = currentUser?._id.toString() === post.userId._id.toString();
+
   return (
     <Card>
       <CardHeader>
@@ -78,6 +83,7 @@ const PostCard = ({
           user={user}
           isFollowing={isFollowing}
           createdAt={post.createdAt}
+          isAuthor={isAuthor}
         />
       </CardHeader>
       <Link href={`/posts/${post.slug}`} className="pt-0 -mt-5">
@@ -110,7 +116,12 @@ const PostCard = ({
       <CardFooter>
         <div className="flex-between w-full">
           <PostControls post={post} isLiked={isLiked} />
-          <BookmarkButton id={plainPost._id} />
+          <div className="flex items-center gap-x-2">
+            {isAuthor && type === "profile" && (
+              <PostOwnerTools postId={post._id} />
+            )}
+            <BookmarkButton id={plainPost._id} />
+          </div>
         </div>
       </CardFooter>
     </Card>

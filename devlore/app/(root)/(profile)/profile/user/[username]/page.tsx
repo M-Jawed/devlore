@@ -6,7 +6,7 @@ import {
 import ProfileDetails from "./profile-details";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ProfilePosts from "./profile-posts";
 
 export const generateMetadata = async ({
@@ -36,14 +36,18 @@ const UserDetailsPage = async ({
 
   const userId = session?.user?.id as string;
 
-  const user = (await getUserByUsername({ username })).data;
-  const userPosts = (await getUserPosts({ userId: user._id as string })).data;
+  const user = await getUserByUsername({ username });
+
+  if (!user.success) return notFound();
+
+  const userPosts = (await getUserPosts({ userId: user.data._id as string }))
+    .data;
   const currentUser = await getUserById(userId);
 
   return (
     <section className="py-5">
       <ProfileDetails
-        user={user}
+        user={user.data}
         currentUserId={userId}
         currentUser={currentUser}
         userPosts={userPosts}

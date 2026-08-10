@@ -76,6 +76,7 @@ export type Reply = {
 
 export type PopulatedReply = Omit<Reply, "userId"> & {
   userId: {
+    _id: string;
     name: string;
     image: string;
     username: string;
@@ -84,6 +85,7 @@ export type PopulatedReply = Omit<Reply, "userId"> & {
 
 export type PopulatedComment = Omit<Comment, "userId" | "replies"> & {
   userId: {
+    _id: string;
     name: string;
     image: string;
     username: string;

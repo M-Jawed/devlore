@@ -8,6 +8,7 @@ import {
   checkIfBookmarked,
 } from "@/lib/actions/bookmark.action";
 import type { Post } from "@/types";
+import { Skeleton } from "../ui/skeleton";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 
@@ -45,7 +46,9 @@ const BookmarkButton = ({ id }: { id: string }) => {
     checkBookmark();
   }, [userId, postId]);
 
-  if (loading) return;
+  if (loading) {
+    return <Skeleton className="w-6 h-5" />;
+  }
 
   return (
     <Toggle

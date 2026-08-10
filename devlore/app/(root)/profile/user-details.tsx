@@ -20,9 +20,9 @@ const UserDetails = ({
   user: User;
   currentUserId: string;
 }) => {
-  const initialName = user.name.charAt(0).toUpperCase();
+  const initialName = user?.name?.charAt(0).toUpperCase();
 
-  const isProfileOwner = user._id.toString() === currentUserId.toString();
+  const isProfileOwner = user?._id?.toString() === currentUserId.toString();
 
   return (
     <div className="flex-center flex-col space-y-4">

@@ -19,6 +19,7 @@ const DisplayComments = ({
             <CommentCard
               isLiked={isLiked}
               key={index}
+              postOwnerId={post.userId._id}
               comment={comment as any}
               postSlug={post.slug}
               postId={post._id}

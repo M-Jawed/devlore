@@ -114,8 +114,8 @@ export const getPostBySlug = async (slug: string) => {
   try {
     const post = await Post.findOne({ slug: slug })
       .populate("userId", "_id image name username")
-      .populate("comments.userId", "name image username")
-      .populate("comments.replies.userId", "name image username")
+      .populate("comments.userId", "name image username _id")
+      .populate("comments.replies.userId", "name image username _id")
       .lean();
 
     if (!post)
@@ -218,9 +218,15 @@ export const findUserPosts = async () => {
 
     const userId = session?.user?.id as string;
 
-    const posts = await Post.find({ userId }).lean();
+    const posts = await Post.find({ userId })
+      .populate("userId", "name image username _id")
+      .lean();
 
-    return { success: true, message: "Posts found", data: posts };
+    return {
+      success: true,
+      message: "Posts found",
+      data: convertToPlainJSON(posts),
+    };
   } catch (error) {
     return { success: false, message: formatError(error), data: [] };
   }
@@ -255,4 +261,17 @@ export const createPost = async (data: {
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+};
+
+export const deletePostById = async (postId: string) => {
+  if (!postId) return { success: false, message: "ID is required" };
+
+  await connectDB();
+
+  await Post.findByIdAndDelete(postId);
+
+  revalidatePath("/posts");
+  revalidatePath("/profile/posts");
+
+  return { success: true, message: "Post deleted" };
 };

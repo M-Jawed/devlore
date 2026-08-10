@@ -37,6 +37,8 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
     (item: { userId: string; followedAt: string }) =>
       item.userId.toString() === post.userId._id.toString(),
   );
+
+  const isAuthor = user.id.toString() === post.userId._id.toString();
   return (
     <section className="w-full flex-center min-h-screen overflow-hidden">
       <Card className="w-[70%] max-sm:w-full ring-0 shadow-none">
@@ -57,6 +59,7 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
           <CardTitle className="text-4xl font-bold"> {post.title} </CardTitle>
           <div className="flex items-center gap-x-3">
             <PostOwner
+              isAuthor={isAuthor}
               user={post.userId}
               postSlug={post.slug}
               createdAt={post.createdAt}

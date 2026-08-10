@@ -1,9 +1,13 @@
 import { findUserPosts } from "@/lib/actions/post.action";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
-import { title } from "process";
+import PostCard from "@/components/posts/post-card";
+import { PopulatedPost } from "@/types";
+import { auth } from "@/auth";
+import { headers } from "next/headers";
+import { notFound } from "next/navigation";
+import { getUserById } from "@/lib/actions/user.action";
 
 export const metadata: Metadata = {
   title: "Your Posts",
@@ -11,14 +15,18 @@ export const metadata: Metadata = {
 
 const PostPage = async () => {
   const posts = (await findUserPosts()).data;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) return notFound();
+
+  const userId = session?.user?.id;
+
+  const currentUser = await getUserById(userId);
 
   return (
     <section className="w-[63%] mx-auto mt-10">
-      {/* <Button variant={"link"} size={"sm"} className="" asChild>
-        <Link href={"/profile"}>
-          <ArrowLeft /> Go back{" "}
-        </Link>
-      </Button> */}
       <div className="w-full flex-center">
         {posts.length === 0 ? (
           <div className="mt-20 text-center pt-7">
@@ -29,11 +37,18 @@ const PostPage = async () => {
               It seems like you do not have any posts
             </p>
             <Button variant={"link"} size={"sm"} asChild>
-              <Link href={"/posts"}>Create one</Link>
+              <Link href={"/upload/post"}>Create one</Link>
             </Button>
           </div>
         ) : (
-          <div>found {posts.length}</div>
+          posts.map((post: PopulatedPost) => (
+            <PostCard
+              key={post._id}
+              post={post}
+              type={"profile"}
+              currentUser={currentUser}
+            />
+          ))
         )}
       </div>
     </section>
