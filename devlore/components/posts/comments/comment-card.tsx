@@ -52,6 +52,7 @@ const CommentCard = ({
         {comment.replies?.length! > 0 && (
           <div className="ml-6 pl-6 border-l-2 w-full">
             <DisplayReplies
+              postOwnerId={postOwnerId}
               comment={comment}
               postId={postId}
               postSlug={postSlug}

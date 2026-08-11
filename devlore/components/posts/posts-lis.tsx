@@ -1,4 +1,4 @@
-import type { Post } from "@/types";
+import type { PopulatedPost, Post } from "@/types";
 import PostCard from "./post-card";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -8,7 +8,7 @@ const PostsList = ({
   data,
   limit,
 }: {
-  data: Post[] | undefined;
+  data: PopulatedPost[] | undefined;
   limit: number;
 }) => {
   return (

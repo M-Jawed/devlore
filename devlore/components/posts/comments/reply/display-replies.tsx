@@ -9,11 +9,13 @@ import ReplyCard from "./reply-card";
 import { useSession } from "@/lib/auth-client";
 
 const DisplayReplies = ({
+  postOwnerId,
   comment,
   postId,
   postSlug,
 }: {
   comment: PopulatedComment;
+  postOwnerId: string;
   postId: string;
   postSlug: string;
 }) => {
@@ -28,6 +30,7 @@ const DisplayReplies = ({
         );
         return (
           <ReplyCard
+            postOwnerId={postOwnerId}
             isLiked={isLiked}
             key={item._id}
             reply={item}

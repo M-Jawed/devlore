@@ -9,22 +9,27 @@ import { PopulatedReply } from "@/types";
 import ReplyControls from "./reply-controls";
 
 const ReplyCard = ({
+  postOwnerId,
   reply,
   commentId,
   postSlug,
   postId,
   isLiked,
 }: {
+  postOwnerId: string;
   reply: PopulatedReply;
   commentId: string;
   postSlug: string;
   postId: string;
   isLiked: boolean;
 }) => {
+  const isAuthor = reply.userId._id.toString() === postOwnerId.toString();
   return (
     <Card className="ring-0 border-b shadow-none rounded-none">
       <CardHeader>
         <CommentOwnerAvatar
+          isAuthor={isAuthor}
+          username={reply.userId.username}
           image={reply.userId.image}
           name={reply.userId.name}
           createdAt={reply.createdAt as Date}
