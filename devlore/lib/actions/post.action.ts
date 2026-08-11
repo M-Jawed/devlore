@@ -70,7 +70,7 @@ export const getFeaturedPosts = async ({
   }
 };
 
-export const getPostById = async ({ postId }: { postId: string }) => {
+export const getPostById = async (postId: string) => {
   try {
     const data = await Post.findById(postId).lean();
 
@@ -274,4 +274,39 @@ export const deletePostById = async (postId: string) => {
   revalidatePath("/profile/posts");
 
   return { success: true, message: "Post deleted" };
+};
+
+export const updatePost = async ({
+  data,
+  postId,
+}: {
+  data: {
+    title: string;
+    slug: string;
+    body: string;
+    category: string;
+    tags: string[];
+    banner: string;
+    description: string;
+  };
+  postId: string;
+}) => {
+  try {
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session) return { success: false, message: "Session is null" };
+
+    await Post.findByIdAndUpdate(postId, { ...data });
+
+    revalidatePath("/posts");
+    revalidatePath(`/posts/${data.slug}`);
+
+    return { success: true, message: "Post updated" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
 };

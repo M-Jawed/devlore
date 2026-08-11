@@ -18,7 +18,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { User, DoorOpen, BookMarked, Home } from "lucide-react";
+import {
+  User,
+  DoorOpen,
+  BookMarked,
+  Home,
+  LayoutDashboard,
+} from "lucide-react";
 import Link from "next/link";
 
 const UserAvatar = ({
@@ -79,6 +85,16 @@ const UserAvatar = ({
             <BookMarked />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
+        {session?.user.role === "admin" && (
+          <DropdownMenuItem>
+            <Link href={"/dashboard"} className="w-full">
+              Dashboard
+            </Link>
+            <DropdownMenuShortcut>
+              <LayoutDashboard />
+            </DropdownMenuShortcut>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleSignOut()}>
           Sign Out

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 
 const protectedRoutes = ["/dashboard", "/bookmarks", "/posts", "/profile"];
-const adminRoute = ["/admin"];
+const adminRoute = ["/admin", "/dashboard"];
 
 const proxy = async (req: NextRequest) => {
   const session = await auth.api.getSession({
@@ -23,7 +23,7 @@ const proxy = async (req: NextRequest) => {
   }
 
   if (isAdmin && session?.user.role !== "admin") {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/posts", req.url));
   }
 
   return NextResponse.next();
