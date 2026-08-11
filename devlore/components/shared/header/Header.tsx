@@ -25,11 +25,13 @@ const Header = async () => {
           <Search />
         </div>
         <div className="flex items-center gap-x-4">
-          <Button size={"sm"} asChild>
-            <Link href={"/upload/post"} className="flex items-center gap-x-1">
-              Upload <StickyNotePlus />
-            </Link>
-          </Button>
+          {session && (
+            <Button size={"sm"} asChild>
+              <Link href={"/upload/post"} className="flex items-center gap-x-1">
+                Upload <StickyNotePlus />
+              </Link>
+            </Button>
+          )}
           <ThemeDropdown />
           <UserButton />
         </div>
