@@ -21,9 +21,11 @@ const Header = async () => {
           {session && <SidebarTrigger />}
           <NavLinks />
         </div>
-        <div>
+        {session && (
+          <div>
           <Search />
         </div>
+        )}
         <div className="flex items-center gap-x-4">
           {session && (
             <Button size={"sm"} asChild>
