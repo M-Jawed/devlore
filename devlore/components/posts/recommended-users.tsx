@@ -48,7 +48,7 @@ const RecommendedUsers = ({
         ) : (
           unfollowedUsers.map((user: UserType) => {
             return (
-              <div key={user.username} className="flex-between">
+              <div key={user._id} className="flex-between">
                 <div className="flex items-center gap-x-2">
                   <Avatar>
                     <AvatarImage src={user.image as string} />

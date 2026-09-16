@@ -28,7 +28,7 @@ const SignUpPage = async () => {
   if (session) redirect("/posts");
   return (
     <section className={`${geist.className} w-full min-h-screen flex-center`}>
-      <Card className="w-[40%]">
+      <Card className="min-w-[30%]">
         <CardHeader className="text-center">
           <CardTitle className="md:text-4xl md:font-bold md:tracking-wide">
             Sign Up

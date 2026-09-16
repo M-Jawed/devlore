@@ -89,6 +89,7 @@ const SignUpForm = () => {
               <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
               <Input
                 placeholder="Enter your full name"
+                className="max-sm:text-sm"
                 id={field.name}
                 aria-invalid={fieldState.invalid}
                 {...field}
@@ -107,6 +108,7 @@ const SignUpForm = () => {
               <Input
                 {...field}
                 placeholder="Enter your username"
+                className="max-sm:text-sm"
                 id={field.name}
                 aria-invalid={fieldState.invalid}
               />
@@ -125,6 +127,7 @@ const SignUpForm = () => {
             <Input
               {...field}
               placeholder="Enter your email"
+              className="max-sm:text-sm"
               id={field.name}
               aria-invalid={fieldState.invalid}
             />
@@ -142,6 +145,7 @@ const SignUpForm = () => {
             <Input
               {...field}
               placeholder="Enter your password"
+              className="max-sm:text-sm"
               type="password"
               id={field.name}
               aria-invalid={fieldState.invalid}

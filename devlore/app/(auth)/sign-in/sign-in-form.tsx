@@ -68,7 +68,11 @@ const SignInForm = () => {
           render={({ field, fieldState }) => (
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input placeholder="Enter your email" {...field} />
+              <Input
+                placeholder="Enter your email"
+                className="max-sm:text-sm"
+                {...field}
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -83,6 +87,7 @@ const SignInForm = () => {
               <div className="flex items-center gap-x-2">
                 <Input
                   placeholder="Enter your password"
+                  className="max-sm:text-sm"
                   type={showPassword ? "text" : "password"}
                   {...field}
                 />

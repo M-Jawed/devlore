@@ -27,8 +27,10 @@ const SignInPage = async () => {
 
   if (session) redirect("/");
   return (
-    <section className={`${geist.className} w-full min-h-screen flex-center`}>
-      <Card className="w-[40%] mx-auto">
+    <section
+      className={`${geist.className} w-full min-h-screen flex-center px-3 md:px-0`}
+    >
+      <Card className="min-w-[30%] mx-auto">
         <CardHeader className="text-center">
           <CardTitle className="md:text-3xl md:font-bold md:tracking-wide">
             Sign In
