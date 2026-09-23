@@ -319,3 +319,48 @@ export const getUserLikedPosts = async () => {
     return { success: false, message: formatError(error), data: [] };
   }
 };
+
+export const getAllUsers = async ({
+  type,
+  searchValue,
+}: {
+  type?: string;
+  searchValue?: string;
+}) => {
+  try {
+    if (!type || !searchValue) return;
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session) return { success: false, message: "Session is null" };
+
+    const query =
+      type && (type === "user" || type === "all")
+        ? {
+            name: {
+              $regex: searchValue,
+              $options: "i",
+            },
+            username: {
+              $regex: searchValue,
+              $options: "i",
+            },
+          }
+        : {};
+
+    const users = await User.find(query).sort({ createdAt: -1 }).lean();
+
+    if (!users) return { success: false, message: "No user found" };
+
+    return {
+      success: true,
+      message: "Users found",
+      data: convertToPlainJSON(users),
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+};

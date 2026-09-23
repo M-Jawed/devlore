@@ -57,7 +57,7 @@ export const getFeaturedPosts = async ({
       .lean()
       .limit(limit);
     if (!featuredPosts || featuredPosts.length === 0) {
-      return { success: false, message: "No featrued posts found", data: [] };
+      return { success: false, message: "No featured posts found", data: [] };
     }
 
     return {

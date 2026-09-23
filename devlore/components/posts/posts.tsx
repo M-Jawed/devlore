@@ -25,7 +25,7 @@ const Posts = ({
           <PostCard key={post._id} post={post} currentUser={currentUser} />
         ))
       ) : (
-        <h1>There are no featured posts currently. Come back later.</h1>
+        <h1>No posts found</h1>
       )}
     </div>
   );

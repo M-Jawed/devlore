@@ -21,19 +21,25 @@ const LikedPostPage = async () => {
   const userId = session?.user?.id;
 
   const currentUser = await getUserById(userId);
+  console.log(posts.likedPosts);
   return (
     <section className="mt-5 px-5">
       <h1 className="text-3xl font-bold text-center">Liked Posts</h1>
       <div className="w-[63%] mx-auto mt-6">
-        {posts.likedPosts.length === 0 ? (
+        {!posts.likedPosts || posts.likedPosts.length === 0 ? (
           <div>
             <h1>You have no liked posts</h1>
           </div>
         ) : (
           <div className="space-y-4">
-            {posts.likedPosts.map((post: any) => (
-              <PostCard key={post._id} post={post} currentUser={currentUser} />
-            ))}
+            {posts.likedPosts &&
+              posts.likedPosts.map((post: any) => (
+                <PostCard
+                  key={post._id}
+                  post={post}
+                  currentUser={currentUser}
+                />
+              ))}
           </div>
         )}
       </div>

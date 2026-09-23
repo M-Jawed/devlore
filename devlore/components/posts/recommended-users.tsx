@@ -31,7 +31,7 @@ const RecommendedUsers = ({
   };
 
   const followingIds = (currentUser.following ?? []).map(
-    (item: { userId: string }) => item.userId.toString(),
+    (item: { userId: string }) => item.userId?.toString(),
   );
 
   const unfollowedUsers = users

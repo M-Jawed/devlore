@@ -35,7 +35,7 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
 
   const isFollowing = userFromDB.following?.some(
     (item: { userId: string; followedAt: string }) =>
-      item.userId.toString() === post.userId._id.toString(),
+      item.userId?.toString() === post.userId._id.toString(),
   );
 
   const isAuthor = user.id.toString() === post.userId._id.toString();

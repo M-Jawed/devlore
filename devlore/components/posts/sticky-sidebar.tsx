@@ -21,11 +21,20 @@ const StickySidebar = ({ children }: { children: React.ReactNode }) => {
       }
 
       const scrollingDown = scrollY > lastScrollY.current;
+      const currentTop = parseInt(sidebar.style.top || "0");
 
       if (scrollingDown) {
-        sidebar.style.top = `${viewportHeight - sidebarHeight}px`;
+        const newTop = Math.max(
+          viewportHeight - sidebarHeight,
+          currentTop - (scrollY - lastScrollY.current),
+        );
+        sidebar.style.top = `${newTop}px`;
       } else {
-        sidebar.style.top = "0px";
+        const newTop = Math.min(
+          0,
+          currentTop + (lastScrollY.current - scrollY),
+        );
+        sidebar.style.top = `${newTop}px`;
       }
 
       lastScrollY.current = scrollY;
@@ -38,7 +47,7 @@ const StickySidebar = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       ref={sidebarRef}
-      className="max-xl:hidden sticky w-80 px-4 py-3 border-l"
+      className="max-xl:hidden sticky w-80 px-4 py-3 border-l shrink-0"
     >
       {children}
     </div>
