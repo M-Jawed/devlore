@@ -47,7 +47,7 @@ const PostsPage = async ({
       <div className="w-full pt-10">
         <PostFilters />
         {type === "all" || type === "user" ? (
-          <UserSearch users={users!.data} />
+          <UserSearch users={users!.data} searchParams={searchParams} />
         ) : (
           ""
         )}

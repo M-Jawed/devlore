@@ -16,15 +16,15 @@ const Header = async () => {
   });
   return (
     <nav className=" h-15 w-full flex-center flex-col p-5 border-b">
-      <div className="flex-between w-[60%] mx-auto max-sm:w-full">
+      <div className="flex-between w-[60%] mx-auto max-sm:w-full max-lg:w-full">
         <div className="flex items-center gap-x-2">
           {session && <SidebarTrigger />}
           <NavLinks />
         </div>
         {session && (
-          <div>
-          <Search />
-        </div>
+          <div className="max-sm:hidden">
+            <Search />
+          </div>
         )}
         <div className="flex items-center gap-x-4">
           {session && (

@@ -201,7 +201,7 @@ export const handleUserFollow = async ({
     }
 
     revalidatePath("/posts");
-    revalidatePath(`/posts/${postSlug}`);
+    if (postSlug) revalidatePath(`/posts/${postSlug}`);
 
     return {
       success: true,
