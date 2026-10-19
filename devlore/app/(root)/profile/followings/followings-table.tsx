@@ -52,7 +52,7 @@ const FollowingsTable = ({
       <TableHeader>
         <TableRow>
           <TableHead>User</TableHead>
-          <TableHead>Followed on</TableHead>
+          <TableHead className="max-sm:hidden">Followed on</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -78,7 +78,7 @@ const FollowingsTable = ({
                   </div>
                 </TableCell>
               </Link>
-              <TableCell>
+              <TableCell className="max-sm:hidden">
                 {" "}
                 {moment(item.followedAt).format("LL") || "undefined date"}{" "}
               </TableCell>

@@ -23,9 +23,9 @@ const LikedPostPage = async () => {
   const currentUser = await getUserById(userId);
   console.log(posts.likedPosts);
   return (
-    <section className="mt-5 px-5">
+    <section className="mt-5 px-5 max-sm:px-2">
       <h1 className="text-3xl font-bold text-center">Liked Posts</h1>
-      <div className="w-[63%] mx-auto mt-6">
+      <div className="w-[63%] mx-auto mt-6 max-sm:w-full">
         {!posts.likedPosts || posts.likedPosts.length === 0 ? (
           <div>
             <h1>You have no liked posts</h1>

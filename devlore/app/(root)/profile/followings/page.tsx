@@ -12,7 +12,7 @@ const FollowingsPage = async () => {
   const followings = (await getAllUserFollowings()).data;
 
   return (
-    <section className="w-[63%] mt-10 mx-auto">
+    <section className="w-[63%] mt-10 mx-auto max-sm:w-full max-sm:px-2 ">
       <div className="flex-center">
         {followings.length === 0 ? (
           <div className="text-center">

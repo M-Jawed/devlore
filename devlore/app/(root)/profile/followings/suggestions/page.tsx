@@ -29,7 +29,7 @@ const FollowingSuggestions = async () => {
     (user: User) => !followingIds.includes(user._id.toString()),
   );
   return (
-    <section className="w-[63%] mx-auto mt-10">
+    <section className="w-[63%] mx-auto mt-10 max-sm:w-full max-sm:px-2">
       <div className="w-full space-y-4">
         {unfollowedUsers.length === 0 ? (
           <div>

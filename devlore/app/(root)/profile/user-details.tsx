@@ -26,9 +26,9 @@ const UserDetails = ({
 
   return (
     <div className="flex-center flex-col space-y-4">
-      <div className="mt-10 w-100 flex-center flex-col">
+      <div className="mt-10 w-100 flex-center flex-col max-sm:w-full">
         <div className="relative">
-          <div className="absolute inset-0 top-2 left-24 transition-opacity z-20 ">
+          <div className="absolute inset-0 top-2 left-24 transition-opacity z-20">
             {isProfileOwner && (
               <ProfileAvatarDropdown
                 userImage={user.image as string}
@@ -45,7 +45,7 @@ const UserDetails = ({
           <p> {user.bio ?? "No bio yet"} </p>
         </div>
       </div>
-      <Card className="ring-0 shadow-none">
+      <Card className="ring-0 shadow-none max-sm:w-full">
         <CardHeader className="text-center flex-center">
           <DisplayFollows followers={user.followers as string[]} />
           {isProfileOwner && (
@@ -55,24 +55,24 @@ const UserDetails = ({
           )}
         </CardHeader>
         <CardContent>
-          <div className="w-200 flex-center flex-col space-y-4">
-            <div className="flex-between w-[60%] px-3 border-b pb-2">
+          <div className="w-200 flex-center flex-col space-y-4 max-sm:w-full">
+            <div className="flex-between w-[60%] px-3 border-b pb-2 max-sm:w-full">
               <span className="text-muted-foreground">Name: </span>
               {user.name}
             </div>
-            <div className="flex-between w-[60%] px-3 border-b pb-2">
+            <div className="flex-between w-[60%] px-3 border-b pb-2 max-sm:w-full">
               <span className="text-muted-foreground">Username: </span>
               {user.username}
             </div>
-            <div className="flex-between w-[60%] px-3 border-b pb-2">
+            <div className="flex-between w-[60%] px-3 border-b pb-2 max-sm:w-full">
               <span className="text-muted-foreground">Email: </span>
               {user.email}
             </div>
-            <div className="flex-between w-[60%] px-3 border-b pb-2">
+            <div className="flex-between w-[60%] px-3 border-b pb-2 max-sm:w-full">
               <span className="text-muted-foreground">Email Verified: </span>
               {user.emailVerified ? "Yes" : "No"}
             </div>
-            <div className="flex-between w-[60%] px-3 border-b pb-2">
+            <div className="flex-between w-[60%] px-3 border-b pb-2 max-sm:w-full">
               <span className="text-muted-foreground">Gender: </span>
               {user.gender || "Not specified"}
             </div>

@@ -18,7 +18,7 @@ const ProfilePage = async () => {
   const user = await getUserById(session?.user.id as string);
   return (
     <div className="w-full">
-      <div className="flex flex-col mt-5">
+      <div className="flex flex-col mt-5 max-sm:w-full">
         <h1 className="text-4xl font-bold tracking-wide text-center">
           {" "}
           {user.name}{" "}

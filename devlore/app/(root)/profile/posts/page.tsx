@@ -26,7 +26,7 @@ const PostPage = async () => {
   const currentUser = await getUserById(userId);
 
   return (
-    <section className="w-[63%] mx-auto mt-10">
+    <section className="w-[63%] mx-auto mt-10 max-sm:w-full max-sm:px-2">
       <div className="w-full flex-center">
         {posts.length === 0 ? (
           <div className="mt-20 text-center pt-7">

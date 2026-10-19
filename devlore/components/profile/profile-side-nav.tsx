@@ -16,9 +16,9 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0 text-muted-foreground",
+            "font-medium rounded-none border-0 text-muted-foreground max-sm:text-sm",
             pathname === "/profile" &&
-              "font-bold border-b-2 border-black tracking-wide text-md pb-1 text-primary",
+              "font-bold border-b-2 border-black tracking-wide text-md pb-1 text-primary max-sm:text-sm",
           )}
         >
           <Link href={"/profile"}>Profile</Link>
@@ -29,9 +29,9 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0 text-muted-foreground",
+            "font-medium rounded-none border-0 text-muted-foreground max-sm:text-sm",
             pathname === "/profile/posts" &&
-              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary",
+              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary max-sm:text-sm",
           )}
         >
           <Link href={"/profile/posts"}>Your posts</Link>
@@ -42,9 +42,9 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0 text-muted-foreground",
+            "font-medium rounded-none border-0 text-muted-foreground max-sm:text-sm",
             pathname === "/profile/followings" &&
-              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary",
+              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary max-sm:text-sm",
           )}
         >
           <Link href={"/profile/followings"}>Followings</Link>
@@ -55,9 +55,9 @@ const ProfileNavigation = () => {
           size={"sm"}
           asChild
           className={cn(
-            "font-medium rounded-none border-0 text-muted-foreground",
+            "font-medium rounded-none border-0 text-muted-foreground max-sm:text-sm",
             pathname === "/profile/followings/suggestions" &&
-              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary",
+              "font-black border-b-2 border-black tracking-wide text-md pb-1 text-primary max-sm:text-sm",
           )}
         >
           <Link href={"/profile/followings/suggestions"}>Suggestions</Link>

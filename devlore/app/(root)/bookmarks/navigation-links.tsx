@@ -9,8 +9,8 @@ const NavigationLinks = () => {
   const pathname = usePathname();
 
   return (
-    <div className="w-[60%] mx-auto mt-10 border-b">
-      <div className="flex items-center gap-x-3">
+    <div className="w-[60%] mx-auto mt-10 border-b max-sm:w-[90%]">
+      <div className="flex items-center gap-x-3 max-sm:justify-center">
         <Button
           variant={"link"}
           size={"sm"}
