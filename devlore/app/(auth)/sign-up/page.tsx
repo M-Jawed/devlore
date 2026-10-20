@@ -10,6 +10,9 @@ import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Geist } from "next/font/google";
+import { MoveLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -28,7 +31,12 @@ const SignUpPage = async () => {
   if (session) redirect("/posts");
   return (
     <section className={`${geist.className} w-full min-h-screen flex-center`}>
-      <Card className="min-w-[30%]">
+      <Card className="min-w-[30%] max-sm:w-[90%]">
+        <Button size={"sm"} variant={"link"} className="max-md:w-[50%] w-[40%]">
+          <Link href={"/"} className="flex items-center gap-x-2">
+            <MoveLeft /> Back to devlore
+          </Link>
+        </Button>
         <CardHeader className="text-center">
           <CardTitle className="md:text-4xl md:font-bold md:tracking-wide">
             Sign Up
