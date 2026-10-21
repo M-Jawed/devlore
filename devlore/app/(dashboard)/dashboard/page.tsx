@@ -1,5 +1,11 @@
+import DashboardHeader from "@/components/dashboard/header/dashboard-header";
+
 const DashboardPage = () => {
-  return <h1>this is dashboard page and only admins can access it</h1>;
+  return (
+    <main>
+      <h1>Dashboard content goes here</h1>
+    </main>
+  );
 };
 
 export default DashboardPage;

@@ -53,7 +53,6 @@ const UploadPostForm = () => {
 
   const onSubmit = async (value: z.infer<typeof uploadPostSchema>) => {
     setIsSubmitting(true);
-    console.log(value);
     const res = await createPost(value);
 
     if (!res.success) {

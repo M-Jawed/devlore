@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { convertToPlainJSON } from "@/lib/utils";
 import { PopulatedPost } from "@/types";
 import { getUserById } from "@/lib/actions/user.action";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -31,12 +32,26 @@ const Bookmarks = async () => {
   const posts = convertToPlainJSON(res.data);
 
   return (
-    <section className="px-5 mt-10">
+    <section className="px-5 mt-5">
       <h1 className="text-3xl font-bold text-center">Bookmarks</h1>
       <div className="grid w-[60%] gap-x-3 mt-5 space-y-6 mx-auto max-lg:w-[80%] max-md:w-full">
-        {posts.map((post: PopulatedPost) => (
-          <PostCard key={post._id} post={post} currentUser={currentUser} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post: PopulatedPost) => (
+            <PostCard key={post._id} post={post} currentUser={currentUser} />
+          ))
+        ) : (
+          <div>
+            <p className="text-muted-foreground">
+              You do not have any saved posts.{" "}
+              <Link
+                href={"/posts"}
+                className="text-primary underline underline-offset-2"
+              >
+                Browse Posts
+              </Link>
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
