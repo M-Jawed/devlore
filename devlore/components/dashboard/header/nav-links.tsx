@@ -9,6 +9,16 @@ const NavLinks = () => {
   return (
     <div className="flex items-center gap-x-6">
       <Link
+        href={"/dashboard"}
+        className={cn(
+          "text-muted-foreground",
+          pathname === "/dashboard" &&
+            "text-primary underline underline-offset-2",
+        )}
+      >
+        Dashboard
+      </Link>
+      <Link
         href={"/dashboard/posts"}
         className={cn(
           "text-muted-foreground",

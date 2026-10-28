@@ -1,10 +1,10 @@
-import DashboardHeader from "@/components/dashboard/header/dashboard-header";
+import DashboardHome from "@/components/dashboard/dashboard-home";
 
 const DashboardPage = () => {
   return (
-    <main>
-      <h1>Dashboard content goes here</h1>
-    </main>
+    <section>
+      <DashboardHome />
+    </section>
   );
 };
 

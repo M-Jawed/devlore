@@ -1,22 +1,19 @@
-import Image from "next/image";
-import Link from "next/link";
 import NavLinks from "./nav-links";
+import UserButton from "@/components/shared/header/user-button";
+import ThemeDropdown from "@/components/shared/header/theme-dropdown";
+import DashboardSearch from "./dashboard-search";
 
 const DashboardHeader = () => {
   return (
     <header className="w-full h-20 border-b border-gray-300 flex-center">
-      <div className="w-full md:w-[80%]">
-        <div className="flex items-center gap-x-5">
-          <Link href={"/posts"}>
-            <Image
-              src={"/images/logo.png"}
-              alt="Image of the logo devlore"
-              width={200}
-              height={100}
-            />
-          </Link>
+      <div className="w-full md:w-full px-10 pr-15 flex-between">
+        <div className="w-[70%]">
+          <DashboardSearch />
+        </div>
 
-          <NavLinks />
+        <div className="flex-between md:w-[8%]">
+          <ThemeDropdown />
+          <UserButton />
         </div>
       </div>
     </header>
