@@ -11,20 +11,20 @@ import type { LucideIcon } from "lucide-react";
 const DashboardStatsCard = ({
   header,
   stats,
-  icon,
+  icon: Icon,
 }: {
   header: string;
   stats: string | number;
-  icon?: LucideIcon;
+  icon: LucideIcon;
 }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle> {header} </CardTitle>
+        {Icon && <Icon />}
+        <CardTitle className="mt-5 text-muted-foreground"> {header} </CardTitle>
       </CardHeader>
-
       <CardContent>
-        <p> {stats} </p>
+        <span className="text-2xl font-bold"> {stats} </span>
       </CardContent>
     </Card>
   );

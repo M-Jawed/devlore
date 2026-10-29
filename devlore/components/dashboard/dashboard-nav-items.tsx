@@ -19,17 +19,16 @@ const DashboardNavItems = () => {
         <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
         <SidebarMenuItem>
           <SidebarMenuButton
+            tooltip={"Home"}
             className="text-lg font-medium"
             asChild
             isActive={pathname === "/dashboard"}
           >
             <Link href={"/dashboard"} className="py-5">
-              Home
+              <Home />
+              <span>Home</span>
             </Link>
           </SidebarMenuButton>
-          <SidebarMenuBadge className="mt-1">
-            <Home />
-          </SidebarMenuBadge>
         </SidebarMenuItem>
       </SidebarGroup>
 
@@ -38,31 +37,29 @@ const DashboardNavItems = () => {
         <SidebarMenuItem>
           <SidebarMenuButton
             className="text-lg font-medium"
+            tooltip={"Posts"}
             asChild
             isActive={pathname === "/dashboard/posts"}
           >
             <Link href={"/dashboard/posts"} className="py-5">
-              Posts
+              <StickyNote />
+              <span>Posts</span>
             </Link>
           </SidebarMenuButton>
-          <SidebarMenuBadge className="mt-1">
-            <StickyNote />
-          </SidebarMenuBadge>
         </SidebarMenuItem>
 
         <SidebarMenuItem>
           <SidebarMenuButton
             className="text-lg font-medium"
+            tooltip={"Users"}
             asChild
             isActive={pathname === "/dashboard/users"}
           >
             <Link href={"/dashboard/users"} className="py-5">
-              Users
+              <User />
+              <span>Users</span>
             </Link>
           </SidebarMenuButton>
-          <SidebarMenuBadge className="mt-1">
-            <User />
-          </SidebarMenuBadge>
         </SidebarMenuItem>
       </SidebarGroup>
     </>

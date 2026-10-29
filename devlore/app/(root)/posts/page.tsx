@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import StickySidebar from "@/components/posts/sticky-sidebar";
 import PostSidebar from "@/components/posts/post-sidebar";
 import UserSearch from "@/components/posts/display-user-search";
-import { getUserById, getAllUsers } from "@/lib/actions/user.action";
+import { getUserById, getAllSearchUsers } from "@/lib/actions/user.action";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 
@@ -34,7 +34,7 @@ const PostsPage = async ({
         }
       : {};
   const posts = await getAllPosts(query);
-  const users = await getAllUsers(userQuery);
+  const users = await getAllSearchUsers(userQuery);
 
   const session = await auth.api.getSession({
     headers: await headers(),

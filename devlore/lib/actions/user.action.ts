@@ -9,6 +9,7 @@ import connectDB from "@/config/db";
 import { convertToPlainJSON } from "../utils";
 import Post from "@/models/Post";
 import mongoose from "mongoose";
+import { ApiError } from "next/dist/server/api-utils";
 
 export const getUserById = async (id: string) => {
   try {
@@ -320,7 +321,7 @@ export const getUserLikedPosts = async () => {
   }
 };
 
-export const getAllUsers = async ({
+export const getAllSearchUsers = async ({
   type,
   searchValue,
 }: {
@@ -363,4 +364,20 @@ export const getAllUsers = async ({
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+};
+
+export const getAllUsers = async () => {
+  await connectDB();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) return { success: false, message: "Session is null" };
+
+  const users = await User.countDocuments();
+
+  if (!users) return { success: false, message: "No users found" };
+
+  return { success: true, message: "Users found", totalUsers: users };
 };

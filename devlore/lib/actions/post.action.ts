@@ -37,9 +37,12 @@ export const getAllPosts = async ({
       return { success: false, message: "No posts found", data: [] };
     }
 
+    const totalPosts = await Post.countDocuments();
+
     return {
       success: true,
       message: "Posts found",
+      postCount: totalPosts,
       data: convertToPlainJSON(posts),
     };
   } catch (error) {
