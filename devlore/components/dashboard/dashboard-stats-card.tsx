@@ -12,13 +12,15 @@ const DashboardStatsCard = ({
   header,
   stats,
   icon: Icon,
+  backgroundColor,
 }: {
   header: string;
   stats: string | number;
   icon: LucideIcon;
+  backgroundColor?: string;
 }) => {
   return (
-    <Card>
+    <Card className={`bg-${backgroundColor}`}>
       <CardHeader>
         {Icon && <Icon />}
         <CardTitle className="mt-5 text-muted-foreground"> {header} </CardTitle>

@@ -2,6 +2,7 @@ import DashboardStatsCard from "./dashboard-stats-card";
 import { User, StickyNote } from "lucide-react";
 import { getAllPosts } from "@/lib/actions/post.action";
 import { getAllUsers } from "@/lib/actions/user.action";
+import DashboardChart from "./dashboard-chart";
 
 const DashboardHome = async () => {
   const postsCount = (await getAllPosts()).postCount ?? 0;
@@ -14,8 +15,13 @@ const DashboardHome = async () => {
           header="Posts"
           stats={postsCount}
           icon={StickyNote}
+          backgroundColor="#71B340"
         />
         <DashboardStatsCard header="Users" stats={usersCount} icon={User} />
+      </div>
+
+      <div className="mt-7">
+        <DashboardChart />
       </div>
     </div>
   );
