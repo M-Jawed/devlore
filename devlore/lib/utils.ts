@@ -20,3 +20,11 @@ export const formatError = (error: any) => {
 export const convertToPlainJSON = (data: any) => {
   return JSON.parse(JSON.stringify(data));
 };
+
+export const formatMonth = (date: string) => {
+  const [year, month] = date.split("-");
+
+  return new Date(Number(year), Number(month) - 1).toLocaleString("en-US", {
+    month: "short",
+  });
+};

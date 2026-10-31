@@ -2,15 +2,17 @@ import DashboardStatsCard from "./dashboard-stats-card";
 import { User, StickyNote } from "lucide-react";
 import { getAllPosts } from "@/lib/actions/post.action";
 import { getAllUsers } from "@/lib/actions/user.action";
-import DashboardChart from "./dashboard-chart";
+import PostsChart from "./dashboard-posts-chart";
+import UsersChart from "./dashboard-user-chart";
 
 const DashboardHome = async () => {
   const postsCount = (await getAllPosts()).postCount ?? 0;
   const usersCount = (await getAllUsers()).totalUsers ?? 0;
+  const postsPerMonth = (await getAllPosts()).postsPerMonth!;
 
   return (
     <div className="w-full mt-5 px-10">
-      <div className="grid md:grid-cols-2 gap-x-4">
+      <div className="grid md:grid-cols-2 gap-x-4 max-sm:gap-y-3">
         <DashboardStatsCard
           header="Posts"
           stats={postsCount}
@@ -21,7 +23,10 @@ const DashboardHome = async () => {
       </div>
 
       <div className="mt-7">
-        <DashboardChart />
+        <div className="grid md:grid-cols-2 gap-x-3">
+          <PostsChart data={postsPerMonth} />
+          <UsersChart />
+        </div>
       </div>
     </div>
   );

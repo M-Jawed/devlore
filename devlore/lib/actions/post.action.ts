@@ -38,11 +38,21 @@ export const getAllPosts = async ({
     }
 
     const totalPosts = await Post.countDocuments();
+    const postsPerMonths = await Post.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          posts: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
 
     return {
       success: true,
       message: "Posts found",
       postCount: totalPosts,
+      postsPerMonth: postsPerMonths,
       data: convertToPlainJSON(posts),
     };
   } catch (error) {
