@@ -8,7 +8,9 @@ import {
 } from "../ui/card";
 import Image from "next/image";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
+import Link from "next/link";
 import { UserRound } from "lucide-react";
+import DashboardCardControllers from "./dashboard-card-controllers";
 
 const DashboardRecentPost = ({
   recentPosts,
@@ -18,26 +20,27 @@ const DashboardRecentPost = ({
   return (
     <div>
       <span className="text-2xl font-medium">Recent Posts</span>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
         {recentPosts.map((post) => (
-          <Card key={post._id} className="h-full">
-            <CardHeader>
-              <div className="relative aspect-video w-full overflow-hidden">
-                <Image
-                  src={post.banner}
-                  alt={`Image of the post ${post.title}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </CardHeader>
+          <Card key={post._id} className="h-full flex flex-col">
+            <Link href={`/posts/${post.slug}`}>
+              <CardHeader>
+                <div className="relative aspect-video w-full overflow-hidden">
+                  <Image
+                    src={post.banner}
+                    alt={`Image of the post ${post.title}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </CardHeader>
 
-            <CardContent className="flex flex-1 flex-col">
-              <span className="text-lg font-medium line-clamp-2 mb-3">
-                {" "}
-                {post.title}{" "}
-              </span>
-              <div className="flex items-center gap-x-2 mt-auto">
+              <CardContent>
+                <span className="text-lg font-medium my-3"> {post.title} </span>
+              </CardContent>
+            </Link>
+            <CardFooter className="mt-auto flex flex-col items-start">
+              <div className="flex items-center gap-x-2">
                 <Avatar>
                   <AvatarImage
                     src={post.userId.image ?? undefined}
@@ -52,7 +55,11 @@ const DashboardRecentPost = ({
 
                 <span> {post.userId.name} </span>
               </div>
-            </CardContent>
+
+              <div className="mt-5">
+                <DashboardCardControllers postId={post._id.toString()} />
+              </div>
+            </CardFooter>
           </Card>
         ))}
       </div>

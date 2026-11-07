@@ -10,6 +10,7 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 import mongoose from "mongoose";
+import { canEditPost } from "../auth/can-edit-post";
 
 export const getAllPosts = async ({
   featured,
@@ -85,7 +86,21 @@ export const getFeaturedPosts = async ({
 
 export const getPostById = async (postId: string) => {
   try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session) return { success: false, message: "Unauthorized", post: [] };
+
     const data = await Post.findById(postId).lean();
+
+    if (!canEditPost(session, data.userId.toString())) {
+      return {
+        success: false,
+        message: "You are not authorized to edit this post",
+        post: [],
+      };
+    }
 
     if (!data || data.length === 0)
       return {

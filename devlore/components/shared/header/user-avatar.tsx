@@ -25,6 +25,7 @@ import {
   Home,
   LayoutDashboard,
 } from "lucide-react";
+import { MdAdminPanelSettings } from "react-icons/md";
 import Link from "next/link";
 
 const UserAvatar = ({
@@ -91,7 +92,7 @@ const UserAvatar = ({
               Dashboard
             </Link>
             <DropdownMenuShortcut>
-              <LayoutDashboard />
+              <MdAdminPanelSettings />
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         )}
