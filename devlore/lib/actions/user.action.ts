@@ -377,7 +377,22 @@ export const getAllUsers = async () => {
 
   const users = await User.countDocuments();
 
+  const usersPerMonth = await User.aggregate([
+    {
+      $group: {
+        _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+        users: { $sum: 1 },
+      },
+    },
+    { $sort: { _id: 1 } },
+  ]);
+
   if (!users) return { success: false, message: "No users found" };
 
-  return { success: true, message: "Users found", totalUsers: users };
+  return {
+    success: true,
+    message: "Users found",
+    totalUsers: users,
+    usersPerMonth,
+  };
 };

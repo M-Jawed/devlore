@@ -21,7 +21,8 @@ export const convertToPlainJSON = (data: any) => {
   return JSON.parse(JSON.stringify(data));
 };
 
-export const formatMonth = (date: string) => {
+export const formatMonth = (date: unknown) => {
+  if (typeof date !== "string") return "";
   const [year, month] = date.split("-");
 
   return new Date(Number(year), Number(month) - 1).toLocaleString("en-US", {

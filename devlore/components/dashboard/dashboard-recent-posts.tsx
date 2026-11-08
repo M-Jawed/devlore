@@ -53,7 +53,12 @@ const DashboardRecentPost = ({
                   </AvatarFallback>
                 </Avatar>
 
-                <span> {post.userId.name} </span>
+                <Link
+                  href={`/profile/user/${post.userId.username}`}
+                  className="underline-offset-1 hover:underline"
+                >
+                  {post.userId.name}{" "}
+                </Link>
               </div>
 
               <div className="mt-5">

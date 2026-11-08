@@ -33,7 +33,7 @@ const UserSearchCard = ({
     toast.success(res.message);
   };
   return (
-    <Link href={"/test"}>
+    <Link href={`/profile/user/${user.username}`}>
       <Card className="text-center">
         <CardHeader className="w-full text-center">
           <Avatar size="lg" className="mx-auto">

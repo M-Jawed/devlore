@@ -3,25 +3,17 @@
 import { ChartContainer, ChartTooltipContent, ChartTooltip } from "../ui/chart";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { BarChart, Bar, CartesianGrid, XAxis } from "recharts";
+import { formatMonth } from "@/lib/utils";
 
-const UsersChart = () => {
-  const chartData = [
-    { month: "January", mobile: 8, desktop: 12 },
-    { month: "May", mobile: 34, desktop: 20 },
-    { month: "July", mobile: 45, desktop: 4 },
-    { month: "September", mobile: 6, desktop: 9 },
-  ];
-
+const UsersChart = ({ data }: { data: { _id: string; users: number }[] }) => {
   const chartConfig = {
-    desktop: {
-      label: "desktop",
-      color: "#2563eb",
-    },
-    mobile: {
-      label: "mobile",
-      color: "#60a5fa",
+    users: {
+      label: "Users",
+      color: "#00FDDC",
     },
   };
+
+  console.log(data);
   return (
     <Card className="ring-0">
       <CardHeader>
@@ -29,17 +21,19 @@ const UsersChart = () => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={data}>
             <CartesianGrid />
             <XAxis
-              dataKey={"month"}
+              dataKey={"_id"}
               tickLine={false}
               tickMargin={10}
               axisLine={false}
+              tickFormatter={formatMonth}
             />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey={"desktop"} fill="#00FDDC" radius={5} />
-            <Bar dataKey={"mobile"} fill="#60a5fa" radius={5} />
+            <ChartTooltip
+              content={<ChartTooltipContent labelFormatter={formatMonth} />}
+            />
+            <Bar dataKey={"users"} fill="#00FDDC" radius={5} />
           </BarChart>
         </ChartContainer>
       </CardContent>

@@ -30,7 +30,9 @@ const PostsChart = ({ data }: { data: { month: string; posts: number }[] }) => {
               tickMargin={8}
               tickFormatter={formatMonth}
             />
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartTooltip
+              content={<ChartTooltipContent labelFormatter={formatMonth} />}
+            />
             <Line
               dataKey={"posts"}
               type={"natural"}

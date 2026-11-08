@@ -13,6 +13,7 @@ const DashboardHome = async () => {
   const usersCount = (await getAllUsers()).totalUsers ?? 0;
   const postsPerMonth = (await getAllPosts()).postsPerMonth!;
   const recentPosts = (await getRecentPosts()).data;
+  const usersPerMonth = (await getAllUsers()).usersPerMonth!;
 
   return (
     <div className="w-full mt-5 px-10">
@@ -35,7 +36,7 @@ const DashboardHome = async () => {
       <div className="mt-7">
         <div className="grid md:grid-cols-2 gap-x-3">
           <PostsChart data={postsPerMonth} />
-          <UsersChart />
+          <UsersChart data={usersPerMonth} />
         </div>
       </div>
 

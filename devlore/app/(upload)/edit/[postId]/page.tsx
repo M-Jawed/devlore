@@ -15,10 +15,7 @@ const EditPostPage = async ({
 
   const post = await getPostById(postId);
 
-  if (!post.success) {
-    console.log(post.message);
-    return notFound();
-  }
+  if (!post.success) notFound();
 
   const session = await auth.api.getSession({
     headers: await headers(),
