@@ -9,11 +9,17 @@ import UsersChart from "./dashboard-user-chart";
 import DashboardRecentPost from "./dashboard-recent-posts";
 
 const DashboardHome = async () => {
-  const postsCount = (await getAllPosts()).postCount ?? 0;
-  const usersCount = (await getAllUsers()).totalUsers ?? 0;
-  const postsPerMonth = (await getAllPosts()).postsPerMonth!;
-  const recentPosts = (await getRecentPosts()).data;
-  const usersPerMonth = (await getAllUsers()).usersPerMonth!;
+  const [postsRes, usersRes, recentPostsRes] = await Promise.all([
+    getAllPosts(),
+    getAllUsers(),
+    getRecentPosts(),
+  ]);
+
+  const postsCount = postsRes.postCount ?? 0;
+  const usersCount = usersRes.totalUsers ?? 0;
+  const postsPerMonth = postsRes.postsPerMonth ?? [];
+  const recentPosts = recentPostsRes.data;
+  const usersPerMonth = usersRes.usersPerMonth ?? [];
 
   return (
     <div className="w-full mt-5 px-10">

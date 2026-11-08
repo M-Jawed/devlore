@@ -13,7 +13,6 @@ const UsersChart = ({ data }: { data: { _id: string; users: number }[] }) => {
     },
   };
 
-  console.log(data);
   return (
     <Card className="ring-0">
       <CardHeader>

@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import Link from "next/link";
 import { UserRound } from "lucide-react";
-import DashboardCardControllers from "./dashboard-card-controllers";
+import DashboardDeletePostBtn from "./dashboard-delete-post-btn";
 
 const DashboardRecentPost = ({
   recentPosts,
@@ -61,8 +61,8 @@ const DashboardRecentPost = ({
                 </Link>
               </div>
 
-              <div className="mt-5">
-                <DashboardCardControllers postId={post._id.toString()} />
+              <div className="mt-5 flex items-center gap-x-3">
+                <DashboardDeletePostBtn postId={post._id.toString()} />
               </div>
             </CardFooter>
           </Card>
