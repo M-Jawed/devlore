@@ -131,7 +131,7 @@ export const getRecentPosts = async () => {
     return {
       success: true,
       message: "Posts found",
-      data: posts as PopulatedPost[],
+      data: convertToPlainJSON(posts as PopulatedPost[]),
     };
   } catch (error) {
     return { success: false, message: formatError(error), data: [] };

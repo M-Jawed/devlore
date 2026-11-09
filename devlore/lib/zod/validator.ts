@@ -42,3 +42,14 @@ export const uploadPostSchema = z.object({
   banner: z.string().min(1, "Image is required"),
   description: z.string().min(3, "Description must be above 3 characters"),
 });
+
+export const quickEditPost = z.object({
+  title: z
+    .string()
+    .min(5, "Title must be above 5 characters")
+    .max(70, "Maximum is 70 characters"),
+  slug: z.string().min(3, "Slug is required").max(70),
+  description: z.string().min(3, "Description must be above 3 characters"),
+  category: z.string().min(1, "Please select a category"),
+  tags: z.array(z.string()).min(2, "Please select at least 2 tags"),
+});

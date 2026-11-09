@@ -11,6 +11,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import Link from "next/link";
 import { UserRound } from "lucide-react";
 import DashboardDeletePostBtn from "./dashboard-delete-post-btn";
+import DashboardEditPostDialog from "./dashboard-edit-dialog";
 
 const DashboardRecentPost = ({
   recentPosts,
@@ -63,6 +64,7 @@ const DashboardRecentPost = ({
 
               <div className="mt-5 flex items-center gap-x-3">
                 <DashboardDeletePostBtn postId={post._id.toString()} />
+                <DashboardEditPostDialog post={post} />
               </div>
             </CardFooter>
           </Card>

@@ -35,8 +35,7 @@ const TagCombobox = ({
           <ComboboxList>
             {options.map((tag) => (
               <ComboboxItem key={tag} value={tag}>
-                {" "}
-                {tag}{" "}
+                {tag}
               </ComboboxItem>
             ))}
           </ComboboxList>
