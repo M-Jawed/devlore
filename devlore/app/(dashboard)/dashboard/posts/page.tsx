@@ -1,5 +1,13 @@
+import DashboardAllPosts from "@/components/dashboard/posts/dashboard-all-posts";
+import DashboardPostFilters from "@/components/dashboard/posts/dashboard-posts-filter";
+
 const DashboardPostsPage = () => {
-  return <h1>This is the dashboard post page</h1>;
+  return (
+    <>
+      <DashboardPostFilters />
+      <DashboardAllPosts />
+    </>
+  );
 };
 
 export default DashboardPostsPage;

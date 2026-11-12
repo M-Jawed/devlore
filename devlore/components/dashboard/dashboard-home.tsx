@@ -46,7 +46,7 @@ const DashboardHome = async () => {
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 pb-3">
         <DashboardRecentPost recentPosts={recentPosts} />
       </div>
     </div>

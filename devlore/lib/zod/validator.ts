@@ -51,5 +51,4 @@ export const quickEditPost = z.object({
   slug: z.string().min(3, "Slug is required").max(70),
   description: z.string().min(3, "Description must be above 3 characters"),
   category: z.string().min(1, "Please select a category"),
-  tags: z.array(z.string()).min(2, "Please select at least 2 tags"),
 });

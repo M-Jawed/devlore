@@ -332,6 +332,7 @@ export const updatePost = async ({
 
     revalidatePath("/posts");
     revalidatePath(`/posts/${data.slug}`);
+    revalidatePath("/dashboard");
 
     return { success: true, message: "Post updated" };
   } catch (error) {

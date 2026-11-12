@@ -33,10 +33,15 @@ import CopyButton from "./copy-button";
 import { Controller } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { categories, tags } from "@/constant";
-import TagCombobox from "@/app/(upload)/upload/post/tag-combobox";
+import Link from "next/link";
+import { Spinner } from "../ui/spinner";
+import { updatePost } from "@/lib/actions/post.action";
+import { toast } from "sonner";
+import { useState } from "react";
 
 const DashboardEditPostDialog = ({ post }: { post: PopulatedPost }) => {
   const { title, description, _id, userId } = post;
+  const [open, setOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof quickEditPost>>({
     resolver: zodResolver(quickEditPost),
@@ -45,15 +50,31 @@ const DashboardEditPostDialog = ({ post }: { post: PopulatedPost }) => {
       slug: post.slug ?? "",
       description: post.description ?? "",
       category: post.category ?? "",
-      tags: post.tags ?? [],
     },
   });
 
   const onSubmit = async (value: z.infer<typeof quickEditPost>) => {
-    console.log(value);
+    const res = await updatePost({
+      data: {
+        ...value,
+        tags: post.tags,
+        body: post.body,
+        banner: post.banner,
+      },
+      postId: _id.toString(),
+    });
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success(res.message);
+    setOpen(false);
+    form.reset();
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger>
@@ -74,9 +95,10 @@ const DashboardEditPostDialog = ({ post }: { post: PopulatedPost }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Quick edit post</DialogTitle>
-          <DialogDescription>
-            quickly edit this post. for full edit go to /edit/[postId]
-          </DialogDescription>
+          <DialogDescription>quickly edit this post.</DialogDescription>
+          <Button variant={"outline"} asChild>
+            <Link href={`/edit/${_id.toString()}`}>Full Edit</Link>
+          </Button>
         </DialogHeader>
 
         <FieldGroup className="grid md:grid-cols-2">
@@ -88,7 +110,7 @@ const DashboardEditPostDialog = ({ post }: { post: PopulatedPost }) => {
           </Field>
 
           <Field>
-            <FieldLabel htmlFor="user_id">User ID</FieldLabel>
+            <FieldLabel htmlFor="user_id">User ID (Post Owner)</FieldLabel>
 
             <Input
               name="user_id"
@@ -100,6 +122,7 @@ const DashboardEditPostDialog = ({ post }: { post: PopulatedPost }) => {
         </FieldGroup>
 
         <form
+          id="quick-edit-post"
           onSubmit={form.handleSubmit(onSubmit)}
           method="POST"
           className="space-y-3"
@@ -144,54 +167,40 @@ const DashboardEditPostDialog = ({ post }: { post: PopulatedPost }) => {
             )}
           />
 
-          <FieldGroup className="flex flex-row">
-            <Controller
-              control={form.control}
-              name="category"
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor="category">Category</FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Category</SelectLabel>
-                        {categories.map((category: string) => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              control={form.control}
-              name="tags"
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor="tags">Tags</FieldLabel>
-                  <TagCombobox
-                    value={field.value}
-                    onChange={field.onChange}
-                    options={tags}
-                  />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </FieldGroup>
+          <Controller
+            control={form.control}
+            name="category"
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor="category">Category</FieldLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Category</SelectLabel>
+                      {categories.map((category: string) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
         </form>
+        <DialogFooter>
+          <DialogClose>
+            <Button variant={"outline"}>Cancel</Button>
+          </DialogClose>
+          <Button type="submit" form="quick-edit-post">
+            {form.formState.isSubmitting ? <Spinner /> : "Save changes"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
