@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Plus, User } from "lucide-react";
 import { followRecommendation, getUserById } from "@/lib/actions/user.action";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import type { User as UserType } from "@/types";
+import type { PopulatedPost, User as UserType } from "@/types";
 import RecommendedTopics from "./recommended-topics";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
@@ -30,7 +30,7 @@ const PostSidebar = async () => {
           {posts.data.length === 0 ? (
             <h1>No posts found</h1>
           ) : (
-            posts.data.map((item) => (
+            posts.data.map((item: PopulatedPost) => (
               <RecentPostCard key={item._id} post={item} />
             ))
           )}
