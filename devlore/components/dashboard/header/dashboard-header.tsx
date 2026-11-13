@@ -6,7 +6,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const DashboardHeader = () => {
   return (
-    <header className="w-full h-20 border-b border-gray-300 flex-center">
+    <header className="w-full h-20 border-b border-border flex-center">
       <div className="w-full md:w-full px-10 pr-15 flex-between">
         <div className="w-[70%] flex items-center gap-x-2">
           <SidebarTrigger />

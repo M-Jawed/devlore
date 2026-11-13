@@ -15,24 +15,37 @@ import { canEditPost } from "../auth/can-edit-post";
 export const getAllPosts = async ({
   featured,
   search,
-}: { featured?: boolean; search?: string } = {}) => {
+  catQuery: { category, sort } = {},
+}: {
+  featured?: boolean;
+  search?: string;
+  catQuery?: { category?: string | undefined; sort?: string | undefined };
+} = {}) => {
   try {
     await connectDB();
 
-    const query = featured
-      ? { isFeatured: true }
-      : search
-        ? {
-            title: {
-              $regex: search,
-              $options: "i",
-            },
-          }
-        : {};
+    const query: Record<string, unknown> = {};
+
+    if (featured) query.isFeatured = true;
+
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+
+    if (category) query.category = category;
+
+    const sortMap: Record<string, Record<string, 1 | -1>> = {
+      "a-z": { title: 1 },
+      "z-a": { title: -1 },
+    };
+
+    const sortBy = sortMap[sort ?? ""] ?? { createdAt: -1 };
     const posts = await Post.find(query)
       .lean()
       .sort({ createdAt: -1 })
-      .populate("userId", "_id name username image");
+      .populate("userId", "_id name username image")
+      .sort(sortBy)
+      .collation({ locale: "en", strength: 2 });
 
     if (!posts || posts.length === 0) {
       return { success: false, message: "No posts found", data: [] };
