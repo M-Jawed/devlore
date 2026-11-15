@@ -8,6 +8,8 @@ import UserSearch from "@/components/posts/display-user-search";
 import { getUserById, getAllSearchUsers } from "@/lib/actions/user.action";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
+import { Suspense } from "react";
+import PostSkeleton from "@/components/posts/post-skeleton";
 
 export const metadata: Metadata = {
   title: "Posts",
@@ -52,7 +54,9 @@ const PostsPage = async ({
           ""
         )}
         {type !== "user" && (
-          <Posts currentUser={currentUser} posts={posts.data} />
+          <Suspense fallback={<PostSkeleton />}>
+            <Posts currentUser={currentUser} posts={posts.data} />
+          </Suspense>
         )}
       </div>
 

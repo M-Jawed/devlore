@@ -50,7 +50,7 @@ const PostOwner = ({
         |
         <span className="text-muted-foreground ml-2">
           {" "}
-          {moment(createdAt, "YYYYMMDD").fromNow()}{" "}
+          {moment(createdAt).fromNow()}{" "}
         </span>
       </div>
 

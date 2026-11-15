@@ -46,7 +46,7 @@ const SignInForm = () => {
       <div className="flex-center">
         <Button
           type="button"
-          variant={"secondary"}
+          variant={"outline"}
           disabled={loading}
           className="w-50"
           onClick={handleGoogleSignIn}

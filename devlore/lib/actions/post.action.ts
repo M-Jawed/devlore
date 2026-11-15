@@ -15,11 +15,20 @@ import { canEditPost } from "../auth/can-edit-post";
 export const getAllPosts = async ({
   featured,
   search,
-  catQuery: { category, sort } = {},
+  catQuery: { category, sort, keywords } = {},
+  pagination: { postsPerPage, page } = {},
 }: {
   featured?: boolean;
   search?: string;
-  catQuery?: { category?: string | undefined; sort?: string | undefined };
+  catQuery?: {
+    category?: string | undefined;
+    sort?: string | undefined;
+    keywords?: string | undefined;
+  };
+  pagination?: {
+    postsPerPage?: number;
+    page?: number;
+  };
 } = {}) => {
   try {
     await connectDB();
@@ -28,8 +37,8 @@ export const getAllPosts = async ({
 
     if (featured) query.isFeatured = true;
 
-    if (search) {
-      query.title = { $regex: search, $options: "i" };
+    if (search || keywords) {
+      query.title = { $regex: search || keywords, $options: "i" };
     }
 
     if (category) query.category = category;
@@ -45,7 +54,9 @@ export const getAllPosts = async ({
       .sort({ createdAt: -1 })
       .populate("userId", "_id name username image")
       .sort(sortBy)
-      .collation({ locale: "en", strength: 2 });
+      .collation({ locale: "en", strength: 2 })
+      .limit(postsPerPage ?? 0)
+      .skip((page! - 1) * postsPerPage!);
 
     if (!posts || posts.length === 0) {
       return { success: false, message: "No posts found", data: [] };

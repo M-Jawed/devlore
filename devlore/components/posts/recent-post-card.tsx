@@ -28,7 +28,7 @@ const RecentPostCard = ({ post }: { post: PopulatedPost }) => {
           <h1 className="font-bold text-lg"> {post.title} </h1>
           <span className="text-xs text-muted-foreground">
             {" "}
-            {moment(post.createdAt, "YYMMDD").fromNow()}{" "}
+            {moment(post.createdAt).fromNow()}{" "}
           </span>
         </div>
       </Link>

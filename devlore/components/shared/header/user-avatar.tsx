@@ -15,6 +15,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuShortcut,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
@@ -26,6 +29,8 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { BsFileEarmarkText } from "react-icons/bs";
+import { FiUsers } from "react-icons/fi";
 import Link from "next/link";
 
 const UserAvatar = ({
@@ -87,14 +92,25 @@ const UserAvatar = ({
           </DropdownMenuShortcut>
         </DropdownMenuItem>
         {session?.user.role === "admin" && (
-          <DropdownMenuItem>
-            <Link href={"/dashboard"} className="w-full">
-              Dashboard
-            </Link>
-            <DropdownMenuShortcut>
-              <MdAdminPanelSettings />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Link href="/dashboard">Dashboard</Link>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem>
+                <Link href={"/dashboard/posts"}>Posts</Link>
+                <DropdownMenuShortcut>
+                  <BsFileEarmarkText />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={"/dashboard/users"}>Users</Link>
+                <DropdownMenuShortcut>
+                  <FiUsers />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
         )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleSignOut()}>

@@ -1,7 +1,7 @@
 import User from "@/models/User";
 import connectDB from "@/config/db";
-import { users } from "@/data/sample-data";
 import mongoose from "mongoose";
+import { posts } from "./sample-data";
 
 const seed = async () => {
   await connectDB();
@@ -10,7 +10,7 @@ const seed = async () => {
 
   await User.deleteMany({});
 
-  await User.insertMany(users);
+  await User.insertMany(posts);
 
   console.log("Database seeded successfully");
 

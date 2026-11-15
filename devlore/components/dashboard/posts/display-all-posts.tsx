@@ -20,7 +20,7 @@ const DisplayPosts = ({ posts }: { posts: PopulatedPost[] }) => {
       {posts.map((post: PopulatedPost) => (
         <Card className="flex h-full flex-col" key={post._id}>
           <CardHeader>
-            <Link href={`/post/${post._id.toString()}`}>
+            <Link href={`/post/${post.slug.toString()}`}>
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src={post.banner}

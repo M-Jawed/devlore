@@ -47,8 +47,15 @@ const DashboardPostFilters = () => {
     searchParams.get("category") ?? "",
   );
   const [sort, setSort] = useState<string>(searchParams.get("sort") ?? "");
+  const [keywords, setKeywords] = useState<string>(
+    searchParams.get("keywords") ?? "",
+  );
 
-  const pushParams = (next: { category: string; sort: string }) => {
+  const pushParams = (next: {
+    category: string;
+    sort: string;
+    keywords?: string;
+  }) => {
     const params = new URLSearchParams(searchParams.toString());
 
     Object.entries(next).forEach(([key, value]) => {
@@ -62,19 +69,25 @@ const DashboardPostFilters = () => {
     setOpen(false);
   };
 
-  const handleApply = () => pushParams({ category, sort });
+  const handleApply = () => pushParams({ category, sort, keywords });
 
   const handleReset = () => {
     setCategory("");
     setSort("");
-    pushParams({ category: "", sort: "" });
+    pushParams({ category: "", sort: "", keywords: "" });
   };
 
   return (
     <div className="w-full mt-5 px-5">
       <div className="w-[45%] flex items-center gap-x-3">
         <InputGroup>
-          <InputGroupInput placeholder="Search posts" />
+          <InputGroupInput
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleApply();
+            }}
+            onChange={(e) => setKeywords(e.target.value)}
+            placeholder="Search posts"
+          />
           <InputGroupAddon>
             <IoSearchOutline />
           </InputGroupAddon>

@@ -7,8 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import DisplayPosts from "./display-all-posts";
+import DashboardPostsPagination from "./dashboard-posts-pagination";
 
-const DashboardAllPosts = ({ posts }: { posts: PopulatedPost[] }) => {
+const DashboardAllPosts = ({
+  posts,
+  totalPosts,
+}: {
+  posts: PopulatedPost[];
+  totalPosts: number;
+}) => {
   return (
     <div className="w-full px-5 mt-5">
       <Card>
@@ -18,6 +25,7 @@ const DashboardAllPosts = ({ posts }: { posts: PopulatedPost[] }) => {
         </CardHeader>
         <CardContent>
           <DisplayPosts posts={posts} />
+          <DashboardPostsPagination totalPosts={totalPosts} />
         </CardContent>
       </Card>
     </div>
