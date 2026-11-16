@@ -33,6 +33,7 @@ const UserDetailsPage = async ({
   });
 
   if (!session) redirect("/");
+  console.log(username)
 
   const userId = session?.user?.id as string;
 

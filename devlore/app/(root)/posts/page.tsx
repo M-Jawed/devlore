@@ -10,6 +10,11 @@ import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 import PostSkeleton from "@/components/posts/post-skeleton";
+import {
+  checkIfBookmarked,
+  getBookmarkedPostIds,
+} from "@/lib/actions/bookmark.action";
+import { PopulatedPost } from "@/types";
 
 export const metadata: Metadata = {
   title: "Posts",
@@ -43,6 +48,9 @@ const PostsPage = async ({
   });
 
   const currentUser = await getUserById(session?.user.id as string);
+  const bookmarkedIds = await getBookmarkedPostIds(
+    posts.data.map((p: PopulatedPost) => p._id),
+  );
 
   return (
     <section className=" w-full grid md:grid-cols-[1fr_auto] items-start min-h-screen px-6 pb-5 max-sm:px-0">
@@ -55,7 +63,11 @@ const PostsPage = async ({
         )}
         {type !== "user" && (
           <Suspense fallback={<PostSkeleton />}>
-            <Posts currentUser={currentUser} posts={posts.data} />
+            <Posts
+              currentUser={currentUser}
+              posts={posts.data}
+              bookmarkedIds={bookmarkedIds?.data ?? []}
+            />
           </Suspense>
         )}
       </div>

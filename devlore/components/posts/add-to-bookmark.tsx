@@ -2,7 +2,7 @@
 
 import { Toggle } from "../ui/toggle";
 import { Bookmark, BookmarkCheck } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import {
   addToBookmark,
   checkIfBookmarked,
@@ -12,41 +12,53 @@ import { Skeleton } from "../ui/skeleton";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 
-const BookmarkButton = ({ id }: { id: string }) => {
-  const [bookmarked, setBookmarked] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+const BookmarkButton = ({
+  id,
+  isBookmarked,
+}: {
+  id: string;
+  isBookmarked: boolean;
+}) => {
+  const [bookmarked, setBookmarked] = useState<boolean>(isBookmarked ?? false);
+  const [isPending, startTransition] = useTransition();
+
   const session = useSession();
   const userId = session.data?.user.id as string;
   const postId = id;
 
   const handleAddBookmark = async () => {
-    const res = await addToBookmark({ userId, postId });
+    const next = !bookmarked;
+    setBookmarked(next);
 
-    if (!res.success) {
-      toast.error(res.message);
-      return;
-    }
+    startTransition(async () => {
+      const res = await addToBookmark({ userId, postId });
 
-    if (res.type === "delete") {
-      setBookmarked(false);
-    } else {
-      setBookmarked(true);
-    }
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
 
-    toast.success(res.message);
+      if (res.type === "delete") {
+        setBookmarked(false);
+      } else {
+        setBookmarked(true);
+      }
+
+      toast.success(res.message);
+    });
   };
 
-  useEffect(() => {
-    const checkBookmark = async () => {
-      setLoading(true);
-      const res = await checkIfBookmarked({ userId, postId });
-      setLoading(false);
-      setBookmarked(res.bookmarked);
-    };
-    checkBookmark();
-  }, [userId, postId]);
+  // useEffect(() => {
+  //   const checkBookmark = async () => {
+  //     setLoading(true);
+  //     const res = await checkIfBookmarked({ userId, postId });
+  //     setLoading(false);
+  //     setBookmarked(res.bookmarked);
+  //   };
+  //   checkBookmark();
+  // }, [userId, postId]);
 
-  if (loading) {
+  if (isPending) {
     return <Skeleton className="w-6 h-5" />;
   }
 
@@ -56,6 +68,8 @@ const BookmarkButton = ({ id }: { id: string }) => {
       variant={"default"}
       pressed={bookmarked}
       onClick={handleAddBookmark}
+      disabled={isPending}
+      aria-disabled={isPending}
     >
       {bookmarked ? <BookmarkCheck /> : <Bookmark />}
     </Toggle>

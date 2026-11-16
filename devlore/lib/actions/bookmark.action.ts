@@ -5,6 +5,8 @@ import Bookmark from "@/models/Bookmark";
 import { formatError } from "../utils";
 import Post from "@/models/Post";
 import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
+import { headers } from "next/headers";
 
 export const getUserBookmarks = async ({ userId }: { userId: string }) => {
   await connectDB();
@@ -71,4 +73,27 @@ export const checkIfBookmarked = async ({
   } catch (error) {
     return { bookmarked: false };
   }
+};
+
+export const getBookmarkedPostIds = async (postIds: string[]) => {
+  try {
+    await connectDB();
+
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session) return { success: false, message: "Unauthorized", data: [] };
+
+    const rows = await Bookmark.find({
+      userId: session?.user?.id,
+      postId: { $in: postIds },
+    });
+
+    return {
+      success: true,
+      message: "Post ids found",
+      data: rows.map((r: { postId: string }) => r.postId.toString()),
+    };
+  } catch (error) {}
 };

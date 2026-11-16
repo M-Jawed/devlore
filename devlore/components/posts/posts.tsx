@@ -8,10 +8,13 @@ import { cn } from "@/lib/utils";
 const Posts = ({
   posts,
   currentUser,
+  bookmarkedIds,
 }: {
   posts: PopulatedPost[];
   currentUser: User;
+  bookmarkedIds: string[];
 }) => {
+  const bookmarked = new Set(bookmarkedIds);
   const { open } = useSidebar();
   return (
     <div
@@ -21,9 +24,16 @@ const Posts = ({
       )}
     >
       {posts!.length > 0 ? (
-        posts?.map((post: PopulatedPost) => (
-          <PostCard key={post._id} post={post} currentUser={currentUser} />
-        ))
+        posts?.map((post: PopulatedPost) => {
+          return (
+            <PostCard
+              key={post._id}
+              post={post}
+              currentUser={currentUser}
+              isBookmarked={bookmarked.has(post._id)}
+            />
+          );
+        })
       ) : (
         <h1>No posts found</h1>
       )}

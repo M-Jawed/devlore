@@ -17,10 +17,12 @@ const PostCard = ({
   type,
   post,
   currentUser,
+  isBookmarked,
 }: {
   type?: "profile" | null;
   post: PopulatedPost;
   currentUser?: User;
+  isBookmarked: boolean;
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
@@ -120,7 +122,7 @@ const PostCard = ({
             {isAuthor && type === "profile" && (
               <PostOwnerTools postId={post._id} />
             )}
-            <BookmarkButton id={plainPost._id} />
+            <BookmarkButton isBookmarked={isBookmarked} id={plainPost._id} />
           </div>
         </div>
       </CardFooter>
