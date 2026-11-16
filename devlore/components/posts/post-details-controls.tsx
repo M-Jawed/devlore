@@ -13,9 +13,11 @@ import { useState } from "react";
 const PostDetailsControls = ({
   post,
   isLiked,
+  isBookmarked,
 }: {
   post: PopulatedPost;
   isLiked: string | boolean;
+  isBookmarked: boolean;
 }) => {
   const handleLike = async () => {
     const res = await handleLikePost({ postId: post._id, postSlug: post.slug });
@@ -55,7 +57,7 @@ const PostDetailsControls = ({
         </div>
       </div>
 
-      <BookmarkButton id={post._id} />
+      <BookmarkButton id={post._id} isBookmarked={isBookmarked} />
     </div>
   );
 };

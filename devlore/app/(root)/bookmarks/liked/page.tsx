@@ -6,6 +6,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getBookmarkedPostIds } from "@/lib/actions/bookmark.action";
+import { PopulatedPost } from "@/types";
 
 export const metadata: Metadata = {
   title: "Liked Posts",
@@ -20,6 +22,11 @@ const LikedPostPage = async () => {
   if (!session) redirect("/sign-in");
 
   const userId = session?.user?.id;
+
+  const getBookmarkIds = await getBookmarkedPostIds(
+    posts.map((p: PopulatedPost) => p._id),
+  );
+  const bookmarked = new Set(getBookmarkIds?.data ?? []);
 
   const currentUser = await getUserById(userId);
   return (
@@ -45,6 +52,7 @@ const LikedPostPage = async () => {
                 <PostCard
                   key={post._id}
                   post={post}
+                  isBookmarked={bookmarked.has(post._id)}
                   currentUser={currentUser}
                 />
               ))}

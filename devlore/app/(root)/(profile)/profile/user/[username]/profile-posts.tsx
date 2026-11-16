@@ -5,10 +5,13 @@ import type { User as UserType } from "@/types";
 const ProfilePosts = ({
   userPosts,
   currentUser,
+  bookmarks,
 }: {
   userPosts: PopulatedPost[];
   currentUser: UserType;
+  bookmarks: string[];
 }) => {
+  const bookmarked = new Set(bookmarks);
   return (
     <div className="w-full mt-5">
       <h1 className="text-2xl font-bold mb-5">Posts</h1>
@@ -21,7 +24,12 @@ const ProfilePosts = ({
       ) : (
         <div className="w-full space-y-4">
           {userPosts.map((post) => (
-            <PostCard key={post._id} post={post} currentUser={currentUser} />
+            <PostCard
+              key={post._id}
+              post={post}
+              currentUser={currentUser}
+              isBookmarked={bookmarked.has(post._id)}
+            />
           ))}
         </div>
       )}

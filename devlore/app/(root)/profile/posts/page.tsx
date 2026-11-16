@@ -8,6 +8,7 @@ import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.action";
+import { getBookmarkedPostIds } from "@/lib/actions/bookmark.action";
 
 export const metadata: Metadata = {
   title: "Your Posts",
@@ -24,10 +25,14 @@ const PostPage = async () => {
   const userId = session?.user?.id;
 
   const currentUser = await getUserById(userId);
+  const getBookmarkIds = await getBookmarkedPostIds(
+    posts.map((p: PopulatedPost) => p._id),
+  );
+  const bookmarked = new Set(getBookmarkIds?.data ?? []);
 
   return (
     <section className="w-[63%] mx-auto mt-10 max-sm:w-full max-sm:px-2">
-      <div className="w-full flex-center">
+      <div className="w-full grid gap-3">
         {posts.length === 0 ? (
           <div className="mt-20 text-center pt-7">
             <h1 className="font-medium text-lg tracking-wide">
@@ -43,6 +48,7 @@ const PostPage = async () => {
         ) : (
           posts.map((post: PopulatedPost) => (
             <PostCard
+              isBookmarked={bookmarked.has(post._id)}
               key={post._id}
               post={post}
               type={"profile"}

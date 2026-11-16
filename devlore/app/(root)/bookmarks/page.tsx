@@ -8,6 +8,7 @@ import { PopulatedPost } from "@/types";
 import { getUserById } from "@/lib/actions/user.action";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getBookmarkedPostIds } from "@/lib/actions/bookmark.action";
 
 export const metadata: Metadata = {
   title: "Bookmarks",
@@ -30,6 +31,10 @@ const Bookmarks = async () => {
   }
 
   const posts = convertToPlainJSON(res.data);
+  const getBookmarkIds = await getBookmarkedPostIds(
+    posts.map((p: PopulatedPost) => p._id),
+  );
+  const bookmarked = new Set(getBookmarkIds?.data ?? []);
 
   return (
     <section className="px-5 mt-5">
@@ -37,7 +42,12 @@ const Bookmarks = async () => {
       <div className="grid w-[60%] gap-x-3 mt-5 space-y-6 mx-auto max-lg:w-[80%] max-md:w-full">
         {posts.length > 0 ? (
           posts.map((post: PopulatedPost) => (
-            <PostCard key={post._id} post={post} currentUser={currentUser} />
+            <PostCard
+              key={post._id}
+              post={post}
+              currentUser={currentUser}
+              isBookmarked={bookmarked.has(post._id)}
+            />
           ))
         ) : (
           <div>

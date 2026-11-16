@@ -8,6 +8,8 @@ import { auth } from "@/auth";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import ProfilePosts from "./profile-posts";
+import { getBookmarkedPostIds } from "@/lib/actions/bookmark.action";
+import { PopulatedPost } from "@/types";
 
 export const generateMetadata = async ({
   params,
@@ -33,7 +35,7 @@ const UserDetailsPage = async ({
   });
 
   if (!session) redirect("/");
-  console.log(username)
+  console.log(username);
 
   const userId = session?.user?.id as string;
 
@@ -43,11 +45,16 @@ const UserDetailsPage = async ({
 
   const userPosts = (await getUserPosts({ userId: user.data._id as string }))
     .data;
+
+  const bookmarks = await getBookmarkedPostIds(
+    userPosts.map((p: PopulatedPost) => p._id),
+  );
   const currentUser = await getUserById(userId);
 
   return (
     <section className="py-5">
       <ProfileDetails
+        bookmarks={bookmarks?.data ?? []}
         user={user.data}
         currentUserId={userId}
         currentUser={currentUser}

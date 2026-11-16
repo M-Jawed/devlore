@@ -18,6 +18,7 @@ import { headers } from "next/headers";
 import type { User } from "better-auth";
 import { getUserById } from "@/lib/actions/user.action";
 import { notFound } from "next/navigation";
+import { getBookmarkedPostIds } from "@/lib/actions/bookmark.action";
 
 const PostDetails = async ({ post }: { post: PopulatedPost }) => {
   const session = await auth.api.getSession({
@@ -37,6 +38,10 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
     (item: { userId: string; followedAt: string }) =>
       item.userId?.toString() === post.userId._id.toString(),
   );
+
+  const bookmarkIds = await getBookmarkedPostIds([post._id]);
+  const bookmarks = new Set(bookmarkIds?.data ?? []);
+  const isBookmarked = bookmarks.has(post._id);
 
   const isAuthor = user.id.toString() === post.userId._id.toString();
   return (
@@ -67,7 +72,11 @@ const PostDetails = async ({ post }: { post: PopulatedPost }) => {
               type="details"
             />
           </div>
-          <PostDetailsControls isLiked={isLiked} post={post} />
+          <PostDetailsControls
+            isLiked={isLiked}
+            post={post}
+            isBookmarked={isBookmarked}
+          />
         </CardHeader>
 
         <CardContent className="space-y-9 mt-5">
