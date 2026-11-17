@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import BProgressProvider from "./bgprogress-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -51,8 +52,10 @@ export default function RootLayout({
           attribute={"class"}
           disableTransitionOnChange
         >
-          <TooltipProvider>{children}</TooltipProvider>
-          <Toaster position="top-right" />
+          <BProgressProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+            <Toaster position="top-right" />
+          </BProgressProvider>
         </ThemeProvider>
       </body>
     </html>
