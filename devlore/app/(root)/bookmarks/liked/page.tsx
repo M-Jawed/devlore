@@ -24,7 +24,7 @@ const LikedPostPage = async () => {
   const userId = session?.user?.id;
 
   const getBookmarkIds = await getBookmarkedPostIds(
-    posts.map((p: PopulatedPost) => p._id),
+    posts ?? [].map((p: PopulatedPost) => p._id),
   );
   const bookmarked = new Set(getBookmarkIds?.data ?? []);
 

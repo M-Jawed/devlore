@@ -15,6 +15,7 @@ const UploadPostButton = ({ type }: { type?: "header" | null }) => {
       disabled={isSubmitting}
       className={cn(type === "header" ? "w-[70%]" : "mt-10 w-[30%]")}
       form="upload-post-form"
+      variant={"secondary"}
     >
       {isSubmitting ? "Uploading..." : "Upload"}{" "}
       {isSubmitting ? <Spinner /> : <ArrowUpFromLine />}

@@ -26,11 +26,22 @@ const Header = async () => {
             <Search />
           </div>
         )}
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center gap-x-4 max-sm:hidden">
           {session && (
-            <Button size={"sm"} asChild>
+            <Button size={"sm"} variant={"secondary"} asChild>
               <Link href={"/upload/post"} className="flex items-center gap-x-1">
                 Upload <StickyNotePlus />
+              </Link>
+            </Button>
+          )}
+          <ThemeDropdown />
+          <UserButton />
+        </div>
+        <div className="flex items-center gap-x-4 sm:hidden">
+          {session && (
+            <Button size={"icon"} variant={"outline"} asChild>
+              <Link href={"/upload/post"} className="flex items-center gap-x-1">
+                <StickyNotePlus />
               </Link>
             </Button>
           )}
