@@ -53,7 +53,7 @@ const PostsPage = async ({
   );
 
   return (
-    <section className=" w-full grid md:grid-cols-[1fr_auto] items-start min-h-screen px-6 pb-5 max-sm:px-0">
+    <section className="w-full grid md:grid-cols-[1fr_auto] items-start min-h-screen px-6 pb-5 max-sm:px-3">
       <div className="w-full pt-10">
         <PostFilters />
         {type === "all" || type === "user" ? (

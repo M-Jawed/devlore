@@ -9,15 +9,14 @@ const NavigationLinks = () => {
   const pathname = usePathname();
 
   return (
-    <div className="w-[60%] mx-auto mt-10 border-b max-sm:w-[90%]">
-      <div className="flex items-center gap-x-3 max-sm:justify-center">
+    <div className="w-[60%] mx-auto mt-10 border-b max-sm:w-full">
+      <div className="flex w-full items-center gap-x-3 max-sm:px-3 max-sm:justify-center">
         <Button
           variant={"link"}
           size={"sm"}
           className={cn(
             "font-bold",
-            pathname === "/bookmarks" &&
-              "border-b-2 border-b-black rounded-none",
+            pathname === "/bookmarks" && "underline rounded-none",
           )}
           asChild
         >

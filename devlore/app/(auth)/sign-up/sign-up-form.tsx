@@ -66,7 +66,7 @@ const SignUpForm = () => {
         <Button
           disabled={loading}
           type="button"
-          variant={"secondary"}
+          variant={"outline"}
           className="w-50"
           onClick={handleSignUpWithGoogle}
         >

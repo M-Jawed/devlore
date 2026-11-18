@@ -19,8 +19,8 @@ const Posts = ({
   return (
     <div
       className={cn(
-        "w-full gap-x-3 mt-5 px-7 max-sm:px-2 space-y-7",
-        !open && "pl-30",
+        "w-full gap-x-3 mt-5 space-y-7 px-5 max-sm:px-0",
+        !open && "sm:pl-30",
       )}
     >
       {posts!.length > 0 ? (

@@ -87,12 +87,20 @@ const PostCard = ({
           createdAt={post.createdAt}
           isAuthor={isAuthor}
         />
+        <div className="my-3 relative w-full overflow-hidden aspect-video md:hidden">
+          <Image
+            src={post.banner}
+            alt={`Image or banner of the post ${post.title}`}
+            fill
+            className="rounded-lg object-cover"
+          />
+        </div>
       </CardHeader>
       <Link href={`/posts/${post.slug}`} className="pt-0 -mt-5">
         <CardContent>
-          <div className="grid grid-cols-[1fr_auto]">
-            <div className="w-[85%] max-sm:w-full">
-              <h1 className="font-bold text-2xl tracking-wide mt-4 max-sm:text-md">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 items-center">
+            <div className="min-w-0">
+              <h1 className="font-bold text-2xl tracking-wide mt-4 max-sm:text-base truncate">
                 {" "}
                 {post.title}{" "}
               </h1>
@@ -101,16 +109,14 @@ const PostCard = ({
                 {post.description}{" "}
               </p>
             </div>
-            <div>
-              <div>
-                <Image
-                  src={post.banner}
-                  alt={`Image or banner of the post ${post.title}`}
-                  width={200}
-                  height={200}
-                  className="rounded-lg max-sm:hidden"
-                />
-              </div>
+            <div className="max-md:hidden shrink-0">
+              <Image
+                src={post.banner}
+                alt={`Image or banner of the post ${post.title}`}
+                width={200}
+                height={200}
+                className="rounded-lg object-cover"
+              />
             </div>
           </div>
         </CardContent>
