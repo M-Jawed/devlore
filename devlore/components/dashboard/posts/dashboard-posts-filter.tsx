@@ -79,12 +79,13 @@ const DashboardPostFilters = () => {
 
   return (
     <div className="w-full mt-5 px-5">
-      <div className="w-[45%] flex items-center gap-x-3">
+      <div className="w-[45%] max-sm:w-full flex items-center gap-x-3">
         <InputGroup>
           <InputGroupInput
             onKeyDown={(e) => {
               if (e.key === "Enter") handleApply();
             }}
+            type="search"
             onChange={(e) => setKeywords(e.target.value)}
             placeholder="Search posts"
           />

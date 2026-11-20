@@ -3,6 +3,7 @@ import UserButton from "@/components/shared/header/user-button";
 import ThemeDropdown from "@/components/shared/header/theme-dropdown";
 import DashboardSearch from "./dashboard-search";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import Notifications from "@/components/notification/notifications";
 
 const DashboardHeader = () => {
   return (
@@ -16,6 +17,7 @@ const DashboardHeader = () => {
         </div>
 
         <div className="flex-between md:w-[8%]">
+          <Notifications />
           <ThemeDropdown />
           <UserButton />
         </div>

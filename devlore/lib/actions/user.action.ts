@@ -375,7 +375,8 @@ export const getAllUsers = async () => {
 
   if (!session) return { success: false, message: "Session is null" };
 
-  const users = await User.countDocuments();
+  const users = await User.find();
+  const usersCount = await User.countDocuments();
 
   const usersPerMonth = await User.aggregate([
     {
@@ -387,12 +388,14 @@ export const getAllUsers = async () => {
     { $sort: { _id: 1 } },
   ]);
 
-  if (!users) return { success: false, message: "No users found" };
+  if (!users) return { success: false, message: "No users found", users: [] };
+  if (!usersCount) return { success: false, message: "No users found" };
 
   return {
     success: true,
     message: "Users found",
-    totalUsers: users,
+    totalUsers: usersCount,
     usersPerMonth,
+    users,
   };
 };

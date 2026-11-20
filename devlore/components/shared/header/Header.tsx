@@ -9,6 +9,7 @@ import Search from "./search";
 import { Button } from "@/components/ui/button";
 import { StickyNotePlus } from "lucide-react";
 import Link from "next/link";
+import Notifications from "@/components/notification/notifications";
 
 const Header = async () => {
   const session = await auth.api.getSession({
@@ -34,6 +35,7 @@ const Header = async () => {
               </Link>
             </Button>
           )}
+          <Notifications />
           <ThemeDropdown />
           <UserButton />
         </div>
@@ -45,6 +47,7 @@ const Header = async () => {
               </Link>
             </Button>
           )}
+
           <ThemeDropdown />
           <UserButton />
         </div>
